@@ -1,5 +1,10 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
+import AuthProvider from '@/components/AuthProvider/AuthProvider'
+// import { useState } from 'react'
+import Tester from '@/components/layout/tester'
+// import Sidebar from '@/components/layout/Sidebar'
+// import MenuBarMobile from '@/components/layout/MobileMenuBar'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,7 +20,28 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <head>
+      <script src="https://acrobatservices.adobe.com/view-sdk/viewer.js" async></script>
+      </head>
+      <body className={inter.className}>
+      <AuthProvider>
+          <div>
+          
+          <div className="flex">
+                  <div className="accentbg">
+                   <Tester />
+                    {/* <MenuBarMobile setter={setShowSidebar} />
+                    <Sidebar show={showSidebar} setter={setShowSidebar} /> */}
+                    </div>
+
+                    <div  id="adobe-dc-view" className="flex flex-col flex-grow  md:w-full min-h-screen">
+                        {children}
+                    </div>
+                </div>
+
+          </div>
+        </AuthProvider>
+      </body>
     </html>
   )
 }

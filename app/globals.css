@@ -1,27 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+ 
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  --text: #06080f;
+  --background: #ffffff;
+  --primary: #2c56cd;/* secondary */
+  --secondary: #c1cae1; /*accent */
+  --paGradient: rgb(102,124,183);
+  --paGradient: -moz-linear-gradient(90deg, rgba(102,124,183,1) 0%, rgba(76,88,123,1) 100%);
+  --paGradient: -webkit-linear-gradient(90deg, rgba(102,124,183,1) 0%, rgba(76,88,123,1) 100%);
+  --paGradient: linear-gradient(90deg, rgba(102,124,183,1) 0%, rgba(76,88,123,1) 100%);
+  --accent: #202d50;/* primary */
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  .dark-mode {
     --foreground-rgb: 255, 255, 255;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
-  }
+    --text: #ffffff;
+    --background: #000000;
+    --primary: #667cb7; /* secondary */
+    --secondary: #4c587b ; /*accent */
+    --accent: #2e4686; /* primary */
+    --paGradient: rgb(44,86,205);
+    --paGradient: -moz-linear-gradient(90deg, rgba(44,86,205,1) 0%, rgba(193,202,225,1) 100%);
+    --paGradient: -webkit-linear-gradient(90deg, rgba(44,86,205,1) 0%, rgba(193,202,225,1) 100%);
+    --paGradient: linear-gradient(90deg, rgba(44,86,205,1) 0%, rgba(193,202,225,1) 100%);
+  } 
 }
 
+
+
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background-color: var(--background);
+  font-family: "Inter", sans-serif;
+}
+
+.accentbg {
+  background: var(--accent);
 }

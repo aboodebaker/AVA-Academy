@@ -1,0 +1,119 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider          = "mongodb"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  password      String?
+  emailVerified DateTime?
+  image         String?
+  grade         String?
+  class         String?
+  games         Game[]
+  files         Files[]
+  notes         Notes[]
+  accounts      Account[]
+  sessions      Session[]
+}
+
+model Notes {
+  id            String  @id @default(auto()) @map("_id") @db.ObjectId
+  title         String?
+  subject       String?
+  content       String?
+  image         String?
+  shared        Boolean?
+  peopleshared  String?
+  User   User?   @relation(fields: [userId], references: [id])
+  userId String? @db.ObjectId
+}
+
+model Files {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  subject String?
+  name    String?
+  file    String?
+  text    String?
+  User    User?   @relation(fields: [userId], references: [id])
+  userId  String? @db.ObjectId
+}
+
+enum GameType {
+  mcq
+  open_ended
+}
+
+model Game {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId      String
+  questions   Question[]
+  timeStarted DateTime
+  topic       String
+  timeEnded   DateTime?
+  gameType    GameType
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+model topic_count {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  topic String @unique
+  count Int
+}
+
+model Question {
+  id                String   @id @default(auto()) @map("_id") @db.ObjectId
+  question          String
+  answer            String
+  gameId            String
+  options           Json? // for mcq questions
+  percentageCorrect Float? // for open_ended questions
+  isCorrect         Boolean? // for mcq questions
+  questionType      GameType
+  userAnswer        String?
+
+  game Game @relation(fields: [gameId], references: [id])
+
+  @@index([gameId])
+}
