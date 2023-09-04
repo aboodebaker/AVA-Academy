@@ -5,6 +5,7 @@ import Router from 'next/navigation';
 import {authOptions} from '@/app/api/auth/[...nextauth]/route'
 import { getServerSession } from 'next-auth';
 import { PrismaClient } from '@prisma/client';
+import { Session } from 'inspector';
 
 const Hoe = ({ notes }) => {
   return (
@@ -18,7 +19,7 @@ const Hoe = ({ notes }) => {
 
 const Home = async () => {
   const router = Router;
-  const session = await fetch('/api/session').then(res => res.json())
+  const session = await getServerSession(authOptions)
   const prisma = new PrismaClient()
 
 //   const fetchData = async () => {
@@ -37,6 +38,13 @@ const Home = async () => {
 //       console.error('Error fetching data:', error);
 //     }
 //   };
+
+if (session) {
+  return session
+} else {
+  // Handle the case where no session is found
+  
+}
 
 const notes = await prisma.notes.findMany({
     where: {

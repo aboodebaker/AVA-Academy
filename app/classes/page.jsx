@@ -5,11 +5,20 @@ import Link from "next/link";
 import {authOptions} from '@/app/api/auth/[...nextauth]/route'
 import Loader from "@/components/loader/Loader";
 import Image from "next/image";
+import { skip } from "node:test";
 
 
 const Page = async () => {
 
-  const session = await fetch('/api/session').then(res => res.json())
+  const session = await getServerSession(authOptions)
+
+  if (session) {
+    return session
+  } else {
+    // Handle the case where no session is found
+    
+  }
+
   const responses = [
         'Maths',
         'English',
