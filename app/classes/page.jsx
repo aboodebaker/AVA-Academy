@@ -7,9 +7,9 @@ import Loader from "@/components/loader/Loader";
 import Image from "next/image";
 
 
-const Page = () => {
+const Page = async () => {
 
-  const session = getServerSession(authOptions)
+  const session = await fetch('/api/session').then(res => res.json())
   const responses = [
         'Maths',
         'English',

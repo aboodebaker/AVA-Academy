@@ -18,7 +18,7 @@ const Hoe = ({ notes }) => {
 
 const Home = async () => {
   const router = Router;
-  const session = await getServerSession(authOptions)
+  const session = await fetch('/api/session').then(res => res.json())
   const prisma = new PrismaClient()
 
 //   const fetchData = async () => {
