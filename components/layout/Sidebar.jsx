@@ -36,7 +36,7 @@ const Sidebar= ({ show, setter }) => {
       <Link href={route} passHref>
         <div
           onClick={() => {
-            setter((oldVal :any) => !oldVal);
+            setter((oldVal) => !oldVal);
           }}
           className={`flex items-center text-md pl-6 py-1.5 ${colorClass} ${
             isActive ? 'mb-2' : 'mb-1'
