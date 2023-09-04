@@ -49,14 +49,14 @@ const Sidebar= ({ show, setter }) => {
     );
   };
 
-  const ModalOverlay: React.FC = () => (
+  const ModalOverlay = () => (
     <div
       className={`flex md:hidden fixed top-0 right-0 bottom-0 left-0 bg-black/50 z-30`}
       onClick={() => {
         setter((oldVal) => !oldVal);
       }}
     />
-  );
+  )
 
   const className =
     'bg-accent w-[250px] transition-[margin-left] ease-in-out duration-500 fixed md:static top-0 bottom-0 left-0 z-40';
