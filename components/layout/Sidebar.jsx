@@ -12,20 +12,16 @@ import Sticky from 'react-stickynode';
 import './sidebar.css';
 
 
-interface SidebarProps {
-  show: boolean;
-  setter: (val: boolean) => void;
-}
 
-const Sidebar: React.FC<SidebarProps> = ({ show, setter }) => {
+const Sidebar= ({ show, setter }) => {
   const router = useRouter();
-  const [activeRoute, setActiveRoute] = useState<string>(router.pathname);
+  const [activeRoute, setActiveRoute] = useState(router.pathname);
 
   useEffect(() => {
     setActiveRoute(router.pathname);
   }, [router.pathname]);
 
-  const MenuItem: React.FC<{ icon: React.ReactNode; name: string; route: string }> = ({
+  const MenuItem = ({
     icon,
     name,
     route,
