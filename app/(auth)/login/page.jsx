@@ -6,7 +6,7 @@ import { getProviders, signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
-const Login = ({ url }) => {
+const Login = ({ url: String }) => {
   const session = useSession();
   const router = useRouter();
   const params = useSearchParams();
