@@ -14,7 +14,7 @@ function App() {
   if (session.status === "unauthenticated") {
     router.push('/login')
   }
-}, [])
+}, [session.status])
 
   
 

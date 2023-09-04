@@ -36,7 +36,7 @@ const RichTextArea = ({ value, onChange }) => {
       setLoader(false)
       const email = session.data.user.email
     setEmail(email)}
-  }, [])
+  }, [session.status])
   const handleSaveClick = () => {
     setShowOverlay(true);
   };

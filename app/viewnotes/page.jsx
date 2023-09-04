@@ -40,11 +40,8 @@ const Home = async () => {
 //   };
 
 if (session) {
-  return session
-} else {
-  // Handle the case where no session is found
-  
-}
+
+
 
 const notes = await prisma.notes.findMany({
     where: {
@@ -95,6 +92,12 @@ console.log(notes)
       </div>
   
   );
+} 
+  
+else {
+  // Handle the case where no session is found
+  redirect("/login");
+}
 }
 
 export default Home;

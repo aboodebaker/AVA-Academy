@@ -30,6 +30,6 @@ export async function POST(req, res) {
     return NextResponse.json(newNote, { status: 200 });
   } catch (error) {
     console.error(error); // Log the error for debugging purposes
-    return NextResponse.error("Internal Server Error", { status: 500 });
+    
   }
 }
