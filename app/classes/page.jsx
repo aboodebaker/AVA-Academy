@@ -1,3 +1,4 @@
+import Class from '@/components/classes/page'
 import React from "react";
 import { getServerSession, } from "next-auth";
 import styles from "./page.module.css";
@@ -8,7 +9,7 @@ import Image from "next/image";
 import { skip } from "node:test";
 import { redirect } from "next/navigation";
 import { url } from "node:inspector";
-
+import ClassCard from "../../components/classcard/page";
 
 const Page = async () => {
 
@@ -16,90 +17,33 @@ const Page = async () => {
 
   if (session) {
     
-  const responses = [
-    'Maths',
-    'English',
-    'Afrikaans',
-    'History',
-    'Geography',
-    'Physics',
-    'Life Science',
-    'ISW',
-    'ISO',
-    'Quraanic Arabic',
-    'Technology',
-    'Creative Arts',
-    'Coding and Robotics',
-    'Life Orientation',
-  ];
-
-const image = [
-  "/maths.png",
-  "/english.png",
-  "/afrik.png",
-  "/history.png",
-  "/geog.png",
-  "/physics.png",
-  "/ls.png",
-  "/isw.png",
-  "/iso.png",
-  "/qa.png",
-  "/egd.png",
-  "/art.png",
-  "/car.png",
-  "/lo.png",
+  const subjects = [
+  { name: 'Maths', image: '/maths.png' },
+  { name: 'English', image: '/english.png' },
+  { name: 'Afrikaans', image: '/afrik.png' },
+  { name: 'History', image: '/history.png' },
+  { name: 'Geography', image: '/geog.png' },
+  { name: 'Physics', image: '/physics.png' },
+  { name: 'Life Science', image: '/ls.png' },
+  { name: 'ISW', image: '/isw.png' },
+  { name: 'ISO', image: '/iso.png' },
+  { name: 'Quraanic Arabic', image: '/qa.png' },
+  { name: 'Technology', image: '/egd.png' },
+  { name: 'Creative Arts', image: '/art.png' },
+  { name: 'Coding and Robotics', image: '/car.png' },
+  { name: 'Life Orientation', image: '/lo.png' },
 ];
 
-const responsiveImageWidths = [300, 110];
+
+
 
 return (
   <div className={styles.container}>
-    <div className={styles.image}>
-      <Link href={"/"}>
-        <Image src={"/progress.png"} alt="" width={1920} height={1080} layout="responsive" />
-      </Link>
-    </div>
-
-    <div className={styles.header}>
-      <Image src={"/classes.png"} alt="" width={300} height={300} />
-      <Image src={"/college.png"} alt="" width={110} height={110} />
-      <hr color="white" />
-    </div>
-    <div className={styles.flexbox}>
-      <div className={styles.column}>
-        {responses.slice(0, Math.ceil(responses.length / 2)).map((subject, index) => (
-          <div key={index} className={styles.tester}>
-            <Link href={`/classes/${subject}`}>
-              <Image
-                quality={100}
-                src={image[index]}
-                alt=""
-                width={responsiveImageWidths[0]}
-                height={responsiveImageWidths[0]}
-                layout="responsive"
-              />
-            </Link>
-          </div>
-        ))}
-      </div>
-      <div className={styles.column}>
-        {responses.slice(Math.ceil(responses.length / 2)).map((subject, index) => (
-          <div key={index} className={styles.tester}>
-            <Link href={`/classes/${subject}`}>
-              <Image
-                quality={100}
-                src={image[index + 7]}
-                alt=""
-                width={responsiveImageWidths[1]}
-                height={responsiveImageWidths[1]}
-                layout="responsive"
-              />
-            </Link>
-          </div>
-        ))}
-      </div>
-    </div>
+  <div className={styles.headertable}>
+    <h1 className={styles.header}>Classes</h1>
   </div>
+  <Class subjects={subjects}/>
+</div>
 );
   } 
   

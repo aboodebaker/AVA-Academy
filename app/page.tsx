@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { strict_output } from '@/lib/gpt'; // Replace with the actual module path
 import { useSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
+import RightSection from '@/components/home/home'
 
 function App() {
   const [userInput, setUserInput] = useState<string>('');
@@ -43,7 +44,9 @@ function App() {
 
   return (
     <div>
-      <div></div>
+      <div>
+        <RightSection />
+      </div>
       <h1>JSON Formatter</h1>
       <div>
         <label>

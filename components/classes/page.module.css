@@ -28,6 +28,52 @@
 
 
   }
+.fadeIn {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.fadeOut {
+  opacity: 0;
+  transform: translateY(-20px);
+  display: none; /* Hide elements with opacity 0 */
+}
+.input {
+  border-radius: 38px;
+background: var(--secondary);
+padding: 12px;
+color:var(--text);
+border: none;
+font-size: 24px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.48px;
+width: 100%;
+ outline: none;
+}
+.inputiconbox {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.inputbox {
+  display: flex;
+border-radius: 38px;
+  background: var(--secondary);
+  padding: 1rem;
+  width: 95%;
+}
+
+.inputsbox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+
+}
+
 
   .hr {
     color: white;
@@ -145,15 +191,12 @@ color: var(--text);
   }
 }
 
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 900px) {
   .column {
     flex-direction: column; /* 1 column on phones */
   }
   .tester {
     width: 90%; /* Adjust the width as needed for 1 column on phones */
-  }
-  .header {
-    font-size: 84px;
   }
 }
 
