@@ -40,9 +40,7 @@ const RichTextArea = ({ value, onChange }) => {
   const handleSaveClick = () => {
     setShowOverlay(true);
   };
-  if (session.status === 'loading') {
-    setLoader(true)
-  }
+  
 
 
   

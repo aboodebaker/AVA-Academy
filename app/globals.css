@@ -8,7 +8,7 @@
   --background-end-rgb: 255, 255, 255;
   --text: #080808;
   --background: #ffffff;
-  --primary: #2c56cd;/* secondary */
+  --primary: #000F95;
   --secondary: #ADC0DB; 
   --paGradient: rgb(102,124,183);
   --paGradient: -moz-linear-gradient(90deg, rgba(102,124,183,1) 0%, rgba(76,88,123,1) 100%);
@@ -26,7 +26,7 @@
     --text: #ffffff;
     --boxshadow: #FFFFFF;
     --background: #202020;
-    --primary: #667cb7; /* secondary */
+    --primary: #5D64FF;/* secondary */
     --secondary: #2C2C2C ;
     --accent: #2e4686; /* primary */
     --paGradient: rgb(44,86,205);
@@ -52,6 +52,10 @@
   padding: 4rem;
   background-color: var(--secondary);
 }
+
+
+
+
 @media only screen and (max-width: 600px) {
   .outer {
     padding: 0rem;

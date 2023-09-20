@@ -57,15 +57,16 @@ model User {
 }
 
 model Notes {
-  id            String  @id @default(auto()) @map("_id") @db.ObjectId
-  title         String?
-  subject       String?
-  content       String?
-  image         String?
-  shared        Boolean?
-  peopleshared  String?
-  User   User?   @relation(fields: [userId], references: [id])
-  userId String? @db.ObjectId
+  id           String    @id @default(auto()) @map("_id") @db.ObjectId
+  title        String?
+  subject      String?
+  content      String?
+  image        String?
+  shared       Boolean?
+  peopleshared String?
+  created_at   DateTime? @default(now())
+  User         User?     @relation(fields: [userId], references: [id])
+  userId       String?   @db.ObjectId
 }
 
 model Files {
