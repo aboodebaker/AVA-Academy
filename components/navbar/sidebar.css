@@ -1,0 +1,25 @@
+.sidecontainer {
+    border-radius: 86px;
+    background: var(--primary);
+    height: 30vh;
+    width: 4vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 1rem;
+}
+.sidecontainer div {
+  border-radius: 50%;
+}
+.path {
+  background-color: gray;
+}
+
+@media only screen and (max-width: 1800px) {
+  .sidecontainer {
+    width: 55px;
+  }
+  
+}

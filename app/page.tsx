@@ -4,7 +4,7 @@ import { strict_output } from '@/lib/gpt'; // Replace with the actual module pat
 import { useSession } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import RightSection from '@/components/home/home'
-
+import Sidebar from '@/components/navbar/sidebar'
 function App() {
   const [userInput, setUserInput] = useState<string>('');
   const [formattedJson, setFormattedJson] = useState<string>('');
@@ -45,23 +45,10 @@ function App() {
   return (
     <div>
       <div>
-        <RightSection />
+        
+        <Sidebar/>
       </div>
-      <h1>JSON Formatter</h1>
-      <div>
-        <label>
-          Enter a string:
-          <input type="text" value={userInput} onChange={handleInputChange} />
-        </label>
       </div>
-      <div>
-        <button onClick={formatJson}>Format JSON</button>
-      </div>
-      <div>
-        <h2>Formatted JSON:</h2>
-        <pre>{formattedJson}</pre>
-      </div>
-    </div>
   );
 }
 

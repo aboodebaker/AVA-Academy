@@ -40,8 +40,8 @@
 
 .inner {
   background-color: var(--background);
-  font-family: "Inter", sans-serif;
-
+  width: 100%;
+ 
 }
 
 .accentbg {
@@ -49,9 +49,24 @@
 }
 
 .outer {
-  padding: 4rem;
+  display: flex; /* Use flexbox to position Sidebar and inner content */
+  padding: 3rem;
   background-color: var(--secondary);
 }
+
+.sidebar {
+  position: fixed;
+  left: 20px;
+  top: 50%;
+  transform: translateY(-50%); /* Center vertically */
+  width: 5vw; /* Adjust the width as needed */
+  background-color: var(--secondary); /* Match the background color of .outer */
+  /* Add scroll if content overflows */
+  z-index: 1000;
+  border-radius: 86px;
+  
+}
+
 
 
 
@@ -59,5 +74,14 @@
 @media only screen and (max-width: 600px) {
   .outer {
     padding: 0rem;
+  }
+  .sidebar {
+    width: 50px;
+  }
+}
+@media only screen and (max-width: 1800px) {
+  
+  .sidebar {
+    width: 55px;
   }
 }

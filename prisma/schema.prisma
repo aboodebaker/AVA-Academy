@@ -70,13 +70,29 @@ model Notes {
 }
 
 model Files {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  subject String?
-  name    String?
-  file    String?
-  text    String?
-  User    User?   @relation(fields: [userId], references: [id])
-  userId  String? @db.ObjectId
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  name      String?   @map("name")
+  pdfUrl    String    @map("pdf_url")
+  createdAt DateTime  @map("created_at")
+  userId    String    @map("user_id")
+  fileKey   String?   @map("file_key")
+  messages  Message[] @relation("FileMessages")
+  User      User      @relation(fields: [userId], references: [id])
+}
+
+model Message {
+  id        String         @id @default(auto()) @map("_id") @db.ObjectId
+  chatId    Int?           @map("chat_id")
+  content   String?        @map("content")
+  createdAt DateTime       @map("created_at")
+  role      UserSystemEnum @map("role")
+  fileId    String         @map("file_id")
+  files     Files          @relation("FileMessages", fields: [fileId], references: [id])
+}
+
+enum UserSystemEnum {
+  system
+  user
 }
 
 enum GameType {

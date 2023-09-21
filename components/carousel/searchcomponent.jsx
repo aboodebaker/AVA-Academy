@@ -27,7 +27,7 @@ const SCarousel = ({ notes, groupedNotes }) => {
       <div className='inputbox'>
       <input
         type="text"
-        placeholder="Find Classes"
+        placeholder="Find Notes"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
         

@@ -17,6 +17,7 @@ const CarouselItem = ({ notes }) => {
         placeholder="Search notes..."
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
+        className='input-inplace'
       />
       <div className="scrolling-wrapper">
         {filteredNotes.map((note, index) => (
