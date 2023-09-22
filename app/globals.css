@@ -59,14 +59,20 @@
   left: 20px;
   top: 50%;
   transform: translateY(-50%); /* Center vertically */
-  width: 5vw; /* Adjust the width as needed */
+  width: 4vw; /* Adjust the width as needed */
   background-color: var(--secondary); /* Match the background color of .outer */
   /* Add scroll if content overflows */
   z-index: 1000;
   border-radius: 86px;
   
 }
+.dark-switch {
+  position: fixed;
+  left: 20px;
+  top: 97%;
+  z-index: 1000;
 
+}
 
 
 

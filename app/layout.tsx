@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import AuthProvider from '@/components/AuthProvider/AuthProvider'
 import Tester from '@/components/layout/tester'
 import Sidebar from '@/components/navbar/sidebar'
+import DarkModeSwitcher from '@/components//DarkmodeToggle/Darkmodetoggle'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,6 +33,9 @@ export default function RootLayout({
               <div id="adobe-dc-view" className="min-h-screen">
                 {children}
               </div>
+            </div>
+            <div className='dark-switch'>
+            <DarkModeSwitcher />
             </div>
           </div>
         </AuthProvider>

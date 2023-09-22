@@ -34,7 +34,7 @@ const sidebar = () => {
                 </svg>
             </div>
         </Link>
-        <DarkModeSwitcher />
+        {/* <DarkModeSwitcher /> */}
     </div>
   )
 }
