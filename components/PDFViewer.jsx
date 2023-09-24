@@ -8,7 +8,7 @@ const PDFViewer = async ({ pdf_Url }) => {
       
         // Initialize Adobe DC View when the SDK is ready
         
-          const adobeDCView = new AdobeDC.View({ clientId: '5d878b022a9742a0bf3e4ad58f18435b', divId: 'adobe-dc-view' });
+          const adobeDCView = new AdobeDC.View({ clientId: '1c9773d18f39418aab4d3510b525c51c', divId: 'adobe-dc-view' });
           adobeDCView.previewFile({
             content: { location: { url: pdf_Url } },
             metaData: { fileName: 'Bodea Brochure.pdf' }
