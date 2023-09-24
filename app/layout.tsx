@@ -32,7 +32,7 @@ export default function RootLayout({
               <Sidebar /> {/* Place Sidebar component here */}
             </div>
             <div className="inner">
-              <div id="adobe-dc-view" className="min-h-screen">
+              <div  className="min-h-screen">
                 {children}
               </div>
             </div>

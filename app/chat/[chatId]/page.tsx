@@ -18,7 +18,7 @@ type Props = {
 
 const ChatPage = async ({ params: { chatId } }: Props) => {
   const session = await getServerSession(authOptions);
-  const userId = session?.user.id
+  const userId = session?.user?.id
   if (!userId) {
     redirect('/sign-in');
   }
@@ -35,21 +35,21 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
 
   const currentFile = files.find((file) => file.id === chatId);
   const isPro = true;
-  const url = currentFile?.pdfUrl.replace(/ /g, '+')
+  const url = currentFile?.pdfUrl
   console.log(url)
   return (
     <div className="flex h-screen">
       <div className="flex w-full max-h-screen overflow-scroll">
         {/* chat sidebar */}
-        <div className="flex-[1] max-w-xs">
+        <div className="flex-[2] max-w-xs">
           <ChatSideBar chats={files} chatId={chatId} isPro={isPro} />
         </div>
         {/* pdf viewer */}
-        <div className="max-h-screen p-4 overflow-scroll flex-[5]">
-          <PDFViewer pdf_url={url} />
+        <div className="max-h-screen p-4 overflow-scroll flex-[4]">
+          <PDFViewer pdf_Url={url} />
         </div>
         {/* chat component */}
-        <div className="flex-[3] border-l-4 border-l-slate-200">
+        <div className="flex-[5] border-l-4 border-l-slate-200">
           <ChatComponent chatId={chatId} />
         </div>
       </div>

@@ -69,15 +69,18 @@ export async function POST(req: Request) {
           fileId: chatId, // Use chatId as fileId, you may need to adjust this based on your schema
         },
       });
+
+    
       await prisma.message.create({
-          data: {
-            content: response.data.choices[0].message.content,
-            role: UserSystemEnum.system, // Use the updated enum value
-            fileId: chatId, // Use chatId as fileId, you may need to adjust this based on your schema
-          },
-        });
-      
-    return new NextResponse(response.data.choices[0].message.content, {status: 200});
+  data: {
+    content: response.data.choices[0]?.message?.content || '', // Provide a default value if it's possibly undefined
+    role: UserSystemEnum.system, // Use the updated enum value
+    fileId: chatId, // Use chatId as fileId, you may need to adjust this based on your schema
+  },
+});
+
+return new NextResponse(response.data.choices[0]?.message?.content || '', { status: 200 });
+
   } catch (error) {
     console.log(error)
   } finally {

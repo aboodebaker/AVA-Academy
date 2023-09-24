@@ -8,11 +8,18 @@ import { cn } from "@/lib/utils";
 import axios from "axios";
 
 
+type Chat = {
+  id: string;
+  pdfName: string;
+  // Add other properties as needed
+};
+
 type Props = {
-  chats: [];
-  chatId: String;
+  chats: Chat[]; // Define the correct type for chats
+  chatId: string;
   isPro: boolean;
 };
+
 
 const ChatSideBar = ({ chats, chatId, isPro }: Props) => {
   const [loading, setLoading] = React.useState(false);

@@ -10,7 +10,7 @@ import axios from "axios";
 import { Message } from "ai";
 import './page.css'
 
-type Props = { chatId: number };
+type Props = { chatId: string };
 
 const ChatComponent = ({ chatId }: Props) => {
   const { data, isLoading } = useQuery({
