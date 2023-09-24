@@ -44,10 +44,7 @@ function App() {
 
   return (
     <div>
-      <div>
-        
-        <Sidebar/>
-      </div>
+      
       </div>
   );
 }

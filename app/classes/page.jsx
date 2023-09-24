@@ -14,7 +14,7 @@ import ClassCard from "../../components/classcard/page";
 const Page = async () => {
 
   const session = await getServerSession(authOptions)
-
+  
   if (session) {
     
   const subjects = [

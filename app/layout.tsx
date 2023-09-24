@@ -4,6 +4,7 @@ import AuthProvider from '@/components/AuthProvider/AuthProvider'
 import Tester from '@/components/layout/tester'
 import Sidebar from '@/components/navbar/sidebar'
 import DarkModeSwitcher from '@/components//DarkmodeToggle/Darkmodetoggle'
+import Providers from '@/components/Providers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -25,6 +26,7 @@ export default function RootLayout({
 
       <body className={inter.className}>
         <AuthProvider>
+          <Providers>
           <div className="outer">
             <div className="sidebar">
               <Sidebar /> {/* Place Sidebar component here */}
@@ -38,6 +40,7 @@ export default function RootLayout({
             <DarkModeSwitcher />
             </div>
           </div>
+          </Providers>
         </AuthProvider>
       </body>
     </html>

@@ -1,130 +1,29 @@
-'use client'
+import ChatComponent from "@/components/ChatComponent";
+import ChatSideBar from "@/components/ChatSideBar";
+import PDFViewer from "@/components/PDFViewer";
+import { redirect } from "next/navigation";
+import React from "react";
+import { PrismaClient } from '@prisma/client';
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import Chatcomp from '@/components/chat/page'
 
-// import React, { useState, useEffect } from 'react';
-// import { ChatFeed, Message } from 'react-chat-ui';
-// import styles from './page.module.css';
 
-// const Page = () => {
-//   const [visability, setVisibility] = useState(true);
-//   const [firstName, setFirstName] = useState('');
-//   const [aiSubmit, setAISubmit] = useState(false);
-//   const [aiMessages, setAiMessages] = useState([
-//     {
-//       role: 'system',
-//       content: 'You are an educational assistant',
-//     },
-//   ]);
-//   const [messages, setMessages] = useState([
-//     new Message({
-//       id: 2,
-//       message: "I'm the recipient! (The person you're talking to)",
-//     }),
-//     new Message({ id: 0, message: "I'm you -- the blue bubble!" }),
-//   ]);
-//   const [err, setError] = useState('');
+const page = async() => {
+  const prisma = new PrismaClient()
+  const session = await getServerSession(authOptions);
+  const userId = session?.user.id
+  if (!userId) {
+    redirect('/sign-in');
+  }
 
-//   const appendNewMessage = (newMessage) => {
-//     const updatedMessage = [...aiMessages, newMessage];
-//     setAiMessages(updatedMessage);
-//     setAISubmit(true);
-//   };
-//   const appendNewMessages = (newMessage) => {
-//     const updatedMessage = [...aiMessages, newMessage];
-//     setAiMessages(updatedMessage);
-//   };
+  const files = await prisma.files.findMany({
+    where: {
+      userId: userId,
+    },
+  });
 
-//   const handleSubmit = async (event) => {
-//     event.preventDefault();
-
-//     const newMessage = new Message({
-//       id: 0, // Assuming the user's ID is 0
-//       message: firstName,
-//     });
-
-//     setMessages((prevMessages) => [...prevMessages, newMessage]);
-//     appendNewMessage({ role: 'user', content: firstName });
-//     setFirstName('');
-//   };
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       if (aiSubmit) {
-//         try {
-//           const response = await fetch('/api/openai', {
-//             method: 'POST',
-//             body: JSON.stringify({ messages: aiMessages }),
-//             headers: {
-//               'Content-Type': 'application/json',
-//             },
-//           });
-
-//           const data = await response.json();
-//           console.log(data)
-
-//           const newMessageai = new Message({
-//             id: 1,
-//             message: data.content,
-//           });
-
-//           setMessages((prevMessages) => [...prevMessages, newMessageai]);
-//           appendNewMessages({role: 'assistant', content: data.content})
-//           setVisibility(true);
-//           setAISubmit(false);
-//         } catch (error) {
-//           setError(error);
-//           setVisibility(true);
-//         }
-//       }
-//     };
-
-//     fetchData();
-//   }, [aiSubmit, aiMessages]);
-
-//   return (
-//     <div className={styles.container}>
-//       <p>{err}</p>
-//       <ChatFeed
-//         messages={messages}
-//         isTyping={false}
-//         hasInputField={false}
-//         showSenderName
-//         bubblesCentered={false}
-//         bubbleStyles={{
-//           text: {
-//             fontSize: 20,
-//           },
-//           chatbubble: {
-//             borderRadius: 70,
-//             padding: 20,
-//           },
-//         }}
-//       />
-//       {visability ? (
-//         <form onSubmit={handleSubmit} className={styles.inputform}>
-//           <input
-//             className={styles.inputfield}
-//             type="text"
-//             id="firstName"
-//             name="firstName"
-//             value={firstName}
-//             placeholder="First Name"
-//             onChange={(event) => setFirstName(event.target.value)}
-//           />
-//           <button type="submit" className={styles.submitbutton}>
-//             Submit
-//           </button>
-//         </form>
-//       ) : null}
-//     </div>
-//   );
-// };
-
-// export default Page;
- 
-import React from 'react';
-import Chatcomp from '../../components/chat/page';
-
-export default function Chat() {
+  const isPro = true;
   const systemprompt = `
   You are an upbeat, encouraging tutor who helps students understand concepts by explaining ideas and asking students questions. Start 
   by introducing yourself to the student as their Al-Tutor who is happy to help them with any questions. Only ask one question at a time. 
@@ -144,6 +43,15 @@ export default function Chat() {
   words; this is the best way to show you know something, or ask them for examples. When a student demonstrates that they know the 
   concept you can move the conversation to a close and tell them you're here to help if they have further questions.`
   return (
-    <Chatcomp systemprompt={systemprompt} />
+    <div className="flex h-screen overflow-scroll">
+      <div className="flex w-full flex-[1] max-h-screen overflow-scroll">
+        <ChatSideBar chats={files} chatId={null} isPro={isPro} />
+        </div>
+        <div className="max-h-screen p-4  flex-[5]">
+          <Chatcomp systemprompt={systemprompt} />
+      </div>
+    
+    </div>
   );
 }
+export default page;

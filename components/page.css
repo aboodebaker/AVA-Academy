@@ -1,0 +1,68 @@
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  justify-content: space-between;
+  padding: 16px;
+}
+
+.message-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column; /* Display messages from top to bottom */
+}
+
+.message {
+  margin: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  max-width: 70%;
+}
+
+.user {
+  align-self: flex-end;
+  background-color: #d3ffd3;
+}
+
+.system {
+  align-self: flex-start;
+  background-color: var(--secondary);
+  color: var(--text);
+}
+
+.input-form {
+  display: flex;
+  margin-top: 16px;
+}
+
+.input-field {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+button {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+/* Add this to your CSS */
+.white-bg .ql-editor {
+background-color: white;
+color: white;
+}
+.submit-button {
+background-color: var(--primary);
+}
+
