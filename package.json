@@ -76,6 +76,7 @@
   "devDependencies": {
     "@capacitor/cli": "^5.4.1",
     "@types/bcrypt": "^5.0.0",
+    "@types/md5": "^2.3.2",
     "@types/react-stickynode": "^4.0.0",
     "node-loader": "^2.0.0",
     "openai": "^3.3.0",
