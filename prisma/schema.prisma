@@ -71,11 +71,11 @@ model Notes {
 
 model Files {
   id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  pdfName   String?   @map("name")
+  pdfName   String    @map("name")
   pdfUrl    String    @map("pdf_url")
   createdAt DateTime  @default(now())
   userId    String    @map("user_id")
-  fileKey   String?   @map("file_key")
+  fileKey   String    @map("file_key")
   messages  Message[] @relation("FileMessages")
   User      User      @relation(fields: [userId], references: [id])
 }
