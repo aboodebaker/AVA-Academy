@@ -1,6 +1,6 @@
 'use client'
 import DarkModeSwitcher from '../DarkmodeToggle/Darkmodetoggle'
-import './Sidebar.css'
+import './sidebar.css'
 import Link from 'next/link'
 import { useState } from 'react'
 import {BsArrowRight, BsArrowLeft} from 'react-icons/bs'
