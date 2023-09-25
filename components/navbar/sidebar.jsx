@@ -1,10 +1,10 @@
 'use client'
 import DarkModeSwitcher from '../DarkmodeToggle/Darkmodetoggle'
-import './sidebar.css'
+import './Sidebar.css'
 import Link from 'next/link'
 import { useState } from 'react'
 import {BsArrowRight, BsArrowLeft} from 'react-icons/bs'
-const sidebar = () => {
+const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(true)
 
     const handleClick = () => {
@@ -98,4 +98,4 @@ const sidebar = () => {
   )
 }
 
-export default sidebar
+export default Sidebar

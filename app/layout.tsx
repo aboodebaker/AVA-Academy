@@ -33,7 +33,7 @@ export default function RootLayout({
           <Providers>
           <div className="outer-none">
             <div className="sidebar">
-              <Sidebar /> {/* Place Sidebar component here */}
+              <Sidebar /> 
             </div>
             <div className="inner">
               <div  className="min-h-screen">
