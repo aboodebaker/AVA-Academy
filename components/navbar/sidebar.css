@@ -9,6 +9,7 @@
     justify-content: center;
     gap: 10px;
     padding: 1rem;
+    transition: transform 0.5s ease; /* Add a smooth transition to the transform property */
 }
 .sidecontainer div {
   border-radius: 50%;
@@ -22,4 +23,48 @@
     width: 55px;
   }
   
+}
+.sidecontainer-closed {
+    border-radius: 86px;
+    background: var(--primary);
+    height: 30vh;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 1rem;
+    transform: translateX(-190%) ;
+    transition: transform 0.5s ease; /* Add a smooth transition to the transform property */
+}
+
+.center-button {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+   transform: translate(-50%, -50%);
+    background-color: var(--primary);
+    border-radius: 50%;
+    padding: 0.5rem;
+    background-color: var(--primary);
+    color: white;
+    font-size: 20px;
+}
+.centers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 0.5rem;
+
+}
+
+
+.button-bg {
+  background-color: var(--primary);
+  border-radius: 50%;
+  padding: 0.5rem;
+  color: white;
+  font-size: 20px;
 }

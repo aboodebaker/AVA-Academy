@@ -60,7 +60,7 @@
   top: 50%;
   transform: translateY(-50%); /* Center vertically */
   width: 4vw; /* Adjust the width as needed */
-  background-color: var(--secondary); /* Match the background color of .outer */
+  background-color: transparent; /* Match the background color of .outer */
   /* Add scroll if content overflows */
   z-index: 1000;
   border-radius: 86px;
