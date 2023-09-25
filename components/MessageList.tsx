@@ -20,9 +20,9 @@ const MessageList = ({ messages, isLoading }: Props) => {
   if (!messages) return <></>;
   return (
     <div className="message-container"> {/* Update to match your CSS */}
-      {messages.map((message) => {
+      {messages.map((message, index) => {
         return (
-          <div className={`message ${message.role === "user" ? "user" : "system"}`}>
+          <div className={`message ${message.role === "user" ? "user" : "system"}`} key={index}>
       <div className={`message-content ${message.role === "system" ? "system" : ""}`}>
         <p>{message.content}</p>
       </div>
