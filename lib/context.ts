@@ -13,32 +13,50 @@ export async function getMatchesFromEmbeddings(
     });
     const pineconeIndex = await client.index("ava-academy");
     const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
+    
     const queryResult = await namespace.query({
-      topK: 5,
+      topK: 1,
       vector: embeddings,
       includeMetadata: true,
     });
-    return queryResult.matches || [];
+    
+    if (queryResult.matches && Array.isArray(queryResult.matches)) {
+      return queryResult.matches.filter(match => {
+        if (match.metadata && match.metadata.text) {
+          return match.score && match.score > 0.7;
+        }
+        return false;
+      }) || [];
+    } else {
+      return [];
+    }
   } catch (error) {
-    console.log("error querying embeddings", error);
+    console.error("Error querying embeddings:", error);
     throw error;
   }
 }
 
 export async function getContext(query: string, fileKey: string) {
-  const queryEmbeddings = await getEmbeddings(query);
-  const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey);
+  try {
+    const queryEmbeddings = await getEmbeddings(query);
+    const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey);
 
-  const qualifyingDocs = matches.filter(
-    (match) => match.score && match.score > 0.7
-  );
+    type Metadata = {
+      text?: string;
+      pageNumber?: number;
+    };
 
-  type Metadata = {
-    text: string;
-    pageNumber: number;
-  };
-
-  let docs = qualifyingDocs.map((match) => (match.metadata as Metadata).text);
-  // 5 vectors
-  return docs.join("\n").substring(0, 3000);
+    let docs = matches.map((match) => {
+      if (match.metadata && match.metadata.text) {
+        return (match.metadata as Metadata).text || "";
+      }
+      return "";
+    });
+    
+    // 5 vectors
+    return docs.join("\n").substring(0, 3000);
+  } catch (error) {
+    console.error("Error in getContext:", error);
+    throw error;
+  }
 }

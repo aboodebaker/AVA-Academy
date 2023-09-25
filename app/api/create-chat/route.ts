@@ -38,6 +38,7 @@ export async function POST(req: Request, res: Response) {
         fileKey: file_key,
       },
     });
+    console.log('created')
 
     return NextResponse.json(
       {
