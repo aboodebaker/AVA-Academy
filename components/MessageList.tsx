@@ -22,22 +22,11 @@ const MessageList = ({ messages, isLoading }: Props) => {
     <div className="message-container"> {/* Update to match your CSS */}
       {messages.map((message) => {
         return (
-          <div
-            key={message.id}
-            className={cn("message", { // Update to match your CSS
-              "user": message.role === "user", // Update to match your CSS
-              "system": message.role === "system", // Update to match your CSS
-            })}
-          >
-            <div
-              className={cn("message-content", { // Update to match your CSS
-                "": message.role === "user",
-                "system": message.role === "system", // Update to match your CSS
-              })}
-            >
-              <p>{message.content}</p>
-            </div>
-          </div>
+          <div className={`message ${message.role === "user" ? "user" : "system"}`}>
+      <div className={`message-content ${message.role === "system" ? "system" : ""}`}>
+        <p>{message.content}</p>
+      </div>
+    </div>
         );
       })}
     </div>
