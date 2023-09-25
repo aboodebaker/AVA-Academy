@@ -127,7 +127,7 @@ import './page.css'
 
 export default function Chatcomp({systemprompt}) {
   
-  const { messages, input, handleInputChange, handleSubmit } = useChat({api:'chat-n', initialMessages: [{role:'system', content:systemprompt}]});
+  const { messages, input, handleInputChange, handleSubmit } = useChat({api:'/api/chat-n', initialMessages: [{role:'system', content:systemprompt}]});
  
   return (
     <div className="chat-container">
