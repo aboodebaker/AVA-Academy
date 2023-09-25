@@ -1,4 +1,4 @@
-import { OpenAIApi, Configuration } from "openai-edge";
+import { OpenAIApi, Configuration } from "openai";
 
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -13,7 +13,7 @@ export async function getEmbeddings(text: string) {
       input: text.replace(/\n/g, " "),
     });
     const result = await response.json();
-    
+
     console.log(result.data.choices[0]?.message?.content)
 
     return result.data[0].embedding as number[];
