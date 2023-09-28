@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 const { format } = require('date-fns');
 
-const ClassCard = ({title, link, img, date, }) => {
+const ClassCard = ({title, link, img, date,  clip}) => {
   const [fdate, setFDate] = useState('')
   useEffect(() => {
   if (date != null) {
@@ -16,7 +16,7 @@ const ClassCard = ({title, link, img, date, }) => {
   }
   },[])
   return (
-<div className="gap-2 grid=">
+<div className="gap-2 grid">
       <div className="border">
         <Card shadow="sm" isPressable onPress={() => console.log("item pressed")}>
           <CardBody className="overflow-visible p-0">
@@ -24,7 +24,7 @@ const ClassCard = ({title, link, img, date, }) => {
               shadow="sm"
               radius="lg"
               width="100%"
-              height='100%'
+              height="100%"
               alt={title}
               className="w-full object-cover"
               src={img}
@@ -33,7 +33,7 @@ const ClassCard = ({title, link, img, date, }) => {
           <CardFooter>
             <div className="flexing">
               <div className="titlebox">
-                <h1 className='title'>{title}</h1>
+                <h1 className={clip}>{title}</h1>
               </div>
               <div className="everythingbox">
                 <p className="dates">{fdate}</p>

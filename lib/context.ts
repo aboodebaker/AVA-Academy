@@ -15,7 +15,7 @@ export async function getMatchesFromEmbeddings(
     const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
     
     const queryResult = await namespace.query({
-      topK: 1,
+      topK: 3,
       vector: embeddings,
       includeMetadata: true,
     });
@@ -23,7 +23,7 @@ export async function getMatchesFromEmbeddings(
     if (queryResult.matches && Array.isArray(queryResult.matches)) {
       return queryResult.matches.filter(match => {
         if (match.metadata && match.metadata.text) {
-          return match.score && match.score > 0.7;
+          return match.score && match.score > 0.1;
         }
         return false;
       }) || [];

@@ -24,7 +24,22 @@ line-height: normal;
 letter-spacing: -0.05rem;
 padding: 1.5rem;
 color: var(--text);
+
 }
+.title-clip {
+    font-size: 40px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.05rem;
+padding: 1.5rem;
+color: var(--text);
+ overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  max-width: 350px;
+}
+
 
 .flexing {
 display: flex;

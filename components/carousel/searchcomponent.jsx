@@ -2,8 +2,8 @@
 import { useState } from "react";
 import CarouselItem from './carasoul.jsx';
 import './style.css'
-import Link from "next/link.js";
-
+import Link from "next/link";
+import CreateNoteDialog from '../CreateNoteDialog.tsx'
 
 const SCarousel = ({ notes, groupedNotes }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -46,18 +46,16 @@ const SCarousel = ({ notes, groupedNotes }) => {
       </svg>
       </div>
       </div>
-      <div>
-        <Link href={'/createnote'}>
-        <button className="newbutton">+New</button>
-        </Link>
-      </div>
+      <CreateNoteDialog />
       </div>
 
       {Object.entries(groupedNotes).map(([subject, _], index) => (
         <div key={subject} className="font-bold p-2">
           <h1 className="subject-title">{subject}</h1>
           {/* Pass filtered notes for the subject to CarouselItem */}
+          
           <CarouselItem notes={filteredNotesBySubject(subject).reverse()} />
+          
         </div>
       ))}
     </div>

@@ -45,7 +45,6 @@ const notes = await prisma.notes.findMany({
     }
 })
 
-console.log(notes)
 
 
 
