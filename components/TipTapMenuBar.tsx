@@ -50,7 +50,7 @@ const TipTapMenuBar = ({ editor }: { editor: Editor }) => {
         <Code className="w-6 h-6" />
       </button>
       <button
-        onClick={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
+        onClick={() => editor.chain().focus().toggleHeading( {level: 1}).run()}
         className={editor.isActive("heading", { level: 1 }) ? "is-active" : ""}
       >
         <Heading1 className="w-6 h-6" />

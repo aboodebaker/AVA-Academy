@@ -18,6 +18,9 @@ module.exports = {
       },
     },
     extend: {
+      boxShadow: {
+        '3xl': '-2px -2px 4px 0px #ADC0DB, 4px 4px 4px 0px rgba(0, 0, 0, 0.25)',
+      },
       colors: {
         'foreground-rgb': "var(--foreground-rgb)",
         'background-start-rgb': "var(--background-start-rgb)",

@@ -19,6 +19,17 @@
   flex-direction: column; /* Display messages from top to bottom */
 }
 
+.generate-button {
+  background: rgb(255,8,8);
+  background: -moz-linear-gradient(24deg, rgba(255,8,8,1) 0%, rgba(244,161,176,1) 31%, rgba(169,84,255,1) 76%, rgba(102,124,183,1) 100%);
+  background: -webkit-linear-gradient(24deg, rgba(255,8,8,1) 0%, rgba(244,161,176,1) 31%, rgba(169,84,255,1) 76%, rgba(102,124,183,1) 100%);
+  background: linear-gradient(24deg, rgba(255,8,8,1) 0%, rgba(244,161,176,1) 31%, rgba(169,84,255,1) 76%, rgba(102,124,183,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ff0808",endColorstr="#667cb7",GradientType=1);
+  padding: 0.5rem;
+  font-size: 16px;
+  font-weight: 700;
+  color: white;
+}
 .message {
   margin: 8px;
   padding: 8px;
