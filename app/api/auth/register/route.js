@@ -7,21 +7,21 @@ export const POST = async (request) => {
   const { name, email, password, grade, classes} = await request.json();
   console.log(name, email, password, grade, classes )
 
-  if( !name || !email ||!password ||!grade ) {
+  if( !name || !email ||!password ||!grade || !classes) {
     return new NextResponse("Missing Email, Name, Grade or Password", {status: 400})
 
   }
 
-  // const exist = prisma.user.findUnique({
-  //   where: {
-  //     email: email
-  //   }
-  // });
+  const exist = prisma.user.findUnique({
+    where: {
+      email: email
+    }
+  });
 
-  // if(exist) {
-  //   return new NextResponse("User already exists", {status: 400})
+  if(exist) {
+    return new NextResponse("User already exists", {status: 400})
 
-  // }
+  }
   const hashedpassword = await bcrypt.hash(password, 10)
   const user = await prisma.user.create({
     data: {
@@ -33,5 +33,5 @@ export const POST = async (request) => {
     }
   })
 
-  return NextResponse.json(user, {status: 200})
+  return NextResponse.json(JSON.stringify({token: user.id, email: user.email, class: user.class, grade: user.grade, name: user.name,}), {status: 200})
 };
