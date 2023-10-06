@@ -4,13 +4,17 @@ import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt'
 
 export const POST = async (request) => {
-  const { name, email, password, grade, classes} = await request.json();
-  console.log(name, email, password, grade, classes )
+  const { name, email, password, grade, Class} = await request.json();
+  console.log(name, email, password, grade, Class )
 
-  if( !name || !email ||!password ||!grade || !classes) {
-    return new NextResponse("Missing Email, Name, Grade or Password", {status: 400})
+  // if( !name || !email ||!password ||!grade || !Class) {
+  //   return new NextResponse("Missing Email, Name, Grade or Password", {status: 400})
 
-  }
+  // }
+  // if( name == '' || email == '' ||password  == ''||grade  == ''|| Class == '') {
+  //   return new NextResponse("Missing Email, Name, Grade or Password", {status: 400})
+
+  // }
 
   const exist = prisma.user.findUnique({
     where: {
@@ -19,7 +23,7 @@ export const POST = async (request) => {
   });
 
   if(exist) {
-    return new NextResponse("User already exists", {status: 400})
+    return new NextResponse("User already exists", {status: 404})
 
   }
   const hashedpassword = await bcrypt.hash(password, 10)
@@ -29,7 +33,7 @@ export const POST = async (request) => {
       email: email,
       password: hashedpassword,
       grade: grade,
-      class: classes,
+      class: Class,
     }
   })
 
