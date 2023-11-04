@@ -26,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <script src="https://acrobatservices.adobe.com/view-sdk/viewer.js" async></script>
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *"></meta>
       </head>
 
       <body>
