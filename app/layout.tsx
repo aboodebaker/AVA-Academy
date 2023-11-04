@@ -26,17 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
         <script src="https://acrobatservices.adobe.com/view-sdk/viewer.js" async></script>
-        <meta http-equiv="Content-Security-Policy" content="
-        default-src 'self';
-        script-src 'self' 'unsafe-inline' 'unsafe-eval' use.typekit.net assets.adobedtm.com www.adobe.com/marketingtech/ prod.adobeccstatic.com/utilnav/ widget.uservoice.com by2.uservoice.com/t2/ assets.adobe.com api.demandbase.com/api/v2/ip.json commerce.adobe.com;
-        style-src 'self' 'unsafe-inline';
-        connect-src 'self' dc-api.adobe.io dc-api-v2.adobe.io p13n.adobe.io/fg/api/ sstats.adobe.com dpm.demdex.net viewlicense.adobe.io/viewsdklicense/ viewlicense.adobe.io/domainVerification/ viewlicense.adobe.io/variations/service_delivery_auth performance.typekit.net use.typekit.net p.typekit.net dc-api.adobecontent.io dc-api-v2.adobecontent.io by2.uservoice.com/t2/ pgc.adobe.io/api/discovery files.acrobat.com/api/base_uris *.adobesign.com/ *.documents.adobe.com/ cctypekit.adobe.io/v1/ bps-il.adobe.io/jil-api/users/ *.amazonaws.com send.acrobat.com;
-        font-src data: use.typekit.net p.typekit.net fonts.gstatic.com;
-        frame-src 'self' *.adobesign.com;
-        img-src 'self' data: use.typekit.net assets.adobedtm.com *.amazonaws.com;
-        media-src 'self' data: use.typekit.net assets.adobedtm.com *.amazonaws.com;
-        manifest-src 'self';
-        worker-src 'self' blob:;"></meta>
+        
       </head>
 
       <body>
