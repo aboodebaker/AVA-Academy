@@ -12,7 +12,8 @@ const FileCarasoul = ({ files }) => {
   );
   
   const uploadToCloudinary = async (pdfContent) => {
-   const data = uploadToS3(pdfContent)
+    const blob = new Blob[pdfContent]
+   const data = uploadToS3(blob)
    console.log(data)
    try {
     await fetch('/api/edit-pdf', {
