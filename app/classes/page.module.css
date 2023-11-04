@@ -78,7 +78,9 @@
   box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
   padding: 1rem;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
 }
 
 .header {
