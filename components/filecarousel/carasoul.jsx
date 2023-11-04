@@ -57,7 +57,7 @@ const handleSave = async (metaData, content, options) => {
   useEffect(() => {
     if (!selectedFile == '') {
     const embedOptions = {
-      clientId: '5d878b022a9742a0bf3e4ad58f18435b',
+      clientId: '1c9773d18f39418aab4d3510b525c51c',
     };
 
     const adobeDCView = new window.AdobeDC.View(embedOptions);
