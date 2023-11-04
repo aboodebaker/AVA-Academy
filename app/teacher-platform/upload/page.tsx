@@ -23,7 +23,7 @@ import { getS3Url } from '@/lib/s3'
   ];
 
 
-const page = () => {
+const Page = () => {
   const [fileKey, setFileKey] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false); // New state to track submitting status
   const [submitSuccess, setSubmitSuccess] = useState(false);
@@ -182,4 +182,4 @@ const page = () => {
   )
 }
 
-export default page
+export default Page
