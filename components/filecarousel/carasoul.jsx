@@ -21,7 +21,7 @@ const FileCarasoul = ({ files }) => {
       body: JSON.stringify({file_key: data.file_key, oldUrl: selectedFile})
     })
    } catch (error) {
-    
+    console.log(error)
    }
   return data
 };
