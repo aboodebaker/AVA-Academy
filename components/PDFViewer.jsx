@@ -2,7 +2,7 @@
 import { useEffect } from "react";
 
 
-const PDFViewer = async ({ pdf_Url }) => {
+const PDFViewer = async ({ pdf_Url, }, {children} ) => {
   useEffect(() => {
     const loadAdobeDCViewSDK = () => {
       
@@ -21,7 +21,7 @@ const PDFViewer = async ({ pdf_Url }) => {
   }, []);
 
   return (
-    <div id="adobe-dc-view" className="w-100 h-100"></div>
+    <div id="adobe-dc-view">{children}</div>
   );
 };
 

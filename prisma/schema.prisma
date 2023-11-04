@@ -13,7 +13,7 @@ generator client {
 
 model Account {
   id                String  @id @default(auto()) @map("_id") @db.ObjectId
-  userId            String
+  userId            String  @db.ObjectId
   type              String
   provider          String
   providerAccountId String
@@ -33,7 +33,7 @@ model Account {
 model Session {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.ObjectId
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -56,6 +56,15 @@ model User {
   sessions      Session[]
 }
 
+// model Subject {
+//   id     String @id @default(auto()) @map("_id") @db.ObjectId
+//   name   String
+//   grade  String
+//   image  String
+//   files  Files[]
+//   notes  Notes[]
+// }
+
 model Notes {
   id           String    @id @default(auto()) @map("_id") @db.ObjectId
   title        String?
@@ -75,8 +84,11 @@ model Files {
   pdfName   String    @map("name")
   pdfUrl    String    @map("pdf_url")
   createdAt DateTime  @default(now())
-  userId    String    @map("user_id")
+  userId    String    @map("user_id") @db.ObjectId
   fileKey   String    @map("file_key")
+  subject   String    @map("subject")
+  edited    Int       @default(0)
+  chatpdf   String?   @map("chatpdf")
   messages  Message[] @relation("FileMessages")
   User      User      @relation(fields: [userId], references: [id])
 }
@@ -87,7 +99,7 @@ model Message {
   content   String?        @map("content")
   createdAt DateTime       @default(now())
   role      UserSystemEnum @map("role")
-  fileId    String         @map("file_id")
+  fileId    String         @map("file_id") @db.ObjectId
   files     Files          @relation("FileMessages", fields: [fileId], references: [id])
 }
 
@@ -103,7 +115,7 @@ enum GameType {
 
 model Game {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  userId      String
+  userId      String     @db.ObjectId
   questions   Question[]
   timeStarted DateTime
   topic       String
@@ -124,7 +136,7 @@ model Question {
   id                String   @id @default(auto()) @map("_id") @db.ObjectId
   question          String
   answer            String
-  gameId            String
+  gameId            String   @db.ObjectId
   options           Json? // for mcq questions
   percentageCorrect Float? // for open_ended questions
   isCorrect         Boolean? // for mcq questions

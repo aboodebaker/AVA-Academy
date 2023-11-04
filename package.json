@@ -87,6 +87,6 @@
     "@types/react-stickynode": "^4.0.0",
     "node-loader": "^2.0.0",
     "openai": "^3.3.0",
-    "prisma": "^5.2.0"
+    "prisma": "^5.5.2"
   }
 }

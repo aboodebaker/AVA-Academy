@@ -9,8 +9,11 @@ import { toast } from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 // https://github.com/aws/aws-sdk-js-v3/issues/4126
+type FileUploadProps = {
+  onFileKeyChange: (fileKey: string) => void;
+};
 
-const FileUpload = () => {
+const FileUpload: React.FC<FileUploadProps> = ({ onFileKeyChange }) => {
   const router = useRouter();
   const [uploading, setUploading] = React.useState(false);
   const { mutate, isLoading } = useMutation({
@@ -21,11 +24,8 @@ const FileUpload = () => {
       file_key: string;
       file_name: string;
     }) => {
-      const response = await axios.post("/api/create-chat", {
-        file_key,
-        file_name,
-      });
-      return response.data;
+      onFileKeyChange(file_key)
+      return true
     },
   });
 
@@ -49,13 +49,13 @@ const FileUpload = () => {
           return;
         }
         mutate(data, {
-          onSuccess: ({ chat_id }) => {
-            toast.success("Chat created!");
-            router.push(`/chat/${chat_id}`);
+          onSuccess: () => {
+            toast.success("File uploaded");
+            
           },
           onError: (err) => {
-            toast.error("Error creating chat");
-            console.error(err);
+            toast.error("Error uploading file to server");
+            
           },
         });
       } catch (error) {
@@ -79,7 +79,7 @@ const FileUpload = () => {
             {/* loading state */}
             <Loader2 className="h-10 w-10 text-blue-500 animate-spin" />
             <p className="mt-2 text-sm text-slate-400">
-              Spilling Tea to GPT...
+              Sending to server
             </p>
           </>
         ) : (

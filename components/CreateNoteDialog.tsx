@@ -95,6 +95,7 @@ const CreateNoteDialog = (props: Props) => {
                 id="subject"
                 className="w-full border rounded p-2 mt-4"
                 value={subject}
+                required
                 onChange={(e) => setSubject(e.target.value)}
               >
                 <option value="">Select a subject</option>

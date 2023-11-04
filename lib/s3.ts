@@ -40,3 +40,31 @@ export function getS3Url(file_key: string) {
   const url = `https://${process.env.NEXT_PUBLIC_S3_BUCKET_NAME}.s3.eu-north-1.amazonaws.com/${file_key}`;
   return url;
 }
+
+export function deleteS3Object (file_key:string) {
+    try {
+      const s3 = new S3({
+        region: "eu-north-1",
+        credentials: {
+          accessKeyId: process.env.NEXT_PUBLIC_S3_ACCESS_KEY_ID!,
+          secretAccessKey: process.env.NEXT_PUBLIC_S3_SECRET_ACCESS_KEY!,
+        },
+      });
+
+      const params = {
+        Bucket: process.env.NEXT_PUBLIC_S3_BUCKET_NAME!,
+        Key: file_key,
+      };
+
+      s3.deleteObject(params, function (err:any, data:any) {
+        if (data) {
+        console.log("File deleted successfully");
+        }
+        else {
+        console.log("Check if you have sufficient permissions : "+err);
+        }
+        })
+
+} catch (error) {
+  console.log('could not delete file')
+}}

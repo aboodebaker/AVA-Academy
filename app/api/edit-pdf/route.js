@@ -1,52 +1,59 @@
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 import { loadS3IntoPinecone } from '@/lib/pinecone';
-import { getS3Url } from '@/lib/s3';
+import { deleteS3Object, getS3Url } from '@/lib/s3';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
 
-interface User {
-  id: string;
-  // Add other properties as needed
-}
 
 // /api/create-chat
-export async function POST(req: Request, res: Response) {
+export async function POST(req, res) {
   const prisma = new PrismaClient();
-
+  const session = await getServerSession(authOptions);
+  const user = session.user
+  const userId = user.id;
   try {
     const body = await req.json();
-    const { file_key, file_name, grade, subject, chatpdf } = body;
-    console.log(file_key, file_name, grade, subject);
+    const { file_key, oldUrl } = body;
 
-    await loadS3IntoPinecone(file_key);
+
     const url = getS3Url(file_key)
 
-    const users = await prisma.user.findMany({
+    const file = await prisma.files.findFirst({
       where: {
-        grade: {
-          equals: grade
+        userId: {
+            equals: userId
+        },
+        pdfUrl: {
+            equals: oldUrl
         }
       }
     })
-    console.log(users)
-    for (const user of users) {
-      const chat = await prisma.files.create({
-        data: {
-          pdfName: file_name,
-          pdfUrl: url,
-          userId: user.id, // Use the user's ID
-          subject: subject,
-          fileKey: file_key,
-          chatpdf: chatpdf,
+
+    const fileId = file.id
+
+    const updated = await prisma.files.update({
+        where: {
+            id: {
+                equals: fileId
+            },
         },
-      });
-      console.log(`Created chat for user ${user.id}`);
+        data: {
+          fileKey: file_key,
+          pdfUrl: url,
+          edited: file.edited + 1,
+        }
+    })
+    
+    if (file.edited != 0) {
+      deleteS3Object(file.fileKey)
     }
+    
+    
 
     return NextResponse.json(
       {
-        pdf:'url'
+        pdf: url
       },
       { status: 200 }
     );

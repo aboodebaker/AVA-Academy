@@ -21,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname();
-  if (pathname == '/chat') {
+  if (pathname.includes('/chat') || pathname.includes('/teacher-platform')) {
     return (
     <html lang="en">
       <head>
