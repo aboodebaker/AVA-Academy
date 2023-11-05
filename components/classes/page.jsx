@@ -47,7 +47,7 @@ const Class = ({ subjects }) => {
               }`}
             >
               <Link href={`/classes/${subject.name}`}>
-                <ClassCard title={subject.name} img={subject.image} link={subject.name} date={''} clip={'title'}/>
+                 <ClassCard title={subject.name} img={subject.image} link={subject.name} height={'100%'} clip={'title'}/>
               </Link>
             </div>
           ))}
