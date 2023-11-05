@@ -47,7 +47,7 @@ export async function POST(req: Request, res: Response) {
     console.log('here')
 
     const { data } = await axios.post(
-      `http://localhost:3000/api/questions`,
+      `${process.env.BASE_URL}/api/questions`,
       {
         amount,
         topic,

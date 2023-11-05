@@ -20,7 +20,7 @@
     "@hookform/resolvers": "^3.3.2",
     "@mui/material": "^5.14.9",
     "@nanostores/react": "github:ai/react",
-    "@nextui-org/react": "^2.1.13",
+    "@nextui-org/react": "^2.2.3",
     "@pinecone-database/doc-splitter": "^0.0.1",
     "@pinecone-database/pinecone": "^1.0.1",
     "@prisma/client": "^5.2.0",
