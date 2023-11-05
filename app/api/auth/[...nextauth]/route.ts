@@ -2,6 +2,7 @@ import { prisma } from '@/lib/prisma'
 import { compare } from 'bcrypt'
 import NextAuth, { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
+import { redirect } from 'next/navigation'
 
 export const authOptions: NextAuthOptions = {
   session: {
@@ -21,7 +22,7 @@ export const authOptions: NextAuthOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
-          return null
+          redirect('/login')
         }
 
         const user = await prisma.user.findUnique({
@@ -31,11 +32,11 @@ export const authOptions: NextAuthOptions = {
         })
 
         if (!user) {
-          return null
+          redirect('/signup')
         }
         else {
           if(user.password == null) {
-            return null
+            redirect('/login')
           }
         const isPasswordValid = await compare(
           credentials.password,
@@ -43,7 +44,7 @@ export const authOptions: NextAuthOptions = {
         )
 
         if (!isPasswordValid) {
-          return null
+          redirect('/login')
         }
 
         return {
