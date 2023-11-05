@@ -98,6 +98,7 @@
     "@types/bcrypt": "^5.0.0",
     "@types/md5": "^2.3.2",
     "@types/react-stickynode": "^4.0.0",
+    "@types/string-similarity": "^4.0.1",
     "node-loader": "^2.0.0",
     "openai": "^3.3.0",
     "prisma": "^5.5.2"
