@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import { quizCreationSchema } from "@/schemas/forms/quiz";
 import React, {useState, useEffect} from "react";

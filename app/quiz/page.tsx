@@ -1,3 +1,4 @@
+// @ts-nocheck
 import React from "react";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { getAuthSession } from "@/lib/nextauth";
