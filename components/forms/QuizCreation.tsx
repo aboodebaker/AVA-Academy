@@ -44,7 +44,7 @@ type Files = {
   subject: string;
   edited: number;
   chatpdf: string | null;
-  messages: Messages;
+  messages: Messages[] | null;
 };
 
 type Messages = {
