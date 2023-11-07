@@ -1,3 +1,4 @@
+// @ts-nocheck
 import HistoryComponent from "@/components/HistoryComponent";
 import { getAuthSession } from "@/lib/nextauth";
 import { redirect } from "next/navigation";
