@@ -1,5 +1,14 @@
-'use client'
-import * as React from 'react';
+"use client";
+import React from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
+import Link from "next/link";
 import { useState } from 'react';
 import {Card, CardBody, CardFooter, Image} from "@nextui-org/react";
 import './stylecopy.css'
@@ -7,7 +16,8 @@ import { useEffect } from 'react';
 
 const { format } = require('date-fns');
 
-const ClassCard = ({title, link,  date,  clip, divId, selectedFile}) => {
+const ClassCard = ({title, link,  date, height, clip, divId, selectedFile}) => {
+  
   const [fdate, setFDate] = useState('')
   useEffect(() => {
   if (date != null) {
@@ -37,7 +47,8 @@ const ClassCard = ({title, link,  date,  clip, divId, selectedFile}) => {
   return (
 <div className="gap-2 grid">
       <div className="border">
-        <Card shadow="sm" isPressable onPress={() => selectedFile(link)}>
+        <Card shadow="sm">
+          <div onClick={() => selectedFile(link)}>
           <CardBody className="overflow-visible p-0">
             {/* <Image
               shadow="sm"
@@ -49,15 +60,44 @@ const ClassCard = ({title, link,  date,  clip, divId, selectedFile}) => {
               src={img}
             /> */}
             <div id={divId} className='pdf'></div>
+            
           </CardBody>
+          </div>
           <CardFooter>
+            <div onClick={() => selectedFile(link)}>
             <div className="flexing">
               <div className="titlebox">
                 <h1 className={clip}>{title}</h1>
               </div>
+              </div>
               <div className="everythingbox">
                 <p className="dates">{fdate}</p>
-                <button className="bux">Open</button>
+                
+                <Dialog>
+                  <DialogTrigger>
+                    <div>
+                    <button className="bux">Options</button>
+                  </div>
+                  </DialogTrigger>
+                  <DialogContent className="bg-white">
+                    <DialogHeader>
+                      <DialogTitle>Here are some options for your PDF</DialogTitle>
+                      <DialogDescription>
+                        
+                      </DialogDescription>
+                    </DialogHeader>
+                    <h1>Have questions? Ask our AI that is based on your module</h1>
+                    <Link href={`/chat/${height}`}>
+                    <button className="bux-2">Chat with your module</button>
+                    </Link>
+                    <h1>Need to prepare for a test? Use our Quiz creation AI for an entire test or just a topic</h1>
+                    <Link href={`/quiz/${height}`}>
+                    <button className="bux-2">Get a quiz on your module</button>
+                    </Link>
+                    {/* <h1>Have questions. Ask our AI based on your module</h1>
+                    <button onClick={() => { router.push(`/chat/${height}`)}}>Chat with your module</button> */}
+                  </DialogContent>
+                </Dialog>
                 
               </div>
             </div>

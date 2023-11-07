@@ -35,6 +35,8 @@ import LoadingQuestions from "../LoadingQuestions";
 type Props = {
   topic: string;
   files: Files[]; // Ensure that "files" is an array
+  id: string;
+
 };
 
 type Files = {
@@ -61,7 +63,7 @@ type Messages = {
 
 type Input = z.infer<typeof quizCreationSchema>;
 
-const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
+const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Props) => {
   const router = useRouter();
   const [showLoader, setShowLoader] = useState(false);
   const [finishedLoading, setFinishedLoading] = useState(false);
@@ -99,8 +101,18 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
     setSubjectFiles(subjectFiles);
   }, [form.getValues("subject"), files]);
 
+  useEffect(() => {
+    if (id) {
+      // Find the subject and file based on the file ID
+      const selectedFile = files.find((file) => file.id === id);
+      console.log(selectedFile)
 
-  
+      if (selectedFile) {
+        // Set the selected subject and file
+        form.setValue("subject", selectedFile.subject);
+        form.setValue("selectedFileId", selectedFile.chatpdf);
+      }}
+}, [id])
 
   const onSubmit = async (data: Input) => {
     setShowLoader(true);

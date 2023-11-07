@@ -19,11 +19,11 @@ const Note = ({notes}) => {
   return (
      <div className="contain ">
         <div
-          className=" headings headertable"
+          className="headings headertable"
           onClick={toggleNotesSection}
         >
-          <h1 >All Notes</h1>
-          {isNotesCollapsed ? "+" : "-"}
+          <h1>All Notes</h1>
+          <h1>{isNotesCollapsed ? "+" : "-"}</h1>
         </div>
         {!isNotesCollapsed && (
           <div>

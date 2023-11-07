@@ -5,17 +5,31 @@
 .headings {
   font-size: 32px;
   font-weight: 700;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
 .headertable {
   border-radius: 11px;
-background: var(--background);
-box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
-display: flex;
-justify-content: space-between;
-
-
-
+  background: var(--background);
+  box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
+  width: 100%;
 }
+
+/* Adjust the margin or padding for h1 elements as needed */
+.headings h1 {
+  margin: 1rem;
+}
+
+/* Make the second h1 element take up the available space */
+.headings h1:last-child {
+  flex: 1;
+  text-align: right;
+}
+
+/* Assuming you have variables defined for background and boxshadow */
+
 .scrolling-wrapper {
   overflow-x: scroll;
   overflow-y: hidden;

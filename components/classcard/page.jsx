@@ -1,9 +1,10 @@
 'use client'
 import * as React from 'react';
 import { useState } from 'react';
-import {Card, CardBody, CardFooter, Image} from "@nextui-org/react";
+import {Card, CardBody, CardFooter,} from "@nextui-org/react";
 import './style.css'
 import { useEffect } from 'react';
+import Image from 'next/image';
 
 const { format } = require('date-fns');
 
@@ -20,15 +21,16 @@ const ClassCard = ({title, link, img, date,  clip}) => {
       <div className="border">
         <Card shadow="sm" isPressable onPress={() => console.log("item pressed")}>
           <CardBody className="overflow-visible p-0">
-            <Image
-              shadow="sm"
-              radius="lg"
-              width="100%"
-              height="100%"
-              alt={title}
-              className="w-full object-cover"
-              src={img}
-            />
+            <div className='relative-global'>
+              <Image
+                height={100}
+                width={100}
+                alt={title}
+                className="w-full object-cover"
+                src={img}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              />
+            </div>
           </CardBody>
           <CardFooter>
             <div className="flexing">

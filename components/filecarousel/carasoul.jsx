@@ -116,7 +116,7 @@ const handleSave = async (metaData, content, options) => {
         {filteredfiles.map((file, index) => (
           <div key={index} className="card">
             
-              <ClassCard title={file.pdfName} link={file.pdfUrl}  date={file.createdAt} height={'100%'} clip={'title-clip'} divId={file.pdfName + index} selectedFile={handleFileChange} />
+              <ClassCard title={file.pdfName} link={file.pdfUrl}  date={file.createdAt} height={file.id} clip={'title-clip'} divId={file.pdfName + index} selectedFile={handleFileChange} />
                   
           </div>
         ))}
