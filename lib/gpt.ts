@@ -58,7 +58,7 @@ export async function strict_output(
     if (list_input) {
       output_format_prompt += `\nGenerate a list of json, one json for each input element.`;
     }
-
+    console.log('here')
     // Use OpenAI to get a response
     const response = await openai.createChatCompletion({
       temperature: temperature,
@@ -71,6 +71,8 @@ export async function strict_output(
         { role: "user", content: user_prompt.toString() },
       ],
     });
+
+    console.log(response)
 
     let res: string =
       response.data.choices[0].message?.content?.replace(/'/g, '"') ?? "";
