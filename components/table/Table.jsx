@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+'use client'
 import {
   Card,
   Table,
@@ -7,9 +7,7 @@ import {
   TableHead,
   TableHeaderCell,
   TableBody,
-  BadgeDelta,
-  MultiSelect,
-  MultiSelectItem,
+  BadgeDelta
 } from "@tremor/react";
 
 const salesPeople = [
@@ -20,7 +18,7 @@ const salesPeople = [
     quota: "1,200,000",
     variance: "low",
     region: "Region A",
-    status: "overperforming",
+    delta: "overperforming",
     deltaType: "moderateIncrease",
   },
   {
@@ -30,7 +28,7 @@ const salesPeople = [
     quota: "1,000,000",
     variance: "low",
     region: "Region B",
-    status: "average",
+    delta: "average",
     deltaType: "unchanged",
   },
   {
@@ -40,7 +38,7 @@ const salesPeople = [
     quota: "1,000,000",
     variance: "medium",
     region: "Region C",
-    status: "underperforming",
+    delta: "underperforming",
     deltaType: "moderateDecrease",
   },
   {
@@ -50,7 +48,7 @@ const salesPeople = [
     quota: "250,000",
     variance: "low",
     region: "Region A",
-    status: "overperforming",
+    delta: "overperforming",
     deltaType: "increase",
   },
   {
@@ -60,7 +58,7 @@ const salesPeople = [
     quota: "750,000",
     variance: "low",
     region: "Region B",
-    status: "overperforming",
+    delta: "overperforming",
     deltaType: "increase",
   },
   {
@@ -70,7 +68,7 @@ const salesPeople = [
     quota: "1,500,000",
     variance: "low",
     region: "Region A",
-    status: "average",
+    delta: "average",
     deltaType: "unchanged",
   },
   {
@@ -80,67 +78,44 @@ const salesPeople = [
     quota: "1,800,000",
     variance: "medium",
     region: "Region B",
-    status: "underperforming",
+    delta: "underperforming",
     deltaType: "moderateDecrease",
   },
 ];
 
-
-
-
-const Tables = ({item}) => {
-  const [selectedNames, setSelectedNames] = useState([]);
-
-  const isSalesPersonSelected = (salesPerson) =>
-    salesPeople.includes(salesPerson.name) || item.length === 0;
+export default function Tables() {
   return (
     <Card>
-    <MultiSelect
-      onValueChange={setSelectedNames}
-      placeholder= 'hi'
-      className="max-w-xs"
-    >
-      {salesPeople.map((item) => (
-        <MultiSelectItem key={item.id} value={item.id}>
-          {item.id}
-        </MultiSelectItem>
-      ))}
-    </MultiSelect>
-    <Table className="mt-6">
-      <TableHead>
-        <TableRow>
-          <TableHeaderCell>Name</TableHeaderCell>
-          <TableHeaderCell className="text-right">Leads</TableHeaderCell>
-          {/* <TableHeaderCell className="text-right">Sales ($)</TableHeaderCell> */}
-          {/* <TableHeaderCell className="text-right">Quota ($)</TableHeaderCell>
-          <TableHeaderCell className="text-right">Variance</TableHeaderCell>
-          <TableHeaderCell className="text-right">Region</TableHeaderCell>
-          <TableHeaderCell className="text-right">Status</TableHeaderCell> */}
-        </TableRow>
-      </TableHead>
-
-      <TableBody>
-        {salesPeople
-          .filter((item) => isSalesPersonSelected(item))
-          .map((item) => (
-            <TableRow key={item.id}>
-              <TableCell>{item.id}</TableCell>
-              <TableCell className="text-right">{item.id}</TableCell>
-              <TableCell className="text-right">{item.summary}</TableCell>
-              {/* <TableCell className="text-right">{item.quota}</TableCell> */}
-              {/* <TableCell className="text-right">{item.variance}</TableCell>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableHeaderCell>Name</TableHeaderCell>
+            <TableHeaderCell className="text-right">Leads</TableHeaderCell>
+            <TableHeaderCell className="text-right">Sales ($)</TableHeaderCell>
+            <TableHeaderCell className="text-right">Quota ($)</TableHeaderCell>
+            <TableHeaderCell className="text-right">Variance</TableHeaderCell>
+            <TableHeaderCell className="text-right">Region</TableHeaderCell>
+            <TableHeaderCell className="text-right">Status</TableHeaderCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {salesPeople.map((item) => (
+            <TableRow key={item.name}>
+              <TableCell>{item.name}</TableCell>
+              <TableCell className="text-right">{item.leads}</TableCell>
+              <TableCell className="text-right">{item.sales}</TableCell>
+              <TableCell className="text-right">{item.quota}</TableCell>
+              <TableCell className="text-right">{item.variance}</TableCell>
               <TableCell className="text-right">{item.region}</TableCell>
               <TableCell className="text-right">
                 <BadgeDelta deltaType={item.deltaType} size="xs">
-                  {item.status}
+                  {item.delta}
                 </BadgeDelta>
-              </TableCell> */}
+              </TableCell>
             </TableRow>
           ))}
-      </TableBody>
-    </Table>
-  </Card>
-  )
+        </TableBody>
+      </Table>
+    </Card>
+  );
 }
-
-export default Tables

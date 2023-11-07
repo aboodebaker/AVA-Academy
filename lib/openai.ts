@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Configuration, OpenAIApi } from "openai";
 
 const config = new Configuration({
@@ -29,7 +30,7 @@ export async function generateImagePrompt(name: string) {
         },
         {
           role: "user",
-          content: `Please generate a prompt for an image generator for my notebook titles ${name}, You are to make sure that it is educational and also very well described. there should be no text. `,
+          content: `Please generate a prompt for an image generator for my notebook titles ${name}, You are to make sure that it is educational and also very well described. there can be text but specify exactly what the text should say. `,
         },
       ],
     });
@@ -47,13 +48,12 @@ export async function generateImagePrompt(name: string) {
 export async function generateImage(image_description: string) {
   try {
     const response = await openai.createImage({
-      prompt: image_description,
-      n: 1,
-      size: "1024x1024",
-    });
-    const data = await response.data;
-    
-    const image_url = data.data[0].url;
+  model: "dall-e-3",
+  prompt: image_description,
+  n: 1,
+  size: "1792x1024",
+});
+ const image_url = response.data.data[0].url;
     return image_url as string;
   } catch (error) {
     console.error(error);

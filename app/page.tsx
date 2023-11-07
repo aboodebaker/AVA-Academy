@@ -1,52 +1,43 @@
-"use client"
-import React, { useState, useEffect } from 'react';
-import { strict_output } from '@/lib/gpt'; // Replace with the actual module path
-import { useSession } from 'next-auth/react';
-import { useRouter } from "next/navigation";
-import RightSection from '@/components/home/home'
-import Sidebar from '@/components/navbar/sidebar'
-function App() {
-  const [userInput, setUserInput] = useState<string>('');
-  const [formattedJson, setFormattedJson] = useState<string>('');
-  const session = useSession();
-  const router = useRouter();
+// @ts-nocheck
+import DetailsDialog from "@/components/DetailsDialog";
+import HistoryCard from "@/components/dashboard/HistoryCard";
+import HotTopicsCard from "@/components/dashboard/HotTopicsCard";
+import QuizMeCard from "@/components/dashboard/QuizMeCard";
+import RecentActivityCard from "@/components/dashboard/RecentActivityCard";
+import { getAuthSession } from "@/lib/nextauth";
+import { redirect } from "next/navigation";
+import React from "react";
+import Tables from '@/components/table/Table'
+type Props = {};
 
-  useEffect(() => {
-  if (session.status === "unauthenticated") {
-    router.push('/login')
+export const metadata = {
+  title: "Dashboard",
+  description: "Quiz yourself on anything!",
+};
+
+const Dasboard = async (props: Props) => {
+  const session = await getAuthSession();
+  if (!session?.user) {
+    redirect("/");
   }
-}, [session.status])
-
-  
-
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUserInput(event.target.value);
-  };
-
-  const formatJson = async () => {
-    try {
-      const output = await strict_output(
-        'you are a reformatter agent and follow the strict output format exactly.', // Replace with your system prompt
-        userInput,
-        {
-          strengths: "all the strenghts of the user",
-          questions: ["every single question", "question 2", "question 3"],
-          summary: "summary"
-        } // Replace with your desired output format
-      );
-
-      setFormattedJson(JSON.stringify(output, null, 2));
-    } catch (error) {
-      console.error('Error formatting JSON:', error);
-    }
-  };
-  console.log(session.data?.user)
 
   return (
-    <div>
-      
+    <main className="p-8 mx-auto max-w-7xl">
+      <div className="flex items-center">
+        <h2 className="mr-2 text-3xl font-bold tracking-tight">Dashboard</h2>
+        <DetailsDialog />
       </div>
-  );
-}
 
-export default App;
+      <div className="grid gap-4 mt-4 md:grid-cols-2">
+        <Tables/>
+        <HistoryCard />
+      </div>
+      <div className="grid gap-4 mt-4 md:grid-cols-2 lg:grid-cols-7">
+        
+        <RecentActivityCard />
+      </div>
+    </main>
+  );
+};
+
+export default Dasboard;

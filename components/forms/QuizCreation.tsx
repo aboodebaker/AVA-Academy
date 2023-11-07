@@ -84,7 +84,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
     defaultValues: {
       topic: topicParam,
       subject: "", // Add a new field for subject
-      type: "mcq",
+      type: "open_ended",
       amount: 3,
       selectedFileId: "", // Add a new field for selectedFileId
     },

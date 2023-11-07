@@ -256,7 +256,8 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                     selectedType === "mcq" ? "text-green-500 font-extrabold" : ""
                   }`}
                   onClick={() => {
-                    setSelectedType("mcq"); // Update the selected type
+                    setSelectedType("mcq");
+                    form.setValue("type", "mcq"); // Update the selected type
                   }}
                   type="button"
                 >
@@ -273,7 +274,8 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                     selectedType === "open_ended" ? "text-green-500 font-extrabold" : ""
                   }`}
                   onClick={() => {
-                    setSelectedType("open_ended"); // Update the selected type
+                    setSelectedType("open_ended");
+                    form.setValue("type", "open_ended"); // Update the selected type
                   }}
                   type="button"
                 >

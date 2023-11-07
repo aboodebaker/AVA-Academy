@@ -24,7 +24,7 @@ const CarouselItem = ({ notes }) => {
         {filteredNotes.map((note, index) => (
           <div key={index} className="card">
             <Link href={`/notes/${note.id}`}>
-              <ClassCard title={note.title} link={note.id} img={'/maths.png'} date={note.created_at} height={'100%'} clip={'title-clip'} />
+              <ClassCard title={note.title} link={note.id} img={note.image} date={note.created_at} height={'100%'} clip={'title-clip'} />
             </Link>          
           </div>
         ))}
