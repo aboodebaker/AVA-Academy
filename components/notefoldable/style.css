@@ -15,6 +15,7 @@
   background: var(--background);
   box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
   width: 100%;
+  margin-left:2rem;
 }
 
 /* Adjust the margin or padding for h1 elements as needed */
