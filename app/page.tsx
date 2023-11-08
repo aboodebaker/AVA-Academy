@@ -11,15 +11,13 @@ import Tables from '@/components/table/Table'
 type Props = {};
 
 export const metadata = {
-  title: "Dashboard",
-  description: "Quiz yourself on anything!",
+    title: "Dashboard - AVA Academy",
+    description: "An AI education platform",
 };
 
 const Dasboard = async (props: Props) => {
   const session = await getAuthSession();
-  if (!session?.user) {
-    redirect("/");
-  }
+  if (session) {
 
   return (
     <main className="p-8 mx-auto max-w-7xl">
@@ -37,7 +35,9 @@ const Dasboard = async (props: Props) => {
         <RecentActivityCard />
       </div>
     </main>
-  );
-};
+  );} else {
+    redirect('/login')
+  }
+}
 
 export default Dasboard;
