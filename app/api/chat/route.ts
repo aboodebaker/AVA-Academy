@@ -191,9 +191,9 @@ export async function POST(req: Request) {
       Remember, your tone should remain casual and friendly, always keeping in mind that you're assisting young students. 
       Your role is not just to answer questions but to help them become more knowledgeable and confident learners.
       here is your context
-      START CONTEXT BLOCK
+      START OF DOCUMENT
       ${context}
-      END OF CONTEXT BLOCK
+      END OF DOCUMENT
       
       `,
     };
