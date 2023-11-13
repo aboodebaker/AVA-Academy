@@ -20,19 +20,16 @@ const DeleteButton = ({ chatId }: Props) => {
       return response.data;
     },
   });
+
   return (
     <Button
       variant={"destructive"}
       size="sm"
       disabled={deleteNote.isLoading}
       onClick={() => {
-        const confirm = window.confirm(
-          "Are you sure you want to delete this note?"
-        );
-        if (!confirm) return;
         deleteNote.mutate(undefined, {
           onSuccess: () => {
-            router.push("/dashboard");
+            router.refresh();
           },
           onError: (err) => {
             console.error(err);

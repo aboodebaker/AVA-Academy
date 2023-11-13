@@ -23,6 +23,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/auth/register/route.js", "lib/gpt.ts", "lib/gpt.ts", "components/carousel/carasoul.jsx", "components/PDFViewer.jsx", "app/api/edit-pdf/route.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/api/auth/register/route.js", "lib/gpt.ts", "lib/gpt.ts", "components/carousel/carasoul.jsx", "components/PDFViewer.jsx", "app/api/edit-pdf/route.js", "app/api/deleteMessages/page.jsx"],
   "exclude": ["node_modules"]
 }
