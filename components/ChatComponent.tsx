@@ -8,6 +8,7 @@ import MessageList from "./MessageList";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { Message } from "ai";
+import DeleteButton from "./DeleteButtonMessages";
 import './page.css'
 
 type Props = { chatId: string };
@@ -57,6 +58,7 @@ const ChatComponent = ({ chatId }: Props) => {
         className="sticky bottom-0 inset-x-0 px-2 py-4 bg-white"
       >
         <div className="flex input-form">
+          <DeleteButton chatId={chatId}/>
           <input
           className="input-field"
           value={input}
