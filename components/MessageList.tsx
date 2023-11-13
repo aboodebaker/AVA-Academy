@@ -25,7 +25,7 @@ const MessageList = ({ messages, isLoading }: Props) => {
         return (
           <div className={`message ${message.role === "user" ? "user" : "system"}`} key={index}>
       <div className={`message-content ${message.role === "system" ? "system" : ""}`}>
-        <p dangerouslySetInnerHTML={{ __html: message.content.replace(/\n/g, '<br />') }}>{message.content}</p>
+        <p dangerouslySetInnerHTML={{ __html: message.content.replace(/\n/g, '<br />') } />
       </div>
     </div>
         );
