@@ -16,6 +16,7 @@ type FileUploadProps = {
 const FileUpload: React.FC<FileUploadProps> = ({ onFileKeyChange }) => {
   const router = useRouter();
   const [uploading, setUploading] = React.useState(false);
+  const [loading, setLoading] = React.useState('Drop PDF Here')
   const { mutate, isLoading } = useMutation({
     mutationFn: async ({
       file_key,
@@ -51,10 +52,12 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileKeyChange }) => {
         mutate(data, {
           onSuccess: () => {
             toast.success("File uploaded");
+            setLoading('File uploaded')
             
           },
           onError: (err) => {
             toast.error("Error uploading file to server");
+            setLoading('Error uploading file to server')
             
           },
         });
@@ -85,7 +88,7 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileKeyChange }) => {
         ) : (
           <>
             <Inbox className="w-10 h-10 text-blue-500" />
-            <p className="mt-2 text-sm text-slate-400">Drop PDF Here</p>
+            <p className="mt-2 text-sm text-slate-400">{loading}</p>
           </>
         )}
       </div>

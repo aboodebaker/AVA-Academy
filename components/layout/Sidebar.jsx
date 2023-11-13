@@ -42,7 +42,7 @@ const Sidebar= ({ show, setter }) => {
             isActive ? 'mb-2' : 'mb-1'
           }`}
         >
-          <div className={`text-xl w-6 h-6 mr-3 ${iconColorClass}`}>{icon}</div>
+          <div className={`text-xxl w-6 h-6 mr-3 ${iconColorClass}`}>{icon}</div>
           <div className='text-small'>{name}</div>
         </div>
       </Link>
@@ -59,7 +59,7 @@ const Sidebar= ({ show, setter }) => {
   )
 
   const className =
-    'bg-accent w-[250px] transition-[margin-left] ease-in-out duration-500 fixed md:static top-0 bottom-0 left-0 z-40';
+    'bg-black w-[250px] transition-[margin-left] ease-in-out duration-500 fixed md:static top-0 bottom-0 left-0 z-40';
   const appendClass = show ? ' ml-0' : ' ml-[-250px] md:ml-0';
 
   return (
@@ -71,12 +71,12 @@ const Sidebar= ({ show, setter }) => {
               <div className="p-2 flex justify-center items-center">
                 <Link href="/" passHref>
                   <div
-                    className="text-white hover:text-white/50 font-extrabold p-3 font-mono text-4xl"
+                    className="text-white hover:text-white/50 font-extrabold p-3 font-mono text-4xl flex justify-center align-center"
                     onClick={() => {
                       setter((oldVal) => !oldVal);
                     }}
                   >
-                    Hello
+                    Teacher Platform
                   </div>
                 </Link>
               </div>
@@ -92,15 +92,6 @@ const Sidebar= ({ show, setter }) => {
             <div className="grow h-full"></div>
             <div className="flex items-center justify-center">
               <DarkModeSwitcher />
-              <button
-                onClick={async () => {
-                  await signOut();
-                  router.push('/'); // Redirect to the home page after sign out
-                }}
-                className="ml-4 flex items-center justify-center h-10 px-4 py-2 bg-primary rounded-md text-white focus:outline-none"
-              >
-                Logout
-              </button>
             </div>
           </div>
         </Sticky>

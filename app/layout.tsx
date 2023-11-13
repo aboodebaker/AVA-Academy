@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   const pathname = usePathname();
-  if (pathname.includes('/chat') || pathname.includes('/teacher-platform')) {
+  if (pathname.includes('/chat')) {
     return (
     <html lang="en">
       <head>
@@ -57,6 +57,35 @@ export default function RootLayout({
         </AuthProvider>
       </body>
     </html>)
+  }
+
+  if (pathname.includes('/teacher-platform')) {
+    return (
+          <html lang="en">
+      <head>
+        <script src="https://acrobatservices.adobe.com/view-sdk/viewer.js" async></script>
+      </head>
+
+      <body>
+        <AuthProvider>
+        <Providers>
+        <div className="flex">
+          <div className="">
+             <Tester />
+              {/* <MenuBarMobile setter={setShowSidebar} />
+              <Sidebar show={showSidebar} setter={setShowSidebar} /> */}
+            </div>
+
+            <div className="flex flex-col flex-grow  md:w-full min-h-screen">
+                {children}
+            </div>
+        </div>
+        </Providers>
+        </AuthProvider>
+
+        </body>
+            </html>
+    )
   }
 
   return (

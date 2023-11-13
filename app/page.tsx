@@ -1,43 +1,40 @@
 // @ts-nocheck
-import DetailsDialog from "@/components/DetailsDialog";
-import HistoryCard from "@/components/dashboard/HistoryCard";
-import HotTopicsCard from "@/components/dashboard/HotTopicsCard";
-import QuizMeCard from "@/components/dashboard/QuizMeCard";
-import RecentActivityCard from "@/components/dashboard/RecentActivityCard";
+import React from "react";
+import { PrismaClient } from "@prisma/client";
 import { getAuthSession } from "@/lib/nextauth";
 import { redirect } from "next/navigation";
-import React from "react";
-import Tables from '@/components/table/Table'
+import Tables from "@/components/table/Table";
+
 type Props = {};
 
-export const metadata = {
-    title: "Dashboard - AVA Academy",
-    description: "An AI education platform",
+const Dashboard = async (props: Props) => {
+  const session = await getAuthSession();
+
+  if (session) {
+    const prisma = new PrismaClient();
+    const games = await prisma.game.findMany({
+      where: { userId: session.user.id },
+      include: { questions: true },
+    });
+
+
+
+    return (
+    <div className="grid grid-rows-2 grid-cols-6 gap-4 w-full h-full">
+      <div className="row-span-1 col-span-2">02</div>
+      <div className="row-span-1 col-span-2">02</div>
+      <div className="row-span-1 col-span-4 m-2">
+        <Tables data={games} />
+      </div>
+      <div className="auto-rows-max auto-cols-max" style={{ position: 'relative' }}>
+        <iframe src="/classes" frameBorder="0" className="w-full h-full" style={{ position: 'absolute', top: 0 }}></iframe>
+      </div>
+    </div>
+  );
+  } else {
+    redirect("/login");
+    return null; // Add a return statement here or handle redirect appropriately
+  }
 };
 
-const Dasboard = async (props: Props) => {
-  const session = await getAuthSession();
-  if (session) {
-
-  return (
-    <main className="p-8 mx-auto max-w-7xl">
-      <div className="flex items-center">
-        <h2 className="mr-2 text-3xl font-bold tracking-tight">Dashboard</h2>
-        <DetailsDialog />
-      </div>
-
-      <div className="grid gap-4 mt-4 md:grid-cols-2">
-        <Tables/>
-        <HistoryCard />
-      </div>
-      <div className="grid gap-4 mt-4 md:grid-cols-2 lg:grid-cols-7">
-        
-        <RecentActivityCard />
-      </div>
-    </main>
-  );} else {
-    redirect('/login')
-  }
-}
-
-export default Dasboard;
+export default Dashboard;

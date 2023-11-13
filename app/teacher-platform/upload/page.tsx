@@ -4,6 +4,13 @@ import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
 import { getS3Url } from '@/lib/s3'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
   const subjectOptions = [
     'Maths',
@@ -28,6 +35,7 @@ const Page = () => {
   const [isSubmitting, setIsSubmitting] = useState(false); // New state to track submitting status
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [Submit, setSubmit] = useState('submit')
   const [grade, setGrade] = useState('');
   const [subject, setSubject] = useState('')
   const [name, setname] = useState('')
@@ -36,6 +44,7 @@ const Page = () => {
    const handleSubmit = async (e:any) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmit('Submitting...')
     try {
        // Set isSubmitting to true when the form is being submitted
       const config = {
@@ -61,21 +70,25 @@ const Page = () => {
         },
       });
 
-      setSubmitSuccess(true); // Set submitSuccess to true on successful submission
+      setSubmitSuccess(true);
+      setSubmit("Submitted") // Set submitSuccess to true on successful submission
       setSubmitError(''); // Reset any previous error messages
         })
         .catch((error:any) => {
           console.log("Error:", error.message);
-          console.log("Response:", error.response.data);
+
           console.error(error);
           setSubmitSuccess(false); // Set submitSuccess to false on failed submission
           setSubmitError('Submission failed. Please try again.');
+          setSubmit("Submission failed")
+
         });
 
     } catch (error) {
       console.error(error);
       setSubmitSuccess(false); // Set submitSuccess to false on failed submission
       setSubmitError('Submission failed. Please try again.'); // Set the error message
+      setSubmit("Submission failed")
     } finally {
       setIsSubmitting(false); // Set isSubmitting to false after the submission process
     }
@@ -103,8 +116,15 @@ const Page = () => {
 
 
   return (
-    <div>
-      <div>
+    <div className='col m-2 '>
+    <div className='flex justify-center align-center w-[800]'>
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold">Upload</CardTitle>
+          <CardDescription>Upload a file to a specific grade and class</CardDescription>
+        </CardHeader>
+        <CardContent className='flex-col justify-center align-center '>
+      <div >
         <FileUpload onFileKeyChange={handleFileKeyChange}/>
       </div>
       <div className="formdiv">
@@ -171,13 +191,16 @@ const Page = () => {
         disabled={isSubmitting}
         onClick={handleSubmit}
         >
-        {isSubmitting ? 'Submitting...' : 'Submit'}
+        {Submit}
       </button>
       
 
         </form>
       </div>
-      
+      </CardContent>
+      </Card>
+    </div>
+
     </div>
   )
 }

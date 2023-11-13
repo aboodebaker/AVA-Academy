@@ -23,10 +23,10 @@ const MessageList = ({ messages, isLoading }: Props) => {
       {messages.map((message, index) => {
         return (
           <div className={`message ${message.role === "user" ? "user" : "system"}`} key={index}>
-      <div className={`message-content ${message.role === "system" ? "system" : ""}`}>
-        <p>{message.content}</p>
-      </div>
-    </div>
+            <div className={`message-content ${message.role === "system" ? "system" : ""}`}>
+              <p>{message.content}</p>
+            </div>
+          </div>
         );
       })}
     </div>
