@@ -1,7 +1,7 @@
 'use client'
 import React, { useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { ArrowsExpandIcon } from "@heroicons/react/outline";
+//import { ArrowsExpandIcon } from "@heroicons/react/outline";
 import { Button, Card, Text, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell } from "@tremor/react";
 import { Fragment, } from "react";
 
@@ -11,7 +11,9 @@ const Tables = ({ data }) => {
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);
+  const available = false
 
+  if (available == false) {
   return (
     <>
       <Card className="relative max-w-xxl mx-auto h-96 overflow-hidden">
@@ -43,7 +45,7 @@ const Tables = ({ data }) => {
         </Table>
         <div className="inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-white pt-12 pb-8 absolute rounded-b-lg">
           <Button
-            icon={ArrowsExpandIcon}
+            icon={null}
             className="bg-white shadow-md border-gray-200 text-gray-500 hover:bg-gray-50 hover:border-gray-300"
             onClick={openModal}
           >
@@ -125,7 +127,11 @@ const Tables = ({ data }) => {
         </Dialog>
       </Transition>
     </>
-  );
+  )}
+  return (
+    <>
+      <p> table</p>
+    </>
 }
 
 export default Tables
