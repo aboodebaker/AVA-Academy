@@ -39,6 +39,7 @@ export async function POST(req: Request, res: Response) {
           subject: subject,
           fileKey: file_key,
           chatpdf: chatpdf,
+          grade: grade,
         },
       });
       console.log(`Created chat for user ${user.id}`);

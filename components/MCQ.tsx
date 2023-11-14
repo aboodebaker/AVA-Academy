@@ -134,7 +134,12 @@ const MCQ = ({ game }: Props) => {
 
   if (hasEnded) {
     return (
+      
       <div className="absolute flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+        <MCQCounter
+          correct_answers={stats.correct_answers}
+          wrong_answers={stats.wrong_answers}
+        />
         <div className="px-4 py-2 mt-2 font-semibold text-white bg-green-500 rounded-md whitespace-nowrap">
           You Completed in{" "}
           {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}

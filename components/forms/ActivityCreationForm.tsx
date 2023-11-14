@@ -69,7 +69,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
   const { toast } = useToast();
   const { mutate: getQuestions, isLoading } = useMutation({
     mutationFn: async ({ amount, topic, type, selectedFileId }: Input) => {
-      const response = await axios.post("/api/game", {
+      const response = await axios.post("/api/activities", {
         amount,
         topic,
         type,
@@ -89,18 +89,22 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
       selectedFileId: "", // Add a new field for selectedFileId
     },
   });
+  
+  const uniqueSubjects = Array.from(new Set(files.map(file => file.subject)));
+
+    const uniqueChatpdfValues = Array.from(new Set(files.map(file => file.chatpdf)));
+  const uniqueFiles = uniqueChatpdfValues.map(chatpdf => files.find(file => file.chatpdf === chatpdf));
 
   const [subjectFiles, setSubjectFiles] = useState<Files[]>([]);
-
+  
   useEffect(() => {
     // Update the subjectFiles when the subject field changes
     const selectedSubject = form.getValues("subject");
-    const subjectFiles = files.filter((file) => file.subject === selectedSubject);
-    setSubjectFiles(subjectFiles);
+    const filteredFiles = files.filter((file) => file.subject === selectedSubject);
+    setSubjectFiles(filteredFiles);
   }, [form.getValues("subject"), files]);
 
 
-  
 
   const onSubmit = async (data: Input) => {
     setShowLoader(true);
@@ -129,6 +133,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
       },
     });
   }
+
   if (showLoader) {
     return <LoadingQuestions finished={finishedLoading} />;
   }
@@ -160,7 +165,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                   </FormItem>
                 )}
               />
-              <FormField
+               <FormField
                 control={form.control}
                 name="subject"
                 render={({ field }) => (
@@ -170,9 +175,9 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                       <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a subject</option>
                         {/* Add options for subjects based on your data */}
-                        {files.map((file, index) => (
-                          <option key={index} value={file.subject}>
-                            {file.subject}
+                        {uniqueSubjects.map((subject, index) => (
+                          <option key={index} value={subject}>
+                            {subject}
                           </option>
                         ))}
                       </select>
@@ -194,9 +199,9 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                     <FormControl>
                       <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a file</option>
-                        {subjectFiles.map((file) => (
-                          <option key={file.chatpdf} value={file.chatpdf}>
-                            {file.pdfName}
+                        {uniqueFiles.map((file, index) => (
+                          <option key={index} value={file?.chatpdf}>
+                            {file?.pdfName} Grade {file?.grade}
                           </option>
                         ))}
                       </select>
@@ -236,7 +241,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                 )}
               />
 
-               <div className="flex justify-between">
+            <div className="flex justify-between">
                 <Button
                   variant={
                     selectedType === "mcq" ? "default" : "destructive"
@@ -245,7 +250,8 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                     selectedType === "mcq" ? "text-green-500 font-extrabold" : ""
                   }`}
                   onClick={() => {
-                    setSelectedType("mcq"); // Update the selected type
+                    setSelectedType("mcq");
+                    form.setValue("type", "mcq"); // Update the selected type
                   }}
                   type="button"
                 >
@@ -262,7 +268,8 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                     selectedType === "open_ended" ? "text-green-500 font-extrabold" : ""
                   }`}
                   onClick={() => {
-                    setSelectedType("open_ended"); // Update the selected type
+                    setSelectedType("open_ended");
+                    form.setValue("type", "open_ended"); // Update the selected type
                   }}
                   type="button"
                 >

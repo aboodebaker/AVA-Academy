@@ -118,10 +118,10 @@ const Page = () => {
   return (
     <div className='col m-2 '>
     <div className='flex justify-center align-center w-[800]'>
-      <Card>
-        <CardHeader>
+      <Card className='flex flex-col align-center justify-center'>
+        <CardHeader >
           <CardTitle className="text-2xl font-bold">Upload</CardTitle>
-          <CardDescription>Upload a file to a specific grade and class</CardDescription>
+          <CardDescription className='text-text'>Upload a file to a specific grade and class</CardDescription>
         </CardHeader>
         <CardContent className='flex-col justify-center align-center '>
       <div >
@@ -130,7 +130,7 @@ const Page = () => {
       <div className="formdiv">
         <form action="">
                 <div className='input-container'>
-        <label htmlFor="nameInput" className='block mb-2 font-bold'>
+        <label htmlFor="nameInput" className='block mb-2 font-bold text-text'>
           Name of the file:
         </label>
         <input
@@ -139,42 +139,42 @@ const Page = () => {
           id="nameInput"
           value={name}
           onChange={handleOptionChangename}
-          className="border border-gray-300 py-2 px-4 rounded-lg"
+          className="border border-gray-300 py-2 px-4 rounded-lg text-text bg-secondary"
         />
       </div>
       <div className="mb-4">
-        <label htmlFor="subjectSelect" className="block mb-2 font-bold">
+        <label htmlFor="subjectSelect" className="block mb-2 font-bold text-text">
           Select Subject:
         </label>
         <select
           id="subjectSelect"
           value={subject}
           onChange={handleOptionChangesubject}
-          className="border border-gray-300 py-2 px-4 rounded-lg"
+          className="border border-gray-300 py-2 px-4 rounded-lg text-text bg-secondary"
         >
           <option value="">-- Select Subject --</option>
           {subjectOptions.map((option, index) => (
-            <option key={index} value={option}>
+            <option key={index} value={option} className='text-black'>
               {option}
             </option>
           ))}
         </select>
       </div>
       <div className="mb-4">
-        <label htmlFor="gradeSelect" className="block mb-2 font-bold">
+        <label htmlFor="gradeSelect" className="block mb-2 font-bold text-text">
           Select Grade:
         </label>
         <select
           id="gradeSelect"
           value={grade}
           onChange={handleOptionChange}
-          className="border border-gray-300 py-2 px-4 rounded-lg"
+          className="border border-gray-300 py-2 px-4 rounded-lg text-text bg-secondary"
         >
-          <option value="">-- Select Grade --</option>
-          <option value="8">8</option>
-          <option value="9">9</option>
-          <option value="10">10</option>
-          <option value="11">11</option>
+          <option value="" className='text-black'>-- Select Grade --</option>
+          <option value="8" className='text-black'>8</option>
+          <option value="9" className='text-black'>9</option>
+          <option value="10" className='text-black'>10</option>
+          <option value="11" className='text-black'>11</option>
 
         </select>
       </div>

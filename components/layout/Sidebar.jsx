@@ -28,9 +28,9 @@ const Sidebar= ({ show, setter }) => {
   }) => {
     const isActive = router.pathname === route;
     const colorClass = isActive
-      ? 'text-white rounded-md bg-backgroundAccent font-bold'
-      : 'text-white hover:text-white/50';
-    const iconColorClass = isActive ? 'text-secondary' : 'text-white hover:text-white/50';
+      ? 'text-text rounded-md bg-backgroundAccent font-bold'
+      : 'text-text hover:text-white/50';
+    const iconColorClass = isActive ? 'text-text' : 'text-text hover:text-white/50';
 
     return (
       <Link href={route} passHref>
@@ -42,8 +42,8 @@ const Sidebar= ({ show, setter }) => {
             isActive ? 'mb-2' : 'mb-1'
           }`}
         >
-          <div className={`text-xxl w-6 h-6 mr-3 ${iconColorClass}`}>{icon}</div>
-          <div className='text-small'>{name}</div>
+          <div className={`text-xl w-6 h-6 mr-3 ${iconColorClass}`}>{icon}</div>
+          <div className='text-xl'>{name}</div>
         </div>
       </Link>
     );
@@ -59,7 +59,7 @@ const Sidebar= ({ show, setter }) => {
   )
 
   const className =
-    'bg-black w-[250px] transition-[margin-left] ease-in-out duration-500 fixed md:static top-0 bottom-0 left-0 z-40';
+    'outer-sidebar w-[250px] transition-[margin-left] ease-in-out duration-500 fixed md:static top-0 bottom-0 left-0 z-40 ';
   const appendClass = show ? ' ml-0' : ' ml-[-250px] md:ml-0';
 
   return (
@@ -71,7 +71,7 @@ const Sidebar= ({ show, setter }) => {
               <div className="p-2 flex justify-center items-center">
                 <Link href="/" passHref>
                   <div
-                    className="text-white hover:text-white/50 font-extrabold p-3 font-mono text-4xl flex justify-center align-center"
+                    className="text-text hover:text-text/50 font-extrabold p-3 font-mono text-4xl flex-col justify-center align-center"
                     onClick={() => {
                       setter((oldVal) => !oldVal);
                     }}
@@ -80,13 +80,12 @@ const Sidebar= ({ show, setter }) => {
                   </div>
                 </Link>
               </div>
-              <div>
-                <MenuItem name="Home" route="/" icon={<SlHome />} />
-                <MenuItem name="Classes" route="/classes" icon={<TbBookFilled />} />
-                <MenuItem name="Chat with AI" route="/chat" icon={<BsFillChatFill />} />
-                <MenuItem name="View Notes" route="/viewnotes" icon={<LiaStickyNoteSolid />} />
-                <MenuItem name="New Note" route="/createnote" icon={<LiaStickyNoteSolid />} />
-                <MenuItem name="Shared Notes" route="/sharednotes" icon={<LiaStickyNoteSolid />} />
+              <div >
+                <MenuItem name="Activities" route="/teacher-platform/activities" icon={<SlHome />} />
+                <MenuItem name="Classes" route="/teacher-platform/classes" icon={<TbBookFilled />} />
+                <MenuItem name="AI Chat" route="/teacher-platform/chat" icon={<BsFillChatFill />} />
+                <MenuItem name="Upload" route="/teacher-platform/upload" icon={<LiaStickyNoteSolid />} />
+                <MenuItem name="Progress" route="/teacher-platform/progress" icon={<LiaStickyNoteSolid />} />
               </div>
             </div>
             <div className="grow h-full"></div>

@@ -76,7 +76,7 @@ export default function RootLayout({
               <Sidebar show={showSidebar} setter={setShowSidebar} /> */}
             </div>
 
-            <div className="flex flex-col flex-grow  md:w-full min-h-screen">
+            <div className="flex flex-col flex-grow  md:w-full min-h-screen inner">
                 {children}
             </div>
         </div>

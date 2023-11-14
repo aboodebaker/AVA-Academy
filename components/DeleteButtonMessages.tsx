@@ -5,18 +5,21 @@ import { Trash } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 type Props = {
   chatId: string;
 };
 
 const DeleteButton = ({ chatId }: Props) => {
+  const pathname = usePathname();
   const router = useRouter();
   const deleteNote = useMutation({
     mutationFn: async () => {
       const response = await axios.post("/api/deleteMessages", {
         chatId,
       });
+      
       return response.data;
     },
   });
@@ -29,7 +32,7 @@ const DeleteButton = ({ chatId }: Props) => {
       onClick={() => {
         deleteNote.mutate(undefined, {
           onSuccess: () => {
-            router.refresh();
+            router.refresh()
           },
           onError: (err) => {
             console.error(err);

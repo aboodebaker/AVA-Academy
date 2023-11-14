@@ -80,6 +80,11 @@ h6 {
   background-color: var(--secondary);
 }
 
+.outer-sidebar {
+  display: flex; /* Use flexbox to position Sidebar and inner content */
+  background-color: var(--secondary);
+}
+
 .sidebar {
   position: fixed;
   left: 20px;
