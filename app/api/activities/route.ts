@@ -14,7 +14,7 @@ export async function POST(req: Request, res: Response) {
 
 
     const body = await req.json();
-    const { topic, type, amount, selectedFileId } = quizCreationSchema.parse(body);
+    const { topic, type, amount, selectedFileId, classs } = quizCreationSchema.parse(body);
 
 
     const usersWithFile = await prisma.user.findMany({
@@ -24,6 +24,7 @@ export async function POST(req: Request, res: Response) {
                 chatpdf: selectedFileId,
             },
             },
+            class: classs,
         },
         include: {
             files: true,

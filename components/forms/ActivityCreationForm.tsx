@@ -68,12 +68,13 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
   const [selectedType, setSelectedType] = useState("mcq");
   const { toast } = useToast();
   const { mutate: getQuestions, isLoading } = useMutation({
-    mutationFn: async ({ amount, topic, type, selectedFileId }: Input) => {
+    mutationFn: async ({ amount, topic, type, selectedFileId, classs }: Input) => {
       const response = await axios.post("/api/activities", {
         amount,
         topic,
         type,
         selectedFileId,
+        classs
       });
       return response.data;
     },
@@ -84,15 +85,16 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
     defaultValues: {
       topic: topicParam,
       subject: "", // Add a new field for subject
-      type: "open_ended",
+      type: "mcq",
       amount: 3,
       selectedFileId: "", // Add a new field for selectedFileId
+      classs: 'A',
     },
   });
   
   const uniqueSubjects = Array.from(new Set(files.map(file => file.subject)));
 
-    const uniqueChatpdfValues = Array.from(new Set(files.map(file => file.chatpdf)));
+  const uniqueChatpdfValues = Array.from(new Set(files.map(file => file.chatpdf)));
   const uniqueFiles = uniqueChatpdfValues.map(chatpdf => files.find(file => file.chatpdf === chatpdf));
 
   const [subjectFiles, setSubjectFiles] = useState<Files[]>([]);
@@ -108,7 +110,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
 
   const onSubmit = async (data: Input) => {
     setShowLoader(true);
-    getQuestions({ ...data, selectedFileId: form.getValues("selectedFileId") }, {
+    getQuestions({ ...data, selectedFileId: form.getValues("selectedFileId"), classs: form.getValues("classs") }, {
       onError: (error) => {
         setShowLoader(false);
         if (error instanceof AxiosError) {
@@ -125,9 +127,9 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
         setFinishedLoading(true);
         setTimeout(() => {
           if (form.getValues("type") === "mcq") {
-            router.push(`/play/mcq/${gameId}`);
+            router.push(`/teacher-platform/activity/mcq/${gameId}`);
           } else if (form.getValues("type") === "open_ended") {
-            router.push(`/play/open-ended/${gameId}`);
+            router.push(`/teacher-platform/activity/open-ended/${gameId}`);
           }
         }, 2000);
       },
@@ -209,6 +211,30 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                     </div>
                     <FormDescription>
                       Select a file for the quiz based on the chosen subject.
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="classs"
+                render={({ field }) => (
+                  <FormItem>
+                    <div className=" ">
+                    <FormLabel className="pr-5">Choose a class</FormLabel>
+                    <FormControl>
+                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
+                        <option value="">Select a class</option>
+                        <option value='A'>A</option>
+                        <option value='B'>B</option>
+                        <option value='C'>C</option>
+                        <option value='D'>D</option>
+                      </select>
+                    </FormControl>
+                    </div>
+                    <FormDescription>
+                      Select a class for the activity based on the chosen topic and file.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>

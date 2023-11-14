@@ -12,7 +12,7 @@ export default function MenuBarMobile({ setter, showSidebar }) {
     return (
         <nav className={`md:hidden mb-4 z-20 fixed top-0 left-0 right-0 h-[60px]  flex [&>*]:my-auto px-2 `}>
             <button
-                className="text-4xl flex text-white"
+                className="text-4xl flex text-black"
                 onClick={() => {
                     setter(oldVal => !oldVal);
                 }}
