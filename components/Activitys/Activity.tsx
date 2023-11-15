@@ -22,10 +22,38 @@ const Activity = ({ game, file }: Props) => {
     { i: 'c', x: 10, y: 0, w: 3, h: 22, isDraggable: false  },
   ];
 
+  const layouts = {
+  lg: [
+    { i: 'a', x: 6, y: 0, w: 3, h: 11 },
+    { i: 'b', x: 0, y: 0, w: 6, h: 22 },
+    { i: 'c', x: 10, y: 0, w: 3, h: 22, isDraggable: false },
+  ],
+  md: [
+    { i: 'a', x: 6, y: 22, w: 10, h: 15 },
+    { i: 'b', x: 0, y: 0, w: 6, h: 22 },
+    { i: 'c', x: 0, y: 0, w: 4, h: 11, isDraggable: false },
+  ],
+  sm: [
+    { i: 'a', x: 0, y: 22, w: 4, h: 11 },
+    { i: 'b', x: 0, y: 0, w: 6, h: 10 },
+    { i: 'c', x: 0, y: 11, w: 3, h: 10, isDraggable: false },
+  ],
+  xs: [
+    { i: 'a', x: 0, y: 22, w: 4, h: 5 },
+    { i: 'b', x: 0, y: 0, w: 4, h: 5 },
+    { i: 'c', x: 0, y: 11, w: 4, h: 5, isDraggable: false },
+  ],
+  xxs: [
+    { i: 'a', x: 0, y: 22, w: 2, h: 5 },
+    { i: 'b', x: 0, y: 0, w: 2, h: 5 },
+    { i: 'c', x: 0, y: 11, w: 2, h: 5, isDraggable: false },
+  ],
+};
+
   return (
     <ResponsiveGridLayout
       className="layout"
-      layouts={{ lg: layout }}
+      layouts={layouts}
       cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
       rowHeight={30}
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
