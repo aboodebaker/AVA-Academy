@@ -66,6 +66,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
   const [showLoader, setShowLoader] = useState(false);
   const [finishedLoading, setFinishedLoading] = useState(false);
   const [selectedType, setSelectedType] = useState("mcq");
+  const [error, setError] = useState(null);
   const { toast } = useToast();
   const { mutate: getQuestions, isLoading } = useMutation({
     mutationFn: async ({ amount, topic, type, selectedFileId, classs }: Input) => {
@@ -122,6 +123,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
             });
           }
         }
+        setError('An error occured. Please try again.')
       },
       onSuccess: ({ gameId }: { gameId: string }) => {
         setFinishedLoading(true);
@@ -146,7 +148,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Quiz Creation</CardTitle>
-          <CardDescription>Choose a topic and subject</CardDescription>
+          <CardDescription className="text-text">Choose a topic and subject</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -156,11 +158,11 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                 name="topic"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Topic</FormLabel>
+                    <FormLabel className="text-text">Topic</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter a topic" {...field} />
+                      <Input placeholder="Enter a topic" {...field} className="text-text" />
                     </FormControl>
-                    <FormDescription>
+                    <FormDescription className="text-text">
                       Please provide any topic you would like to be quizzed on here.
                     </FormDescription>
                     <FormMessage />
@@ -172,7 +174,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                 name="subject"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Subject</FormLabel>
+                    <FormLabel className="text-text">Subject</FormLabel>
                     <FormControl>
                       <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a subject</option>
@@ -184,7 +186,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                         ))}
                       </select>
                     </FormControl>
-                    <FormDescription>
+                    <FormDescription className="text-text">
                       Please select the subject for the quiz.
                     </FormDescription>
                     <FormMessage />
@@ -197,7 +199,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                 render={({ field }) => (
                   <FormItem>
                     <div className=" ">
-                    <FormLabel className="pr-5">Choose a file</FormLabel>
+                    <FormLabel className="pr-5 text-text">Choose a file</FormLabel>
                     <FormControl>
                       <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a file</option>
@@ -209,7 +211,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                       </select>
                     </FormControl>
                     </div>
-                    <FormDescription>
+                    <FormDescription className="text-text">
                       Select a file for the quiz based on the chosen subject.
                     </FormDescription>
                     <FormMessage />
@@ -222,7 +224,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                 render={({ field }) => (
                   <FormItem>
                     <div className=" ">
-                    <FormLabel className="pr-5">Choose a class</FormLabel>
+                    <FormLabel className="pr-5 text-text">Choose a class</FormLabel>
                     <FormControl>
                       <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a class</option>
@@ -233,7 +235,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                       </select>
                     </FormControl>
                     </div>
-                    <FormDescription>
+                    <FormDescription className="text-text">
                       Select a class for the activity based on the chosen topic and file.
                     </FormDescription>
                     <FormMessage />
@@ -245,7 +247,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                 name="amount"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Number of Questions</FormLabel>
+                    <FormLabel className="text-text">Number of Questions</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="How many questions?"
@@ -258,7 +260,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                         max={10}
                       />
                     </FormControl>
-                    <FormDescription>
+                    <FormDescription className="text-text">
                       You can choose how many questions you would like to be
                       quizzed on here.
                     </FormDescription>
@@ -272,7 +274,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                   variant={
                     selectedType === "mcq" ? "default" : "destructive"
                   }
-                  className={`w-1/2 rounded-none rounded-l-lg ${
+                  className={`w-1/2 rounded-none rounded-l-lg text-text ${
                     selectedType === "mcq" ? "text-green-500 font-extrabold" : ""
                   }`}
                   onClick={() => {
@@ -290,7 +292,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                       ? "default"
                       : "secondary"
                   }
-                  className={`w-1/2 rounded-none rounded-l-lg ${
+                  className={`w-1/2 rounded-none rounded-l-lg text-text ${
                     selectedType === "open_ended" ? "text-green-500 font-extrabold" : ""
                   }`}
                   onClick={() => {
@@ -306,6 +308,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                 Submit
               </Button>
             </form>
+            <p>{error}</p>
           </Form>
         </CardContent>
       </Card>

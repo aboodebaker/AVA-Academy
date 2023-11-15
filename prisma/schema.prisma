@@ -155,6 +155,7 @@ enum ActivityType {
 
 model Activity {
   id          String             @id @default(auto()) @map("_id") @db.ObjectId
+  uniqueId    String
   userId      String             @db.ObjectId
   questions   QuestionActivity[]
   timeStarted DateTime
@@ -162,10 +163,11 @@ model Activity {
   timeEnded   DateTime?
   gameType    ActivityType
   summary     String?
+  mpoints     String?
   noteId      String?            @db.ObjectId
-  fileId      String?            @db.ObjectId
+  fileId      String             @db.ObjectId
   user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  file        Files?             @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  file        Files              @relation(fields: [fileId], references: [id], onDelete: Cascade)
   note        Notes?             @relation(fields: [noteId], references: [id], onDelete: Cascade)
   Question    Question[]
 

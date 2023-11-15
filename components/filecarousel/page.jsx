@@ -13,10 +13,11 @@ import { useState } from 'react';
 import {Card, CardBody, CardFooter, Image} from "@nextui-org/react";
 import './stylecopy.css'
 import { useEffect } from 'react';
+import ActivityCard from "./activitycard";
 
 const { format } = require('date-fns');
 
-const ClassCard = ({title, link,  date, height, clip, divId, selectedFile}) => {
+const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activities}) => {
   
   const [fdate, setFDate] = useState('')
   useEffect(() => {
@@ -96,6 +97,15 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile}) => {
                     </Link>
                     {/* <h1>Have questions. Ask our AI based on your module</h1>
                     <button onClick={() => { router.push(`/chat/${height}`)}}>Chat with your module</button> */}
+                    <div className="scrolling-wrapper">
+                    {activities.slice().reverse().map((file, index) => (
+                  <div key={index} className="card">
+                    <Link href={`/activity/${file.gameType == 'open_ended' ? 'open-ended' : 'mcq'}/${file.id}`}>
+                      <ActivityCard title={file.topic} link={`/activity/${file.gameType}/${file.id}`} img={'/maths.png'} date={file.timeStarted} />
+                       </Link>   
+                  </div>
+                ))}
+                </div>
                   </DialogContent>
                 </Dialog>
                 

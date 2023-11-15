@@ -4,6 +4,8 @@ import ClassCard from './page.jsx';
 import './style.css'
 import Link from 'next/link';
 import { useEffect } from 'react';
+import { uploadToS3 } from '@/lib/s3'
+
 const FileCarasoul = ({ files }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFile, setSelectedFile] = useState('')
@@ -116,7 +118,7 @@ const handleSave = async (metaData, content, options) => {
         {filteredfiles.map((file, index) => (
           <div key={index} className="card">
             
-              <ClassCard title={file.pdfName} link={file.pdfUrl}  date={file.createdAt} height={file.id} clip={'title-clip'} divId={file.pdfName + index} selectedFile={handleFileChange} />
+              <ClassCard title={file.pdfName} link={file.pdfUrl}  date={file.createdAt} height={file.id} clip={'title-clip'} divId={file.pdfName + index} selectedFile={handleFileChange} activities={file.activities} />
                   
           </div>
         ))}

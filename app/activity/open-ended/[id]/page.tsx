@@ -1,7 +1,7 @@
 // @ts-nocheck
 import { PrismaClient } from '@prisma/client';
 import React from 'react'
-import Activity from '@/components/Activitys/Activity';
+import Activity from '@/components/Activitys/ActivitySOE';
 
 interface Props {
   params: {

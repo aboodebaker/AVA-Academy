@@ -6,7 +6,7 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 import OpenEnded from '@/components/OpenEndedActivity';
 import Adobe from '../adobefile/Adobe';
-import Summary from './summary';
+import Summary from './summaryS';
 
 interface Props {
   game: any;
@@ -17,9 +17,9 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Activity = ({ game, file }: Props) => {
   const layout = [
-    { i: 'a', x: 6, y: 0, w: 3, h: 11, },
-    { i: 'b', x: 0, y: 0, w: 6, h: 22, },
-    { i: 'c', x: 10, y: 0, w: 3, h: 22, isDraggable: false  },
+    { i: 'a', x: 6, y: 0, w: 4, h: 10, },
+    { i: 'b', x: 0, y: 0, w: 5, h: 20, },
+    { i: 'c', x: 10, y: 0, w: 2, h: 20,  },
   ];
 
   return (

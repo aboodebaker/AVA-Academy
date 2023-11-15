@@ -21,6 +21,9 @@ const page = async ({params}) => {
       subject: {
         equals: data
       }
+    },
+    include: {
+      activities:true
     }
   })
   const notes = await prisma.notes.findMany({
@@ -39,12 +42,14 @@ const page = async ({params}) => {
 
 
   return (
-  <div className={styles.container} id="adobe-dc-view">
+    <div  className='h-screen' id="adobe-dc-view">
+  <div className={styles.container }>
     <div className={styles.headertable}>
       <h1 className={styles.header}>{data}</h1>
     </div>
     <FileCarasoul files={files} />
     <Note notes={notes} />
+  </div>
   </div>
   )
 }

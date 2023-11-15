@@ -45,7 +45,7 @@ export default function RootLayout({
               <Sidebar /> 
             </div>
             <div className="inner">
-              <div  className="min-h-screen">
+              <div  className="min-h-screen" >
                 {children}
               </div>
             </div>

@@ -11,7 +11,16 @@ export async function POST(req: Request, res: Response) {
   try {
     
 
+    function getRandomInt(min, max) {
+      min = Math.ceil(min);
+      max = Math.floor(max);
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
 
+    var randomInteger = getRandomInt(1, 1000000000);
+
+    // Convert the random integer to a string
+    var uniqueId = randomInteger.toString();
 
     const body = await req.json();
     const { topic, type, amount, selectedFileId, classs } = quizCreationSchema.parse(body);
@@ -38,7 +47,7 @@ export async function POST(req: Request, res: Response) {
 
 
 
-    const messageContent =`You are a helpful AI that is able to generate a summary for this topic in the document: ${topic}`
+    const messageContent =`You are a helpful AI that is able to generate a summary, main points and background information for this topic in the document: ${topic}. Format it nicely with bold headings and neat paragraphs and bullet points.`
 
     const message = [{
         role: 'user',
@@ -84,6 +93,9 @@ export async function POST(req: Request, res: Response) {
     chatData = chatResponse.data;
     data = questionResponse.data;
 
+
+    console.log(data)
+
     // Continue with the rest of your code using chatData and questionData
     } catch (error:any) {
         // Handle errors here
@@ -101,11 +113,13 @@ export async function POST(req: Request, res: Response) {
         game = await prisma.activity.create({
                 data: {
                 userId: user.id,
+                uniqueId: uniqueId,
                 fileId: fileId,
                 topic: topic,
                 gameType: type,
                 timeStarted: new Date(),
-                summary: chatData.content
+                summary: chatData.content,
+
                 },
             });
         
@@ -158,11 +172,13 @@ export async function POST(req: Request, res: Response) {
         game = await prisma.activity.create({
                 data: {
                 userId: user.id,
+                uniqueId: uniqueId,
                 fileId: fileId,
                 topic: topic,
                 gameType: type,
                 timeStarted: new Date(),
-                summary: chatData.content
+                summary: chatData.content,
+
                 },
             });
 
