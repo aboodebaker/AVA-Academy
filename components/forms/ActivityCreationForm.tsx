@@ -101,11 +101,15 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
   const [subjectFiles, setSubjectFiles] = useState<Files[]>([]);
   
   useEffect(() => {
-    // Update the subjectFiles when the subject field changes
-    const selectedSubject = form.getValues("subject");
-    const filteredFiles = files.filter((file) => file.subject === selectedSubject);
-    setSubjectFiles(filteredFiles);
-  }, [form.getValues("subject"), files]);
+    const intervalId = setInterval(() => {
+      const selectedSubject = form.getValues("subject");
+      const filteredFiles = uniqueFiles.filter((file) => file.subject === selectedSubject);
+      setSubjectFiles(filteredFiles);
+    }, 500); // Run every 1 second
+
+    // Clear the interval when the component unmounts
+    return () => clearInterval(intervalId);
+  }, []);
 
 
 
@@ -129,9 +133,9 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
         setFinishedLoading(true);
         setTimeout(() => {
           if (form.getValues("type") === "mcq") {
-            router.push(`/teacher-platform/activity/mcq/${gameId}`);
+            router.push(`/teacher-platform/activities/mcq/${gameId}`);
           } else if (form.getValues("type") === "open_ended") {
-            router.push(`/teacher-platform/activity/open-ended/${gameId}`);
+            router.push(`/teacher-platform/activities/open-ended/${gameId}`);
           }
         }, 2000);
       },
@@ -203,7 +207,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                     <FormControl>
                       <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a file</option>
-                        {uniqueFiles.map((file, index) => (
+                        {subjectFiles.map((file, index) => (
                           <option key={index} value={file?.chatpdf}>
                             {file?.pdfName} Grade {file?.grade}
                           </option>

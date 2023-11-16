@@ -17,3 +17,23 @@
 .scrolling-wrapper::-webkit-scrollbar-thumb {
   background: var(--secondary);
 }
+
+.scrolling-wrappers {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+
+  .card {
+    display: inline-block;
+    width: 383px;
+    margin: 1rem;
+  }
+
+}
+.scrolling-wrappers::-webkit-scrollbar {
+  background: var(--background);
+}
+.scrolling-wrappers::-webkit-scrollbar-thumb {
+  background: var(--secondary);
+}

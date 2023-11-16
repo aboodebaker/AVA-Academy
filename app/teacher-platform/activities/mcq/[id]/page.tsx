@@ -1,4 +1,7 @@
+// @ts-nocheck
+import { PrismaClient } from '@prisma/client';
 import React from 'react'
+import Activity from '@/components/Activitys/ActivityM';
 
 interface Props {
   params: {
@@ -7,13 +10,28 @@ interface Props {
   };
 }
 
-
-const page = ({ params }: Props) => {
+const page = async ({ params }: Props) => {
     const data = decodeURIComponent(params.id);
+    const prisma = new PrismaClient()
+
+    const activity = await prisma.activity.findUnique({
+        where: {
+            id: data
+        },
+        include: {
+            questions: true,
+        }
+    })
+
+    const file = await prisma.files.findUnique({
+      where: {
+        id: activity?.fileId
+      }
+    })
 
 
   return (
-    <div>page</div>
+    <div><Activity game={activity} file={file}/></div>
   )
 }
 

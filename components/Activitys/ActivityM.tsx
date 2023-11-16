@@ -7,7 +7,8 @@ import 'react-resizable/css/styles.css';
 import OpenEnded from '@/components/OpenEndedActivity';
 import Adobe from '../adobefile/Adobe';
 import Summary from './summary';
-import OpenEndedTeacherEdit from './OpenEndedTeacherEdit';
+import MCQ from '../MCQActivity';
+import './style.css'
 
 interface Props {
   game: any;
@@ -25,17 +26,17 @@ const Activity = ({ game, file }: Props) => {
 
   const layouts = {
   lg: [
-    { i: 'a', x: 6, y: 0, w: 3, h: 11, isDraggable: false},
+    { i: 'a', x: 6, y: 0, w: 3, h: 11 },
     { i: 'b', x: 0, y: 0, w: 6, h: 22 },
     { i: 'c', x: 10, y: 0, w: 3, h: 22, isDraggable: false },
   ],
   md: [
-    { i: 'a', x: 0, y: 22, w: 10, h: 15, isDraggable: false },
+    { i: 'a', x: 6, y: 22, w: 10, h: 15 },
     { i: 'b', x: 0, y: 0, w: 6, h: 22 },
-    { i: 'c', x: 6, y: 0, w: 4, h: 11, isDraggable: false },
+    { i: 'c', x: 0, y: 0, w: 4, h: 11, isDraggable: false },
   ],
   sm: [
-    { i: 'a', x: 0, y: 22, w: 4, h: 11, isDraggable: false },
+    { i: 'a', x: 0, y: 22, w: 4, h: 11 },
     { i: 'b', x: 0, y: 0, w: 6, h: 10 },
     { i: 'c', x: 0, y: 11, w: 3, h: 10, isDraggable: false },
   ],
@@ -61,12 +62,10 @@ const Activity = ({ game, file }: Props) => {
       compactType="vertical"
     >
       <div key="a" className='border border-solid border-gray-500'>
-        <OpenEndedTeacherEdit game={game} />
+        <MCQ game={game} />
       </div>
       <div key="b" className='border border-solid border-gray-500'><Adobe file={file}/></div>
-      <div key="c" className='border border-solid border-gray-500 '>
-        <Summary summary={game.summary} id={game.uniqueId}/>
-      </div>
+      <div key="c" className='border border-solid border-gray-500 scrolling-wrappers'><Summary summary={game.summary} id={game.uniqueId}/></div>
     </ResponsiveGridLayout>
   );
 };

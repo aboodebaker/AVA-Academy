@@ -19,6 +19,7 @@ import axios from "axios";
 import { useToast } from "./ui/use-toast";
 import Link from "next/link";
 import { Input } from "./ui/input";
+import { pusherClient } from '@/lib/pusher';
 
 type Props = {
   game: Game & { questions: Pick<Question, "id" | "question" | "answer">[] };
@@ -29,15 +30,37 @@ const OpenEnded = ({ game }: Props) => {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [averagePercentage, setAveragePercentage] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
-  const currentQuestion = React.useMemo(() => {
-    return game.questions[questionIndex];
-  }, [questionIndex, game.questions]);
+  const [questions, setQuestions] = useState(game.questions)
+  const [currentQuestion, setCurrentQuestion] = useState(questions[questionIndex]);
+
+  useEffect(() => {
+    setCurrentQuestion(questions[questionIndex]);
+  }, [questionIndex, questions]);
+
+  useEffect(() => {
+      
+    pusherClient.subscribe(game.uniqueId)
+
+    pusherClient.bind('incoming-questions', (data: any) => {
+      console.log(data)
+      setQuestions([...data]);
+    })
+
+    return () => {
+      pusherClient.unsubscribe(game.uniqueId)
+    }
+
+  }, []);
+
   const { mutate: endGame } = useMutation({
     mutationFn: async () => {
       const payload: z.infer<typeof endGameSchema> = {
         gameId: game.id,
       };
-      const response = await axios.post(`/api/activities/endGame`, payload);
+      const response = await axios.post(`/api/activities/endGame`, payload, {
+        headers: {
+          'Content-Type': 'application/json',
+        }},);
       return response.data;
     },
   });
@@ -49,7 +72,10 @@ const OpenEnded = ({ game }: Props) => {
         questionId: currentQuestion.id,
         userInput: userAnswer, // User's entire answer
       };
-      const response = await axios.post(`/api/activities/checkAnswer`, payload);
+      const response = await axios.post(`/api/activities/checkAnswer`, payload, {
+        headers: {
+          'Content-Type': 'application/json',
+        }});
       return response.data;
     },
   });
@@ -162,7 +188,7 @@ const OpenEnded = ({ game }: Props) => {
             Redo
             </Button>
 
-        <iframe src={`/statistics/activity/${game.id}`} frameBorder="0" className="w-full h-full" ></iframe>
+
       </div>
     );
   }
@@ -206,7 +232,7 @@ const OpenEnded = ({ game }: Props) => {
           className="w-full max-w-2xl rounded"
         />
 
-        <div className="flex justify-center align-center">
+        <div className="flex justify-center align-center text-black">
             <Button
             variant="outline"
             className="m-4"

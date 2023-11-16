@@ -53,6 +53,7 @@ import { useMutation } from "@tanstack/react-query";
 import Text from "@tiptap/extension-text";
 import axios from "axios";
 import { useCompletion } from "ai/react";
+import './style.css'
 
 interface Props {
   summary: string;
@@ -112,8 +113,8 @@ const Summary: React.FC<Props> = ({ summary, id }: Props) => {
 
 
   return (
-    <>
-      <div className="flex bg-white">
+    <div className="scrolling-wrappers">
+      <div className="flex bg-white ">
         {editor && <TipTapMenuBar editor={editor} />}
       </div>
 
@@ -122,7 +123,7 @@ const Summary: React.FC<Props> = ({ summary, id }: Props) => {
       </div>
       <div className="h-4"></div>
        <button className='generate-button' onClick={handleAutocompleteClick}>Autocomplete</button>
-    </>
+    </div>
   );
 };
 
