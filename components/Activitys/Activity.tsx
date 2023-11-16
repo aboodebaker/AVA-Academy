@@ -8,6 +8,7 @@ import OpenEnded from '@/components/OpenEndedActivity';
 import Adobe from '../adobefile/Adobe';
 import Summary from './summary';
 import OpenEndedTeacherEdit from './OpenEndedTeacherEdit';
+import './style.css'
 
 interface Props {
   game: any;
@@ -60,11 +61,11 @@ const Activity = ({ game, file }: Props) => {
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       compactType="vertical"
     >
-      <div key="a" className='border border-solid border-gray-500'>
+      <div key="a" className='border border-solid border-gray-500 scrolling-wrapper'>
         <OpenEndedTeacherEdit game={game} />
       </div>
-      <div key="b" className='border border-solid border-gray-500'><Adobe file={file}/></div>
-      <div key="c" className='border border-solid border-gray-500 '>
+      <div key="b" className='border border-solid border-gray-500 '><Adobe file={file}/></div>
+      <div key="c" className='border border-solid border-gray-500 scrolling-wrapper'>
         <Summary summary={game.summary} id={game.uniqueId}/>
       </div>
     </ResponsiveGridLayout>

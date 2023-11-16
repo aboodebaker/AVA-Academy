@@ -17,11 +17,21 @@ const OpenEndedTeacherEdit: React.FC<Props> = ({ game }: Props) => {
     game.questions.map((q:any) => q.answer)
   );
 
+  const [ca, setCa] = useState(() =>
+    game.questions.map((q:any) => q.canAnswer)
+  );
+
   const handleQuestionChange = (index: number, value: string) => {
     const newQuestions = [...questions];
     newQuestions[index] = value;
     setQuestions(newQuestions);
   };
+  const handleCaChange = (index: number, isChecked: boolean) => {
+  const newCa = [...ca];
+  newCa[index] = isChecked;
+  setCa(newCa);
+}
+
 
   const handleAnswerChange = (index: number, value: string) => {
     const newAnswers = [...answers];
@@ -38,6 +48,7 @@ const OpenEndedTeacherEdit: React.FC<Props> = ({ game }: Props) => {
         ...q,
         question: questions[index],
         answer: answers[index],
+        canAnswer: ca[index]
         }));
 
     axios.post('/api/updateQuestionsOE', {input: updatedQuestions, id,})
@@ -66,6 +77,14 @@ return (
               className="mt-1 p-2 border border-text rounded-md w-full text-text bg-background"
             />
           </div>
+          <label>
+            <input
+            type="checkbox"
+            checked={ca[index]}
+            onChange={(e) => handleCaChange(index, e.target.checked)}
+            />
+            Enable Question
+        </label>
         </div>
       ))}
       <button type="submit" className="py-2 px-4 rounded-md bg-primary text-white">

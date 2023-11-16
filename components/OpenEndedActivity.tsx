@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import { cn, formatTimeDelta } from "@/lib/utils";
 import { Game, Question } from "@prisma/client";
@@ -122,13 +123,14 @@ const OpenEnded = ({ game }: Props) => {
   const handleNext = useCallback(() => {
     checkAnswer(undefined, {
       onSuccess: ({ percentageSimilar }) => {
+        if (questions[questionIndex + 1]?.canAnswer) {
         toast({
           title: `Your answer is ${percentageSimilar}% similar to the correct answer`,
         });
         setAveragePercentage((prev) => {
           return (prev + percentageSimilar) / (questionIndex + 1);
         });
-        if (questionIndex === game.questions.length - 1) {
+        
           endGame();
           setHasEnded(true);
           const dataToSave = {
@@ -142,15 +144,8 @@ const OpenEnded = ({ game }: Props) => {
         }
         setQuestionIndex((prev) => prev + 1);
         setUserAnswer(""); // Clear user's answer for the next question
-      },
-      onError: (error) => {
-        console.error(error);
-        toast({
-          title: "Something went wrong",
-          variant: "destructive",
-        });
-      },
-    });
+      }},
+      );
   }, [checkAnswer, questionIndex, toast, endGame, game.questions.length]);
 
   useEffect(() => {
@@ -194,7 +189,10 @@ const OpenEnded = ({ game }: Props) => {
   }
 
   return (
+    
     <div className="">
+      {questionIndex < questions.length && questions[questionIndex]?.canAnswer ? (
+        <div>
       <div className="flex flex-row justify-between">
         <div className="flex flex-col w-1/2">
           <p>
@@ -233,15 +231,17 @@ const OpenEnded = ({ game }: Props) => {
         />
 
         <div className="flex justify-center align-center text-black">
-            <Button
-            variant="outline"
-            className="m-4"
-            disabled={isChecking || hasEnded}
-            onClick={handleNext}
-            >
-            {isChecking && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-            Next <ChevronRight className="w-4 h-4 ml-2" />
-            </Button>
+                    
+              <Button
+                variant="outline"
+                className="m-4"
+                disabled={isChecking || hasEnded}
+                onClick={handleNext}
+              >
+                {isChecking && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                Next <ChevronRight className="w-4 h-4 ml-2" />
+              </Button>
+            
             <Button
             variant="outline"
             className="m-4"
@@ -252,7 +252,14 @@ const OpenEnded = ({ game }: Props) => {
 
         </div>
       </div>
+      </div>
+      ) : (
+              <div className="m-4 text-red-500">
+                You cannot answer the next question yet.
+              </div>
+            )}
     </div>
+    
   );
 };
 

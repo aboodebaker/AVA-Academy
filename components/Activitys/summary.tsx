@@ -113,7 +113,7 @@ const Summary: React.FC<Props> = ({ summary, id }: Props) => {
 
 
   return (
-    <div className="scrolling-wrappers">
+    <div className="scrolling-wrapper">
       <div className="flex bg-white ">
         {editor && <TipTapMenuBar editor={editor} />}
       </div>

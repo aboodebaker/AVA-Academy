@@ -185,6 +185,7 @@ model QuestionActivity {
   isCorrect         Boolean? // for mcq questions
   questionType      GameType
   userAnswer        String?
+  canAnswer         Boolean  @default(true)
 
   activity Activity @relation(fields: [activityId], references: [id])
 

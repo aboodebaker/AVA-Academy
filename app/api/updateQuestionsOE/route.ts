@@ -49,6 +49,8 @@ try {
                 userAnswer: input[i].userAnswer,
             }
         })
+
+        console.log(update)
     }
 
   return new Response(JSON.stringify({ success: true }));
