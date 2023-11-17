@@ -37,7 +37,7 @@ const NotebookPage = async ({ params: { noteId } }: Props) => {
     <div className="min-h-screen  p-8">
       <div className="max-w-4xl mx-auto">
         <div className="border shadow-xl border-stone-200 rounded-lg p-4 flex items-center bg-white">
-          <Link href="/dashboard">
+          <Link href="/notes">
             <Button className="bg-green-600" size="sm">
               Back
             </Button>

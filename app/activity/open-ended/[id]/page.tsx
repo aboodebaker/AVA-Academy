@@ -28,12 +28,14 @@ const page = async ({ params }: Props) => {
         id: activity?.fileId
       }
     })
+    console.log(activity?.noteId)
     if (activity?.noteId !== null) {
     const note = await prisma.notes.findUnique({
       where: {
         id: activity?.noteId
       }
     })
+    console.log(note)
     return (
     <div><Activity game={activity} file={file} note={note}/></div>
   )
@@ -46,7 +48,9 @@ const page = async ({ params }: Props) => {
       where: {
         subject: file?.subject
       }
-    })
+      
+    }
+    )
   
     
   return (

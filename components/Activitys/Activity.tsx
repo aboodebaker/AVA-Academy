@@ -10,6 +10,9 @@ import Summary from './summary';
 import OpenEndedTeacherEdit from './OpenEndedTeacherEdit';
 import './style.css'
 import Notes from './Notes';
+import { useState } from 'react';
+import axios from 'axios'
+import { useEffect } from 'react';
 
 interface Props {
   game: any;
@@ -19,6 +22,27 @@ interface Props {
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 const Activity = ({ game, file }: Props) => {
+
+  const [isStudentOnline, setIsStudentOnline] = useState(false);
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+  const checkStudentOnlineStatus = async () => {
+    try {
+      const response = await axios.post('/api/check-online-status', {channel: game.uniqueId});
+      setIsStudentOnline(response.data);
+      console.log(response.data)
+    } catch (error) {
+      console.error('Error checking online status:', error);
+    }
+  };
+  checkStudentOnlineStatus()
+  }, 500); 
+
+
+      return () => clearInterval(intervalId);
+    }, []);
+
+
   const layout = [
     { i: 'a', x: 6, y: 0, w: 3, h: 11, },
     { i: 'b', x: 0, y: 0, w: 6, h: 22, },

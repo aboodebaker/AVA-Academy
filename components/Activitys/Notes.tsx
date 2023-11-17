@@ -5,21 +5,24 @@ import ClassCard from './page';
 import './style.css'
 import Link from 'next/link';
 import TipTapEditor from '../TipTapEditor';
-import CreateNoteDialog from '../CreateNoteDialog';
+import CreateNoteDialog from '../CreateNoteDialogActivity';
 import { useEffect } from 'react';
 import axios from 'axios';
 
 type Props = {
     notes?:any
     note?:any
+    activityId: string
 }
 
-const Notes = ({ notes, note }:Props) => {
-    if (notes) {
+const Notes = ({ notes, note, activityId }:Props) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const [note, setNote] = useState('')
+  const [notess, setNote] = useState('')
   const [once, setOnce] = useState(0)
   const [actualNote, setActualNote] = useState(null)
+  console.log(note)
+    if (notes) {
+
 
   const filteredNotes = notes.filter((note:any) =>
     note.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -29,8 +32,8 @@ const Notes = ({ notes, note }:Props) => {
   'Content-Type': 'application/json', // Adjust the content type based on your needs
 };
 useEffect(() => {
-  if (note !== '') {
-    axios.post('/api/setnotes', { note: note }, { headers })
+  if (notess !== '') {
+    axios.post('/api/setnotes', { note: notess, activityId }, { headers })
       .then(response => {
         setActualNote(response.data.note);
       })
@@ -69,7 +72,7 @@ useEffect(() => {
       </svg>
       </div>
       </div>
-      <CreateNoteDialog />
+      <CreateNoteDialog setter={setNote} />
       </div>
       <div className="scrolling-wrapper">
         {filteredNotes.map((note:any, index:number) => (
@@ -81,7 +84,8 @@ useEffect(() => {
         ))}
       </div>
       </div>
-      ) : (<TipTapEditor note={actualNote}/>)}
+      ) : 
+      (<TipTapEditor note={actualNote}/>)}
     </div>
          
   );

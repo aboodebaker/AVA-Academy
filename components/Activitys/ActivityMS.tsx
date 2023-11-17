@@ -12,7 +12,9 @@ import Notes from './Notes';
 import { useEffect } from 'react';
 import Pusher from 'pusher-js';
 import { pusherClient } from '@/lib/pusher';
+import MCQ from '../MCQActivity';
 import './style.css'
+
 interface Props {
   game: any;
   file: any;
@@ -91,7 +93,7 @@ const Activity = ({ game, file, notes, note }: Props) => {
       compactType="vertical"
     >
       <div key="a" className='border border-solid border-gray-500 scrolling-wrapper'>
-        <OpenEnded game={game} />
+        <MCQ game={game} />
       </div>
       <div key="b" className='border border-solid border-gray-500'><Adobe file={file}/></div>
       <div key="c" className='border border-solid border-gray-500 scrolling-wrapper'><Summary summary={game.summary} id={game.uniqueId}/></div>

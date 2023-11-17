@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import { Game, Question } from "@prisma/client";
 import React from "react";
@@ -18,6 +19,8 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { z } from "zod";
 import { useToast } from "./ui/use-toast";
+import { useState, useEffect } from "react";
+import { pusherClient } from "@/lib/pusher";
 
 type Props = {
   game: Game & { questions: Pick<Question, "id" | "options" | "question">[] };
@@ -33,9 +36,27 @@ const MCQ = ({ game }: Props) => {
   const [selectedChoice, setSelectedChoice] = React.useState<number>(0);
   const [now, setNow] = React.useState(new Date());
 
-  const currentQuestion = React.useMemo(() => {
-    return game.questions[questionIndex];
-  }, [questionIndex, game.questions]);
+  const [questions, setQuestions] = useState(game.questions)  
+  const [currentQuestion, setCurrentQuestion] = useState(questions[questionIndex]);
+
+  useEffect(() => {
+    setCurrentQuestion(questions[questionIndex]);
+  }, [questionIndex, questions]);
+
+  useEffect(() => {
+      
+    pusherClient.subscribe(game.uniqueId)
+
+    pusherClient.bind('incoming-questions', (data: any) => {
+      console.log(data)
+      setQuestions([...data]);
+    })
+
+    return () => {
+      pusherClient.unsubscribe(game.uniqueId)
+    }
+
+  }, []);
 
   const options = React.useMemo(() => {
     if (!currentQuestion) return [];
@@ -109,6 +130,7 @@ const MCQ = ({ game }: Props) => {
   const handleNext = React.useCallback(() => {
     checkAnswer(undefined, {
       onSuccess: ({ isCorrect }) => {
+        if (questions[questionIndex + 1]?.canAnswer) {
         if (isCorrect) {
           setStats((stats) => ({
             ...stats,
@@ -136,7 +158,7 @@ const MCQ = ({ game }: Props) => {
           return;
         }
         setQuestionIndex((questionIndex) => questionIndex + 1);
-      },
+      }},
     });
   }, [checkAnswer, questionIndex, game.questions.length, toast, endGame]);
 
@@ -168,6 +190,7 @@ const MCQ = ({ game }: Props) => {
     return (
       
       <div className="absolute flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+        
         <MCQCounter
           correct_answers={stats.correct_answers}
           wrong_answers={stats.wrong_answers}
@@ -188,7 +211,9 @@ const MCQ = ({ game }: Props) => {
   }
 
   return (
-    <div className="absolute -translate-x-1/2 -translate-y-1/2 md:w-[80vw] max-w-4xl w-[90vw] top-1/2 left-1/2">
+    <div className=" max-w-4xl text-black">
+      {questionIndex < questions.length && questions[questionIndex]?.canAnswer ? (
+        <div>
       <div className="flex flex-row justify-between">
         <div className="flex flex-col">
           {/* topic */}
@@ -227,11 +252,11 @@ const MCQ = ({ game }: Props) => {
             <Button
               key={option}
               variant={selectedChoice === index ? "default" : "outline"}
-              className="justify-start w-full py-8 mb-4"
+              className="justify-start w-full py-8 mb-4 text-black"
               onClick={() => setSelectedChoice(index)}
             >
               <div className="flex items-center justify-start">
-                <div className="p-2 px-3 mr-5 border rounded-md">
+                <div className="p-2 px-3 mr-5 border rounded-md" text-black>
                   {index + 1}
                 </div>
                 <div className="text-start">{option}</div>
@@ -242,7 +267,7 @@ const MCQ = ({ game }: Props) => {
         <div className="flex justify-center align-center">
             <Button
             variant="default"
-            className="mt-2"
+            className="mt-2 text-black"
             size="lg"
             disabled={isChecking || hasEnded}
             onClick={() => {
@@ -262,6 +287,32 @@ const MCQ = ({ game }: Props) => {
             </Button>
         </div>
       </div>
+      </div>
+      ) : (
+        <div><div className="flex flex-row justify-between">
+        <div className="flex flex-col">
+          {/* topic */}
+          <p>
+            <span className="text-slate-400">Topic</span> &nbsp;
+            <span className="px-2 py-1 text-white rounded-lg bg-slate-800">
+              {game.topic}
+            </span>
+          </p>
+          <div className="flex self-start mt-3 text-slate-400">
+            <Timer className="mr-2" />
+            {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
+          </div>
+        </div>
+        <MCQCounter
+          correct_answers={stats.correct_answers}
+          wrong_answers={stats.wrong_answers}
+        />
+      </div>
+              <div className="m-4 text-red-500">
+                You cannot answer the next question yet.
+              </div>
+              </div>
+            )}
     </div>
   );
 };

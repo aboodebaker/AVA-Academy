@@ -27,7 +27,7 @@ module.exports = {
         'background-end-rgb': "var(--background-end-rgb)",
         text: "var(--text)",
         background: "var(--background)",
-        'primary': "var(--primary)",
+        primary: "var(--primary)",
         secondary: "var(--secondary)",
         'accent': "var(--accent)",
         'backgroundAccent': 'rgba(255, 255, 255, 0.04)',

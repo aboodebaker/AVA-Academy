@@ -39,7 +39,8 @@ const ClassCard = ({title, link, img, date, id,  clip}) => {
               </div>
               <div className="everythingbox">
                 <p className="dates">{fdate}</p>
-                <button className="bux" onClick={link(id)}>Link</button>
+                <button className="bux" onClick={() => link(id)}>Link</button>
+
                 
               </div>
             </div>
