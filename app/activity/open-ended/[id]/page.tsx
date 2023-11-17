@@ -28,11 +28,34 @@ const page = async ({ params }: Props) => {
         id: activity?.fileId
       }
     })
-
-
-  return (
-    <div><Activity game={activity} file={file}/></div>
+    if (activity?.noteId !== null) {
+    const note = await prisma.notes.findUnique({
+      where: {
+        id: activity?.noteId
+      }
+    })
+    return (
+    <div><Activity game={activity} file={file} note={note}/></div>
   )
 }
+  
+
+
+    if (activity?.noteId == null) {
+    const notes = await prisma.notes.findMany({
+      where: {
+        subject: file?.subject
+      }
+    })
+  
+    
+  return (
+    <div><Activity game={activity} file={file} notes={notes}/></div>
+  )
+  }
+}
+
+
+
 
 export default page

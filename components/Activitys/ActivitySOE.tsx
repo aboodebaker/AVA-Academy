@@ -7,31 +7,28 @@ import 'react-resizable/css/styles.css';
 import OpenEnded from '@/components/OpenEndedActivity';
 import Adobe from '../adobefile/Adobe';
 import Summary from './summaryS';
-
+import Notes from './Notes';
 interface Props {
   game: any;
   file: any;
+  notes: any;
 }
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const Activity = ({ game, file }: Props) => {
-    const layout = [
-    { i: 'a', x: 6, y: 0, w: 3, h: 11, },
-    { i: 'b', x: 0, y: 0, w: 6, h: 22, },
-    { i: 'c', x: 10, y: 0, w: 3, h: 22, isDraggable: false  },
-  ];
-
-  const layouts = {
+const Activity = ({ game, file, notes }: Props) => {
+      const layouts = {
   lg: [
     { i: 'a', x: 6, y: 0, w: 3, h: 11, isDraggable: false},
     { i: 'b', x: 0, y: 0, w: 6, h: 22 },
     { i: 'c', x: 10, y: 0, w: 3, h: 22, isDraggable: false },
+    { i: 'd', x: 6, y: 11, w: 3, h: 11, isDraggable: false },
   ],
   md: [
-    { i: 'a', x: 0, y: 22, w: 10, h: 15, isDraggable: false },
+    { i: 'a', x: 0, y: 22, w: 5, h: 15, isDraggable: false },
     { i: 'b', x: 0, y: 0, w: 6, h: 22 },
     { i: 'c', x: 6, y: 0, w: 4, h: 11, isDraggable: false },
+    { i: 'd', x: 5, y: 22, w: 5, h: 15, isDraggable: false },
   ],
   sm: [
     { i: 'a', x: 0, y: 22, w: 4, h: 11, isDraggable: false },
@@ -47,6 +44,7 @@ const Activity = ({ game, file }: Props) => {
     { i: 'a', x: 0, y: 22, w: 2, h: 5 },
     { i: 'b', x: 0, y: 0, w: 2, h: 5 },
     { i: 'c', x: 0, y: 11, w: 2, h: 5, isDraggable: false },
+    
   ],
 };
 
@@ -64,6 +62,7 @@ const Activity = ({ game, file }: Props) => {
       </div>
       <div key="b" className='border border-solid border-gray-500'><Adobe file={file}/></div>
       <div key="c" className='border border-solid border-gray-500'><Summary summary={game.summary} id={game.uniqueId}/></div>
+      <div key={'d'}><Notes notes={notes}/></div>
     </ResponsiveGridLayout>
   );
 };

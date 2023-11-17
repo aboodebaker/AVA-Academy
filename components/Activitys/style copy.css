@@ -1,0 +1,98 @@
+.border {
+    border-radius: 0.625rem;
+
+box-shadow: 6px 6px 8px 1px var(--boxshadow), -1px -1px 4px 0px var(--boxshadow);
+
+}
+.bux {
+    border-radius: 10px;
+background: var(--primary);
+padding: 4px 34px;
+color: #FFF;
+
+font-size: 28px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.56px;
+}
+.title {
+    font-size: 40px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.05rem;
+padding: 1.5rem;
+color: var(--text);
+
+}
+.title-clip {
+    font-size: 40px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+letter-spacing: -0.05rem;
+padding: 1.5rem;
+color: var(--text);
+ overflow: hidden;
+  white-space: nowrap;
+  text-overflow:ellipsis;
+  max-width: 350px;
+}
+
+
+.flexing {
+display: flex;
+flex-direction: column;
+width: 100%;
+}
+
+.titlebox {
+    color: var(--text);
+    display: flex;
+    justify-content: left;
+}
+.everythingbox {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.dates {
+    font-size: 24px;
+
+font-weight: 200;
+line-height: normal;
+letter-spacing: -0.4px;
+color: var(--text);
+}
+
+@media only screen and (max-width: 800px) {
+    .title {
+        font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.05rem;
+    padding: 1.5rem;
+    }
+    .bux {
+        padding: 2px 24px;
+        font-size: 24px;
+    }
+}
+
+@media only screen and (max-width: 2000px) {
+    .title {
+        font-size: 56px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.05rem;
+    padding: 1.5rem;
+    }
+    .bux {
+        padding: 8px 36px;
+        font-size: 36px;
+    }
+}

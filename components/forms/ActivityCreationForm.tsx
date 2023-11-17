@@ -147,7 +147,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
   }
 
   return (
-    <div className='col m-2 '>
+    <div className='col m-2 text-text bg-background'>
     <div className='flex justify-center align-center w-[800]'>
       <Card>
         <CardHeader>
@@ -179,12 +179,12 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel className="text-text">Subject</FormLabel>
-                    <FormControl>
-                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
+                    <FormControl className="bg-background">
+                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-background rounded-md shadow-sm focus:outline-none focus:ring text-black focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a subject</option>
                         {/* Add options for subjects based on your data */}
                         {uniqueSubjects.map((subject, index) => (
-                          <option key={index} value={subject}>
+                          <option key={index} value={subject} className="text-black">
                             {subject}
                           </option>
                         ))}

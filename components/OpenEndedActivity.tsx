@@ -164,7 +164,7 @@ const OpenEnded = ({ game }: Props) => {
   if (hasEnded) {
     return (
       <div className="flex flex-col justify-center">
-        <div className="px-4 py-2 mt-2 font-semibold text-white bg-green-500 rounded-md whitespace-nowrap">
+        <div className="px-4 py-2 mt-2 font-semibold text-black bg-green-500 rounded-md whitespace-nowrap">
           You Completed in{" "}
           {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
         </div>
@@ -177,7 +177,7 @@ const OpenEnded = ({ game }: Props) => {
         </Link>
                     <Button
             variant="outline"
-            className="m-4"
+            className="m-4 text-black"
             onClick={handleRedo}
             >
             Redo
@@ -190,7 +190,7 @@ const OpenEnded = ({ game }: Props) => {
 
   return (
     
-    <div className="">
+    <div className="text-black">
       {questionIndex < questions.length && questions[questionIndex]?.canAnswer ? (
         <div>
       <div className="flex flex-row justify-between">
@@ -234,7 +234,7 @@ const OpenEnded = ({ game }: Props) => {
                     
               <Button
                 variant="outline"
-                className="m-4"
+                className="m-4 text-black"
                 disabled={isChecking || hasEnded}
                 onClick={handleNext}
               >
@@ -244,7 +244,7 @@ const OpenEnded = ({ game }: Props) => {
             
             <Button
             variant="outline"
-            className="m-4"
+            className="m-4 text-black"
             onClick={handleRedo}
             >
             Redo
