@@ -60,7 +60,7 @@ const session = await getServerSession(authOptions);
   
     
   return (
-    <div><Activity game={activity} file={file} notes={notes}/></div>
+    <div><Activity game={activity} file={file} notes={notes} userId={userId}/></div>
   )
   }
 }

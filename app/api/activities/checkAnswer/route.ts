@@ -9,21 +9,13 @@ import { PrismaClient } from '@prisma/client'
 
 export async function POST(req: Request, res: Response) {
   try {
-    const body = await req.json();
-    const { questionId, userInput, userId } = checkAnswerSchema.parse(body);
+    const { questionId, userInput, userId, questionNo } = await req.json();
+
     const question = await prisma.questionActivity.findUnique({
       where: { id: questionId },
     });
-    const activity = await prisma.activity.findUnique({
-      where: {
-        questions: {
-          some: {
-            id: questionId
-          }
-        }
-      }
-    })
-    console.log(activity)
+
+
     if (!question) {
       return NextResponse.json(
         {
@@ -41,15 +33,21 @@ export async function POST(req: Request, res: Response) {
     if (question.questionType === "mcq") {
       const isCorrect =
         question.answer.toLowerCase().trim() === userInput.toLowerCase().trim();
+        console.log(isCorrect)
       await prisma.questionActivity.update({
         where: { id: questionId },
         data: { isCorrect },
       });
-      pusherServer.trigger(activity?.uniqueId, 'incoming-student-answers', {userId: userId, isCorrect: isCorrect});
+      pusherServer.trigger(userId, 'incoming-student-answers', {question: questionNo, correctAnswer: isCorrect});
       return NextResponse.json({
-        isCorrect,
+        isCorrect: isCorrect,
       });
-    } else if (question.questionType === "open_ended") {
+
+
+    } 
+    
+    
+    else if (question.questionType === "open_ended") {
       let percentageSimilar = stringSimilarity.compareTwoStrings(
         question.answer.toLowerCase().trim(),
         userInput.toLowerCase().trim()

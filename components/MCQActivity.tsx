@@ -70,13 +70,26 @@ const MCQ =  ({ game, userId}: Props) => {
   const { toast } = useToast();
   const { mutate: checkAnswer, isLoading: isChecking } = useMutation({
     mutationFn: async () => {
-      const payload: z.infer<typeof checkAnswerSchema> = {
+      const payload = {
         questionId: currentQuestion.id,
         userInput: options[selectedChoice],
         userId: userId,
+        questionNo: questionIndex,
       };
-      const response = await axios.post(`/api/activities/checkAnswer`, payload);
-      return response.data;
+      const headers = {
+
+  'Content-Type': 'application/json',
+};
+console.log(userId)
+      const response = await fetch(`/api/activities/checkAnswer`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: headers
+      });
+      
+      const responseJson = await response.json()
+      console.log(responseJson)
+      return responseJson;
     },
   });
 
