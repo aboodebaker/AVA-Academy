@@ -126,12 +126,12 @@ const OpenEnded = ({ game }: Props) => {
       <div className="flex flex-row justify-between">
         <div className="flex flex-col w-1/2">
           <p>
-            <span className="text-slate-400">Topic</span> &nbsp;
+            <span className="text-text">Topic</span> &nbsp;
             <span className="px-2 py-1 text-white rounded-lg bg-slate-800">
               {game.topic}
             </span>
           </p>
-          <div className="flex self-start mt-3 text-slate-400">
+          <div className="flex self-start mt-3 text-text">
             <Timer className="mr-2" />
             {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
           </div>
@@ -140,13 +140,13 @@ const OpenEnded = ({ game }: Props) => {
       </div>
       <Card className=" mt-4">
         <CardHeader className="flex flex-row items-center">
-          <CardTitle className="mr-5 text-center divide-y divide-zinc-600/50">
+          <CardTitle className="mr-5 text-center divide-y divide-text text-text">
             <div>{questionIndex + 1}</div>
-            <div className="text-base text-slate-400">
+            <div className="text-base text-text">
               {game.questions.length}
             </div>
           </CardTitle>
-          <CardDescription className="flex-grow text-lg">
+          <CardDescription className="flex-grow text-lg text-text">
             {currentQuestion?.question}
           </CardDescription>
         </CardHeader>
@@ -157,11 +157,11 @@ const OpenEnded = ({ game }: Props) => {
           type="text"
           value={userAnswer}
           onChange={(e) => setUserAnswer(e.target.value)}
-          className="w-full max-w-2xl rounded"
+          className="w-full max-w-2xl rounded bg-background text-text"
         />
         <Button
           variant="outline"
-          className="mt-4"
+          className="mt-4 border border-text"
           disabled={isChecking || hasEnded}
           onClick={handleNext}
         >

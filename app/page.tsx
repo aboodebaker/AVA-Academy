@@ -4,6 +4,8 @@ import { PrismaClient } from "@prisma/client";
 import { getAuthSession } from "@/lib/nextauth";
 import { redirect } from "next/navigation";
 import Tables from "@/components/table/Table";
+import SignOutButton from "@/components/signOutButton";
+
 
 type Props = {};
 
@@ -21,6 +23,9 @@ const Dashboard = async (props: Props) => {
 
     return (
     <div className="grid grid-rows-2 grid-cols-6 gap-4 w-full h-full">
+      <div>
+        <SignOutButton/>
+      </div>
       <div className="row-span-1 col-span-2">02</div>
       <div className="row-span-1 col-span-2">02</div>
       <div className="row-span-1 col-span-4 m-2">

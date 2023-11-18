@@ -116,7 +116,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
 
   const onSubmit = async (data: Input) => {
     setShowLoader(true);
-    getQuestions({ ...data, selectedFileId: form.getValues("selectedFileId") }, {
+    getQuestions({ selectedFileId: form.getValues("selectedFileId"), type: form.getValues("type"), amount: form.getValues('amount'), topic: form.getValues('topic')  }, {
       onError: (error) => {
         setShowLoader(false);
         if (error instanceof AxiosError) {
@@ -146,11 +146,12 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
   }
 
   return (
-    <div className="absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+    <div className='flex justify-center align-center w-[800]'>
+      <div className='flex flex-col justify-center align-center '>
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Quiz Creation</CardTitle>
-          <CardDescription>Choose a topic and subject</CardDescription>
+          <CardDescription className="text-text">Choose a topic and subject</CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -160,11 +161,11 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                 name="topic"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Topic</FormLabel>
+                    <FormLabel className="text-text">Topic</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter a topic" {...field} />
+                      <Input placeholder="Enter a topic" {...field} className="text-text" />
                     </FormControl>
-                    <FormDescription>
+                    <FormDescription className="text-text">
                       Please provide any topic you would like to be quizzed on here.
                     </FormDescription>
                     <FormMessage />
@@ -176,10 +177,10 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                 name="subject"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Subject</FormLabel>
-                    <FormControl>
-                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
-                        <option value="">Select a subject</option>
+                    <FormLabel className="text-text">Subject</FormLabel>
+                    <FormControl className="bg-background text-text">
+                      <select {...field} className="mt-1  bg-background text-text  block w-full py-2 px-3 border border-text  rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
+                        <option value="" className="text-black">Select a subject</option>
                         {/* Add options for subjects based on your data */}
                         {files.map((file, index) => (
                           <option key={index} value={file.subject}>
@@ -188,7 +189,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                         ))}
                       </select>
                     </FormControl>
-                    <FormDescription>
+                    <FormDescription className="text-text">
                       Please select the subject for the quiz.
                     </FormDescription>
                     <FormMessage />
@@ -201,19 +202,19 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                 render={({ field }) => (
                   <FormItem>
                     <div className=" ">
-                    <FormLabel className="pr-5">Choose a file</FormLabel>
-                    <FormControl>
-                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
+                    <FormLabel className="pr-5 text-text">Choose a file</FormLabel>
+                    <FormControl className="text-text bg-background">
+                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-text bg-background text-text rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a file</option>
                         {subjectFiles.map((file) => (
-                          <option key={file.chatpdf} value={file.chatpdf}>
+                          <option key={file.chatpdf} value={file.chatpdf} className="text-black">
                             {file.pdfName}
                           </option>
                         ))}
                       </select>
                     </FormControl>
                     </div>
-                    <FormDescription>
+                    <FormDescription className="text-text">
                       Select a file for the quiz based on the chosen subject.
                     </FormDescription>
                     <FormMessage />
@@ -225,7 +226,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                 name="amount"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Number of Questions</FormLabel>
+                    <FormLabel className="text-text">Number of Questions</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="How many questions?"
@@ -236,9 +237,10 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                         }}
                         min={1}
                         max={10}
+                         className="text-text bg-background"
                       />
                     </FormControl>
-                    <FormDescription>
+                    <FormDescription className="text-text">
                       You can choose how many questions you would like to be
                       quizzed on here.
                     </FormDescription>
@@ -253,11 +255,12 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                     selectedType === "mcq" ? "default" : "destructive"
                   }
                   className={`w-1/2 rounded-none rounded-l-lg ${
-                    selectedType === "mcq" ? "text-green-500 font-extrabold" : ""
+                    selectedType === "mcq" ? "bg-primarys font-extrabold text-white" : "text-text border border-text"
                   }`}
                   onClick={() => {
                     setSelectedType("mcq");
                     form.setValue("type", "mcq"); // Update the selected type
+                    console.log(form.getValues('type'))
                   }}
                   type="button"
                 >
@@ -271,7 +274,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                       : "secondary"
                   }
                   className={`w-1/2 rounded-none rounded-l-lg ${
-                    selectedType === "open_ended" ? "text-green-500 font-extrabold" : ""
+                    selectedType === "open_ended" ? "bg-primarys font-extrabold text-white" : "text-text border border-text"
                   }`}
                   onClick={() => {
                     setSelectedType("open_ended");
@@ -282,13 +285,14 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                   <BookOpen className="w-4 h-4 mr-2" /> Open Ended
                 </Button>
               </div>
-              <Button disabled={isLoading} type="submit">
+              <Button disabled={isLoading} onClick={onSubmit} type="submit" className="text-text border border-text">
                 Submit
               </Button>
             </form>
           </Form>
         </CardContent>
       </Card>
+    </div>
     </div>
   );
 };

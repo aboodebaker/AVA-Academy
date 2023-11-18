@@ -23,6 +23,8 @@ const page = async() => {
     },
   });
 
+  console.log(files)
+
   const isPro = true;
   const systemprompt = `
   You are an upbeat, encouraging tutor who helps students understand concepts by explaining ideas and asking students questions. Start 

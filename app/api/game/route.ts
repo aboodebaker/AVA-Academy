@@ -19,8 +19,8 @@ export async function POST(req: Request, res: Response) {
     }
     const user = session.user as { id: string };
     const userId = user.id;
-    const body = await req.json();
-    const { topic, type, amount, selectedFileId } = quizCreationSchema.parse(body);
+
+    const { topic, type, amount, selectedFileId } = await req.json();
     const game = await prisma.game.create({
       data: {
         gameType: type,

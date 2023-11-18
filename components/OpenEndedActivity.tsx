@@ -190,18 +190,18 @@ const OpenEnded = ({ game }: Props) => {
 
   return (
     
-    <div className="text-black">
+    <div className="text-text">
       {questionIndex < questions.length && questions[questionIndex]?.canAnswer ? (
         <div>
       <div className="flex flex-row justify-between">
         <div className="flex flex-col w-1/2">
           <p>
-            <span className="text-slate-400">Topic</span> &nbsp;
+            <span className="text-text">Topic</span> &nbsp;
             <span className="px-2 py-1 text-white rounded-lg bg-slate-800">
               {game.topic}
             </span>
           </p>
-          <div className="flex self-start mt-3 text-slate-400">
+          <div className="flex self-start mt-3 text-text">
             <Timer className="mr-2" />
             {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
           </div>
@@ -210,13 +210,13 @@ const OpenEnded = ({ game }: Props) => {
       </div>
       <Card className=" mt-4">
         <CardHeader className="flex flex-row items-center">
-          <CardTitle className="mr-5 text-center divide-y divide-zinc-600/50">
+          <CardTitle className="mr-5 text-center divide-y divide-text">
             <div>{questionIndex + 1}</div>
-            <div className="text-base text-slate-400">
+            <div className="text-base text-text">
               {game.questions.length}
             </div>
           </CardTitle>
-          <CardDescription className="flex-grow text-lg">
+          <CardDescription className="flex-grow text-lg text-text">
             {currentQuestion?.question}
           </CardDescription>
         </CardHeader>
@@ -227,14 +227,14 @@ const OpenEnded = ({ game }: Props) => {
           type="text"
           value={userAnswer}
           onChange={(e) => setUserAnswer(e.target.value)}
-          className="w-full max-w-2xl rounded"
+          className="w-full max-w-2xl rounded bg- background text-text"
         />
 
         <div className="flex justify-center align-center text-black">
                     
               <Button
                 variant="outline"
-                className="m-4 text-black"
+                className="m-4 text-text border border-text"
                 disabled={isChecking || hasEnded}
                 onClick={handleNext}
               >
@@ -244,7 +244,7 @@ const OpenEnded = ({ game }: Props) => {
             
             <Button
             variant="outline"
-            className="m-4 text-black"
+            className="m-4 text-text border border-text "
             onClick={handleRedo}
             >
             Redo
@@ -258,13 +258,13 @@ const OpenEnded = ({ game }: Props) => {
         <div>
           <div>
           <p>
-            <span className="text-slate-400">Topic</span> &nbsp;
-            <span className="px-2 py-1 text-white rounded-lg bg-slate-800">
+            <span className="text-text-text">Topic</span> &nbsp;
+            <span className="px-2 py-1 text-white rounded-lg bg-text-text">
               {game.topic}
             </span>
           </p>
           
-          <div className="flex self-start mt-3 text-slate-400">
+          <div className="flex self-start mt-3 text-text-text">
             <Timer className="mr-2" />
             {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
           </div>

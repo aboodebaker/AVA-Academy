@@ -74,19 +74,19 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
               <div className="everythingbox">
                 <p className="dates">{fdate}</p>
                 
-                <Dialog>
+                <Dialog className="bg-background text-black">
                   <DialogTrigger>
                     <div>
                     <button className="bux">Options</button>
                   </div>
                   </DialogTrigger>
-                  <DialogContent className="bg-white">
-                    <DialogHeader>
+                  <DialogContent className="bg-background">
+                    <DialogHeader className="bg-background">
                       <DialogTitle>Here are some options for your PDF</DialogTitle>
                       <DialogDescription>
                         
                       </DialogDescription>
-                    </DialogHeader>
+                    </DialogHeader >
                     <h1>Have questions? Ask our AI that is based on your module</h1>
                     <Link href={`/chat/${height}`}>
                     <button className="bux-2">Chat with your module</button>
@@ -98,6 +98,7 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
                     {/* <h1>Have questions. Ask our AI based on your module</h1>
                     <button onClick={() => { router.push(`/chat/${height}`)}}>Chat with your module</button> */}
                     <div className="scrolling-wrapper">
+                      <h1>Activities</h1>
                     {activities.slice().reverse().map((file, index) => (
                   <div key={index} className="card">
                     <Link href={`/activity/${file.gameType == 'open_ended' ? 'open-ended' : 'mcq'}/${file.id}`}>

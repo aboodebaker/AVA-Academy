@@ -73,6 +73,7 @@ const MCQ =  ({ game, userId}: Props) => {
       const payload: z.infer<typeof checkAnswerSchema> = {
         questionId: currentQuestion.id,
         userInput: options[selectedChoice],
+        userId: userId,
       };
       const response = await axios.post(`/api/activities/checkAnswer`, payload);
       return response.data;
@@ -223,12 +224,12 @@ const MCQ =  ({ game, userId}: Props) => {
         <div className="flex flex-col">
           {/* topic */}
           <p>
-            <span className="text-slate-400">Topic</span> &nbsp;
+            <span className="text-text">Topic</span> &nbsp;
             <span className="px-2 py-1 text-white rounded-lg bg-slate-800">
               {game.topic}
             </span>
           </p>
-          <div className="flex self-start mt-3 text-slate-400">
+          <div className="flex self-start mt-3 text-text">
             <Timer className="mr-2" />
             {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
           </div>
@@ -242,16 +243,16 @@ const MCQ =  ({ game, userId}: Props) => {
         <CardHeader className="flex flex-row items-center">
           <CardTitle className="mr-5 text-center divide-y divide-zinc-600/50">
             <div>{questionIndex + 1}</div>
-            <div className="text-base text-slate-400">
+            <div className="text-base text-text">
               {game.questions.length}
             </div>
           </CardTitle>
-          <CardDescription className="flex-grow text-lg">
+          <CardDescription className="flex-grow text-lg text-text">
             {currentQuestion?.question}
           </CardDescription>
         </CardHeader>
       </Card>
-      <div className="flex flex-col items-center justify-center w-full mt-4">
+      <div className="flex flex-col items-center justify-center w-full mt-4 text-text">
         {options.map((option, index) => {
           return (
             <Button
@@ -272,7 +273,7 @@ const MCQ =  ({ game, userId}: Props) => {
         <div className="flex justify-center align-center">
             <Button
             variant="default"
-            className="mt-2 text-black"
+            className="mt-2 text-text border-text"
             size="lg"
             disabled={isChecking || hasEnded}
             onClick={() => {
@@ -285,7 +286,7 @@ const MCQ =  ({ game, userId}: Props) => {
 
             <Button
                 variant="outline"
-                className="m-4"
+                className="m-4 text-text border border-text"
                 onClick={handleRedo}
             >
                 Redo
@@ -298,7 +299,7 @@ const MCQ =  ({ game, userId}: Props) => {
         <div className="flex flex-col">
           {/* topic */}
           <p>
-            <span className="text-slate-400">Topic</span> &nbsp;
+            <span className="text-text">Topic</span> &nbsp;
             <span className="px-2 py-1 text-white rounded-lg bg-slate-800">
               {game.topic}
             </span>

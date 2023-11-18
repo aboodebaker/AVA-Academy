@@ -6,6 +6,7 @@ import AuthProvider from '@/components/AuthProvider/AuthProvider'
 import Tester from '@/components/layout/tester'
 import Sidebar from '@/components/navbar/sidebar'
 import DarkModeSwitcher from '@/components//DarkmodeToggle/Darkmodetoggle'
+import { ThemeProvider } from '@/components/DarkmodeToggle/shadCn'
 import Providers from '@/components/Providers'
 import { usePathname } from "next/navigation";
 import Sticky from 'react-stickynode';
@@ -40,21 +41,24 @@ export default function RootLayout({
       <body>
         <AuthProvider>
           <Providers>
-          <div className="outer-none">
-            <Sticky>
-            <div className="sidebar">
-              <Sidebar /> 
-            </div>
-            </Sticky>
-            <div className="inner">
-              <div  className="min-h-screen" >
-                {children}
+
+
+              <div className="outer-none">
+                
+                <div className="sidebar">
+                  <Sidebar /> 
+                </div>
+                
+                <div className="inner">
+                  <div  className="min-h-screen" >
+                    {children}
+                  </div>
+                </div>
+                <div className='dark-switch'>
+                <DarkModeSwitcher />
+                </div>
               </div>
-            </div>
-            <div className='dark-switch'>
-            <DarkModeSwitcher />
-            </div>
-          </div>
+
           </Providers>
         </AuthProvider>
       </body>
@@ -73,7 +77,9 @@ export default function RootLayout({
         <Providers>
         <div className="flex">
           <div className="">
-             <Tester />
+            <Sticky>
+              <Tester />
+             </Sticky>
               {/* <MenuBarMobile setter={setShowSidebar} />
               <Sidebar show={showSidebar} setter={setShowSidebar} /> */}
             </div>

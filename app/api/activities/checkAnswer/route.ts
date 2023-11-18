@@ -1,16 +1,29 @@
+// @ts-nocheck
 import { prisma } from "@/lib/db";
 import { checkAnswerSchema } from "@/schemas/questions";
 import { NextResponse } from "next/server";
 import { ZodError } from "zod";
 import stringSimilarity from "string-similarity";
+import { pusherServer } from '@/lib/pusher'
+import { PrismaClient } from '@prisma/client'
 
 export async function POST(req: Request, res: Response) {
   try {
     const body = await req.json();
-    const { questionId, userInput } = checkAnswerSchema.parse(body);
+    const { questionId, userInput, userId } = checkAnswerSchema.parse(body);
     const question = await prisma.questionActivity.findUnique({
       where: { id: questionId },
     });
+    const activity = await prisma.activity.findUnique({
+      where: {
+        questions: {
+          some: {
+            id: questionId
+          }
+        }
+      }
+    })
+    console.log(activity)
     if (!question) {
       return NextResponse.json(
         {
@@ -32,6 +45,7 @@ export async function POST(req: Request, res: Response) {
         where: { id: questionId },
         data: { isCorrect },
       });
+      pusherServer.trigger(activity?.uniqueId, 'incoming-student-answers', {userId: userId, isCorrect: isCorrect});
       return NextResponse.json({
         isCorrect,
       });
