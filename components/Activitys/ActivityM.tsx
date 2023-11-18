@@ -25,23 +25,9 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 const Activity = ({ game, file }: Props) => {
 
   const [isStudentOnline, setIsStudentOnline] = useState(false);
-  useEffect(() => {
-    const intervalId = setInterval(() => {
-  const checkStudentOnlineStatus = async () => {
-    try {
-      const response = await axios.post('/api/check-online-status', {channel: game.uniqueId});
-      setIsStudentOnline(response.data);
-      console.log(response.data)
-    } catch (error) {
-      console.error('Error checking online status:', error);
-    }
-  };
-  checkStudentOnlineStatus()
-  }, 500); 
 
 
-      return () => clearInterval(intervalId);
-    }, []);
+
 
 
   const layout = [

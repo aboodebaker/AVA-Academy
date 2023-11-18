@@ -254,8 +254,26 @@ const OpenEnded = ({ game }: Props) => {
       </div>
       </div>
       ) : (
+        <div>
+        <div>
+          <div>
+          <p>
+            <span className="text-slate-400">Topic</span> &nbsp;
+            <span className="px-2 py-1 text-white rounded-lg bg-slate-800">
+              {game.topic}
+            </span>
+          </p>
+          
+          <div className="flex self-start mt-3 text-slate-400">
+            <Timer className="mr-2" />
+            {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
+          </div>
+        </div>
+        <OpenEndedPercentage percentage={averagePercentage} />
+      </div>
               <div className="m-4 text-red-500">
                 You cannot answer the next question yet.
+              </div>
               </div>
             )}
     </div>

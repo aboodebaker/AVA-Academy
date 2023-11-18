@@ -11,7 +11,8 @@ export const quizCreationSchema = z.object({
     }),
   type: z.enum(["mcq", "open_ended"]),
   amount: z.number().min(1).max(10),
-  selectedFileId: z.string()
+  selectedFileId: z.string(),
+  classs: z.string()
 });
 
 export const ActivityCreationSchema = z.object({

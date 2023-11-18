@@ -20,11 +20,12 @@ interface Props {
   file: any;
   notes?: any;
   note?: any;
+  userId: string
 }
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const Activity = ({ game, file, notes, note }: Props) => {
+const Activity =  ({ game, file, notes, note, userId }: Props) => {
 
 
   // useEffect(() => {
@@ -93,7 +94,7 @@ const Activity = ({ game, file, notes, note }: Props) => {
       compactType="vertical"
     >
       <div key="a" className='border border-solid border-gray-500 scrolling-wrapper'>
-        <MCQ game={game} />
+        <MCQ game={game} userId={userId}/>
       </div>
       <div key="b" className='border border-solid border-gray-500'><Adobe file={file}/></div>
       <div key="c" className='border border-solid border-gray-500 scrolling-wrapper'><Summary summary={game.summary} id={game.uniqueId}/></div>

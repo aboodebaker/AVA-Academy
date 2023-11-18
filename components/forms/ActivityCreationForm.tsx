@@ -70,6 +70,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
   const { toast } = useToast();
   const { mutate: getQuestions, isLoading } = useMutation({
     mutationFn: async ({ amount, topic, type, selectedFileId, classs }: Input) => {
+      console.log(classs)
       const response = await axios.post("/api/activities", {
         amount,
         topic,

@@ -21,12 +21,15 @@ import { z } from "zod";
 import { useToast } from "./ui/use-toast";
 import { useState, useEffect } from "react";
 import { pusherClient } from "@/lib/pusher";
+import { getSession } from "next-auth/react";
 
 type Props = {
   game: Game & { questions: Pick<Question, "id" | "options" | "question">[] };
+  userId: string
 };
 
-const MCQ = ({ game }: Props) => {
+const MCQ =  ({ game, userId}: Props) => {
+  
   const [questionIndex, setQuestionIndex] = React.useState(0);
   const [hasEnded, setHasEnded] = React.useState(false);
   const [stats, setStats] = React.useState({
@@ -35,7 +38,7 @@ const MCQ = ({ game }: Props) => {
   });
   const [selectedChoice, setSelectedChoice] = React.useState<number>(0);
   const [now, setNow] = React.useState(new Date());
-
+  const id = game.uniqueId
   const [questions, setQuestions] = useState(game.questions)  
   const [currentQuestion, setCurrentQuestion] = useState(questions[questionIndex]);
 
@@ -130,12 +133,14 @@ const MCQ = ({ game }: Props) => {
   const handleNext = React.useCallback(() => {
     checkAnswer(undefined, {
       onSuccess: ({ isCorrect }) => {
-        if (questions[questionIndex + 1]?.canAnswer) {
+        if (questions[questionIndex]?.canAnswer) {
         if (isCorrect) {
           setStats((stats) => ({
             ...stats,
             correct_answers: stats.correct_answers + 1,
           }));
+
+          
           toast({
             title: "Correct",
             description: "You got it right!",

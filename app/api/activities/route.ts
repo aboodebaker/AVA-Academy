@@ -33,7 +33,9 @@ export async function POST(req: Request, res: Response) {
                 chatpdf: selectedFileId,
             },
             },
-            class: classs,
+            class: {
+              in: [classs, 'teacher', 'registerUser']
+            },
         },
         include: {
             files: true,
@@ -65,7 +67,7 @@ export async function POST(req: Request, res: Response) {
 
     let chatData;
     let data;
-    let game:any;
+    let game:any = null;
 
 
     try {
@@ -94,7 +96,7 @@ export async function POST(req: Request, res: Response) {
     data = questionResponse.data;
 
 
-    console.log(data)
+
 
     // Continue with the rest of your code using chatData and questionData
     } catch (error:any) {
@@ -119,9 +121,11 @@ export async function POST(req: Request, res: Response) {
                 gameType: type,
                 timeStarted: new Date(),
                 summary: chatData.content,
-
+                class: classs,
                 },
             });
+
+            console.log(game)
         
 
 
@@ -178,7 +182,7 @@ export async function POST(req: Request, res: Response) {
                 gameType: type,
                 timeStarted: new Date(),
                 summary: chatData.content,
-
+                class: classs,
                 },
             });
 
@@ -195,6 +199,7 @@ export async function POST(req: Request, res: Response) {
             answer: question.answer,
             activityId: game.id,
             questionType: "open_ended",
+            
           };
         }),
       });

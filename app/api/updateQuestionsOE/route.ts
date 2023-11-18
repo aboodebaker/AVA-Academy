@@ -31,29 +31,50 @@ try {
 //     data: dataToUpdate,
 //   });
 
+ const activities = await prisma.activity.findMany({
+  where: {
+    uniqueId: id
+  },
+  include: {
+    questions: true
+  }
+ })
+console.log(activities)
 
-    for (let i = 0; i < input.length; i++) {
+    for (let i = 0; i < activities.length; i++) {
+  for (let e = 0; e < input.length; e++) {  // Change i++ to e++
+    try {
+      const update = await prisma.questionActivity.update({
+        where: {
+          id: activities[i].questions[e].id
+        },
+        data: {
+          question: input[e].question,
+          answer: input[e].answer,
+          options: input[e].options,
+          percentageCorrect: input[e].percentageCorrect,
+          isCorrect: input[e].isCorrect,
+          questionType: input[e].questionType,
+          userAnswer: input[e].userAnswer,
+          canAnswer: input[e].canAnswer
+        }
+      });
 
-        var update = await prisma.questionActivity.update({
-            where: {
-                id: input[i].id
-            },
-            data: {
-                question: input[i].question,
-                answer: input[i].answer,
-                activityId: input[i].activityId,
-                options: input[i].options, // Replace 'any' with the actual type of 'options'
-                percentageCorrect: input[i].percentageCorrect,
-                isCorrect: input[i].isCorrect, // Replace 'any' with the actual type of 'isCorrect'
-                questionType: input[i].questionType,
-                userAnswer: input[i].userAnswer,
-            }
-        })
-
-        console.log(update)
+      const updated = await prisma.questionActivity.findFirst({
+        where: {
+          id: input[e].id  // Change i to e
+        }
+      });
+      console.log(updated);
+      
+    } catch (error) {
+      console.log(error);
     }
+  }
+}
+return new Response(JSON.stringify({ success: true }));
 
-  return new Response(JSON.stringify({ success: true }));
+
 } catch (error) {
   console.log(error);
 } finally {

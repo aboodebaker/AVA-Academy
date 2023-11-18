@@ -25,7 +25,7 @@ export async function POST(req: Request, res: Response) {
     const users = await prisma.user.findMany({
       where: {
         grade: {
-          equals: grade
+          in: ['teacher', grade, 'registerUser']
         }
       }
     })

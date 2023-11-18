@@ -8,7 +8,7 @@ import Sidebar from '@/components/navbar/sidebar'
 import DarkModeSwitcher from '@/components//DarkmodeToggle/Darkmodetoggle'
 import Providers from '@/components/Providers'
 import { usePathname } from "next/navigation";
-
+import Sticky from 'react-stickynode';
 const inter = Inter({ subsets: ['latin'] })
 
 // export const metadata = {
@@ -41,9 +41,11 @@ export default function RootLayout({
         <AuthProvider>
           <Providers>
           <div className="outer-none">
+            <Sticky>
             <div className="sidebar">
               <Sidebar /> 
             </div>
+            </Sticky>
             <div className="inner">
               <div  className="min-h-screen" >
                 {children}

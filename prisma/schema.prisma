@@ -48,7 +48,7 @@ model User {
   emailVerified DateTime?
   image         String?
   grade         String?
-  class         String?
+  class         String
   games         Game[]
   files         Files[]
   notes         Notes[]
@@ -164,6 +164,7 @@ model Activity {
   gameType    ActivityType
   summary     String?
   mpoints     String?
+  class       String?
   noteId      String?            @db.ObjectId
   fileId      String             @db.ObjectId
   user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)

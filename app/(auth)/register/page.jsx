@@ -62,7 +62,6 @@ const Register = () => {
               <div className="selection">
               <label htmlFor="gradeSelector" className="text">Select your Grade:</label>
               <select id="gradeSelector">
-                <option value="">Select a Grade</option>
                 <option value="8">8</option>
                 <option value="9">9</option>
                 <option value="10">10</option>
@@ -73,7 +72,6 @@ const Register = () => {
             <div className="selection">
               <label htmlFor="classSelector" className="text">Select your class:</label>
               <select id="classSelector">
-                <option value="">Select a class</option>
                 <option value="A">Class A</option>
                 <option value="B">Class B</option>
                 <option value="C">Class C</option>
