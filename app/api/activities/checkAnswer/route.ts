@@ -63,6 +63,7 @@ export async function POST(req: Request, res: Response) {
         where: { id: questionId },
         data: { percentageCorrect: percentageSimilar },
       });
+       pusherServer.trigger(userId, `incoming-student-answers-${userId}`, { question: questionNo, correctAnswer: percentageSimilar, userName: user.name });
       return NextResponse.json({
         percentageSimilar,
       });

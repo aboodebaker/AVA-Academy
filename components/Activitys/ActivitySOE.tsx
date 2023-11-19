@@ -18,11 +18,12 @@ interface Props {
   file: any;
   notes?: any;
   note?: any;
+  userId: any;
 }
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const Activity = ({ game, file, notes, note }: Props) => {
+const Activity = ({ game, file, notes, note, userId }: Props) => {
 
 
   // useEffect(() => {

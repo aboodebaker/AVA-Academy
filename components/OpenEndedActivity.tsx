@@ -24,9 +24,10 @@ import { pusherClient } from '@/lib/pusher';
 
 type Props = {
   game: Game & { questions: Pick<Question, "id" | "question" | "answer">[] };
+    userId: string
 };
 
-const OpenEnded = ({ game }: Props) => {
+const OpenEnded = ({ game, userId }: Props) => {
   const [hasEnded, setHasEnded] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [averagePercentage, setAveragePercentage] = useState(0);
@@ -69,17 +70,29 @@ const OpenEnded = ({ game }: Props) => {
   const [now, setNow] = useState(new Date());
   const { mutate: checkAnswer, isLoading: isChecking } = useMutation({
     mutationFn: async () => {
-      const payload: z.infer<typeof checkAnswerSchema> = {
+      const payload:any = {
         questionId: currentQuestion.id,
         userInput: userAnswer, // User's entire answer
+        userId: userId,
+        questionNo: questionIndex,
       };
-      const response = await axios.post(`/api/activities/checkAnswer`, payload, {
-        headers: {
-          'Content-Type': 'application/json',
-        }});
-      return response.data;
+      const headers = {
+
+  'Content-Type': 'application/json',
+};
+console.log(userId)
+      const response = await fetch(`/api/activities/checkAnswer`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: headers
+      });
+      
+      const responseJson = await response.json()
+      console.log(responseJson)
+      return responseJson;
     },
-  });
+    },
+  );
 
   // Retrieve the last saved question index from localStorage on component mount
       useEffect(() => {

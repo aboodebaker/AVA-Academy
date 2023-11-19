@@ -2,6 +2,8 @@
 import { PrismaClient } from '@prisma/client';
 import React from 'react'
 import Activity from '@/components/Activitys/ActivitySOE';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/route';
 
 interface Props {
   params: {
@@ -13,6 +15,12 @@ interface Props {
 const page = async ({ params }: Props) => {
     const data = decodeURIComponent(params.id);
     const prisma = new PrismaClient()
+
+
+    const session = await getServerSession(authOptions);
+    const user = session?.user as { id?: string };
+    const userId = user?.id;
+
 
     const activity = await prisma.activity.findUnique({
         where: {
@@ -54,7 +62,7 @@ const page = async ({ params }: Props) => {
   
     
   return (
-    <div><Activity game={activity} file={file} notes={notes}/></div>
+    <div><Activity game={activity} file={file} notes={notes} userId={userId}/></div>
   )
   }
 }
