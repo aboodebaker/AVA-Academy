@@ -24,7 +24,7 @@ const Summary: React.FC<Props> = ({ summary, id }: Props) => {
   }, []); // Empty dependency array ensures the effect runs once
 
   return (
-    <div className="contain m-2" style={{ maxHeight: '100%', overflow: 'hidden' }}>
+    <div>
       <p dangerouslySetInnerHTML={{ __html: input.replace(/\n/g, '<br />') }} />
     </div>
   );
