@@ -72,15 +72,16 @@ const Activity = ({ game, file }: Props) => {
       rowHeight={30}
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       compactType="vertical"
+      resizeHandles={['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne']}
     >
-      <div key="a" className='border border-solid border-gray-500 scrolling-wrapper'>
+      <div key="a" className='border border-solid border-gray-500 scrolling-wrappers'>
         <MCQTeacherEdit game={game} />
       </div>
       <div key="b" className='border border-solid border-gray-500 '><Adobe file={file}/></div>
-      <div key="c" className='border border-solid border-gray-500 scrolling-wrapper'>
+      <div key="c" className='border border-solid border-gray-500 scrolling-wrappers'>
         <Summary summary={game.summary} id={game.uniqueId}/>
       </div>
-      <div key={'d'} className='scrolling-wrapper border border-solid border-text'><UserAnswerCorrect uniqueId={game.uniqueId}/></div>
+      <div key={'d'} className='scrolling-wrappers border border-solid border-text'><UserAnswerCorrect uniqueId={game.uniqueId}/></div>
       
     </ResponsiveGridLayout>
   );

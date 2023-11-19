@@ -90,13 +90,14 @@ const Activity = ({ game, file, notes, note, userId }: Props) => {
       rowHeight={30}
       breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
       compactType="vertical"
+      resizeHandles={['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne']}
     >
-      <div key="a" className='border border-solid border-text scrolling-wrapper'>
+      <div key="a" className='border border-solid border-text scrolling-wrappers'>
         <OpenEnded game={game} userId={userId}/>
       </div>
       <div key="b" className='border border-solid border-text'><Adobe file={file}/></div>
-      <div key="c" className='border border-solid border-text scrolling-wrapper'><Summary summary={game.summary} id={game.uniqueId}/></div>
-      <div key={'d'} className='scrolling-wrapper border border-solid border-text'><Notes notes={notes} note={note} activityId={game.id}/></div>
+      <div key="c" className='border border-solid border-text scrolling-wrappers'><Summary summary={game.summary} id={game.uniqueId}/></div>
+      <div key={'d'} className='scrolling-wrappers border border-solid border-text'><Notes notes={notes} note={note} activityId={game.id}/></div>
     </ResponsiveGridLayout>
   );
 };
