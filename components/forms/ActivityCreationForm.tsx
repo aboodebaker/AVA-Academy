@@ -181,11 +181,11 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                   <FormItem>
                     <FormLabel className="text-text">Subject</FormLabel>
                     <FormControl className="bg-background">
-                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-background rounded-md shadow-sm focus:outline-none focus:ring text-black focus:ring-indigo-200 focus:border-indigo-300">
+                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-text bg-background rounded-md shadow-sm focus:outline-none focus:ring text-text focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a subject</option>
                         {/* Add options for subjects based on your data */}
                         {uniqueSubjects.map((subject, index) => (
-                          <option key={index} value={subject} className="text-black">
+                          <option key={index} value={subject} className="text-text">
                             {subject}
                           </option>
                         ))}
@@ -205,11 +205,11 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                   <FormItem>
                     <div className=" ">
                     <FormLabel className="pr-5 text-text">Choose a file</FormLabel>
-                    <FormControl>
-                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
+                    <FormControl className="bg-background">
+                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-text bg-background rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a file</option>
                         {subjectFiles.map((file, index) => (
-                          <option key={index} value={file?.chatpdf}>
+                          <option key={index} value={file?.chatpdf} >
                             {file?.pdfName} Grade {file?.grade}
                           </option>
                         ))}
@@ -227,16 +227,16 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                 control={form.control}
                 name="classs"
                 render={({ field }) => (
-                  <FormItem>
+                  <FormItem className="bg-background">
                     <div className=" ">
                     <FormLabel className="pr-5 text-text">Choose a class</FormLabel>
                     <FormControl>
-                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-black bg-white rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
+                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-text bg-background rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a class</option>
-                        <option value='A'>A</option>
-                        <option value='B'>B</option>
-                        <option value='C'>C</option>
-                        <option value='D'>D</option>
+                        <option value='A' >A</option>
+                        <option value='B' >B</option>
+                        <option value='C' >C</option>
+                        <option value='D' >D</option>
                       </select>
                     </FormControl>
                     </div>
