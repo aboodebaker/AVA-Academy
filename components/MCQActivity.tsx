@@ -335,7 +335,7 @@ console.log(userId)
         />
       </div>
               <div className="m-4 text-red-500">
-                You cannot answer the next question yet.
+                You cannot answer the this question yet.
               </div>
               </div>
             )}

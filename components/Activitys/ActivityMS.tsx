@@ -94,7 +94,7 @@ const Activity =  ({ game, file, notes, note, userId }: Props) => {
       compactType="vertical"
       resizeHandles={['s', 'w', 'e', 'n', 'sw', 'nw', 'se', 'ne']}
     >
-      <div key="a" className='border border-solid border-text scrolling-wrappers'>
+      <div key="a" className='border border-solid border-text scrolling-wrapper'>
         <MCQ game={game} userId={userId}/>
       </div>
       <div key="b" className='border border-solid border-text'><Adobe file={file}/></div>

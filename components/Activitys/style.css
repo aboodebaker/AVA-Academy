@@ -21,7 +21,7 @@
 .scrolling-wrappers {
   overflow-x: hidden;
   overflow-y: scroll;
-  white-space: nowrap;
+
   scroll-behavior: smooth;
 
   .card {
