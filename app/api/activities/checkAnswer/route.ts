@@ -14,7 +14,11 @@ export async function POST(req: Request, res: Response) {
     const question = await prisma.questionActivity.findUnique({
       where: { id: questionId },
     });
-
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId
+      }
+    })
 
     if (!question) {
       return NextResponse.json(
@@ -38,7 +42,9 @@ export async function POST(req: Request, res: Response) {
         where: { id: questionId },
         data: { isCorrect },
       });
-      pusherServer.trigger(userId, 'incoming-student-answers', {question: questionNo, correctAnswer: isCorrect});
+
+      console.log(userId)
+      pusherServer.trigger(userId, `incoming-student-answers-${userId}`, { question: questionNo, correctAnswer: isCorrect, userName: user.name });
       return NextResponse.json({
         isCorrect: isCorrect,
       });

@@ -225,6 +225,13 @@ console.log(userId)
           View Statistics
           <BarChart className="w-4 h-4 ml-2" />
         </Link>
+        <Button
+                variant="outline"
+                className="m-4 text-text border border-text"
+                onClick={handleRedo}
+            >
+                Redo
+            </Button>
       </div>
     );
   }
@@ -268,19 +275,19 @@ console.log(userId)
       <div className="flex flex-col items-center justify-center w-full mt-4 text-text">
         {options.map((option, index) => {
           return (
-            <Button
-              key={option}
-              variant={selectedChoice === index ? "default" : "outline"}
-              className="justify-start w-full py-8 mb-4 text-black"
-              onClick={() => setSelectedChoice(index)}
-            >
-              <div className="flex items-center justify-start">
-                <div className="p-2 px-3 mr-5 border rounded-md" text-black>
-                  {index + 1}
-                </div>
-                <div className="text-start">{option}</div>
-              </div>
-            </Button>
+                <Button
+                  key={option}
+                  variant={selectedChoice === index ? "default" : "outline"}
+                  className={`justify-start w-full py-8 mb-4 text-black`}
+                  onClick={() => setSelectedChoice(index)}
+                >
+                  <div className="flex items-center justify-start">
+                    <div className="p-2 px-3 mr-5 border rounded-md" text-black>
+                      {index + 1}
+                    </div>
+                    <div className="text-start">{option}</div>
+                  </div>
+                </Button>
           );
         })}
         <div className="flex justify-center align-center">

@@ -1,49 +1,63 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { pusherClient } from '@/lib/pusher';
 import axios from 'axios';
+import { pusherClient } from '@/lib/pusher';
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
+
 
 type UserAnswer = {
   userId: string;
-  answers: Array<{ question: string; correctAnswer: string }>;
+  answers: Array<{ question: string; correctAnswer: any }>;
+  userName: string;
 };
 
-const UserAnswerCorrect = () => {
+type Props = {
+  uniqueId: string;
+};
+
+
+
+const UserAnswerCorrect = ({ uniqueId }: Props) => {
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Fetch user information from your API
-        const response = await axios.get('/api/users'); // Replace with the actual endpoint
-        const users = response.data;
+        const response = await axios.post('/api/users', { uniqueId });
+        const users = response.data.users;
 
-        // Subscribe to Pusher channels for each user
-        users.forEach((user:any) => {
+        users.forEach((user: any) => {
           const { id, name } = user;
           pusherClient.subscribe(id);
 
-          pusherClient.bind('incoming-student-answers', (stats: { question: string; correctAnswer: string }) => {
+          const handleIncomingAnswers = (stats: UserAnswer) => {
             setUserAnswers((prevUserAnswers) => {
               const existingUser = prevUserAnswers.find((user) => user.userId === id);
 
               if (existingUser) {
                 const updatedUser = {
                   ...existingUser,
-                  answers: [...existingUser.answers, stats],
+                  answers: [...existingUser.answers, ...stats.answers],
                 };
 
                 return [...prevUserAnswers.filter((user) => user.userId !== id), updatedUser];
               } else {
-                const newUser = {
-                  userId: id,
-                  answers: [stats],
-                };
-                return [...prevUserAnswers, newUser];
+                return [...prevUserAnswers, { userId: id, userName: name, answers: stats.answers }];
               }
             });
-          });
+          };
+
+          pusherClient.bind(`incoming-student-answers-${id}`, handleIncomingAnswers);
         });
 
         setLoading(false);
@@ -56,10 +70,9 @@ const UserAnswerCorrect = () => {
     fetchData();
 
     return () => {
-      // Unsubscribe from Pusher channels when the component unmounts
       userAnswers.forEach((user) => pusherClient.unsubscribe(user.userId));
     };
-  }, []); // Run this effect only once when the component mounts
+  }, [uniqueId, userAnswers]);
 
   const tableHeaders = ['User', 'Question', 'Correct Answer'];
 
@@ -68,40 +81,41 @@ const UserAnswerCorrect = () => {
       {loading ? (
         <p>Loading...</p>
       ) : userAnswers.length > 0 ? (
-        <table>
-          <thead>
-            <tr>
-              <th>{tableHeaders[0]}</th>
-              <th colSpan={tableHeaders.length - 1}>Answers</th>
-            </tr>
-          </thead>
-          <tbody>
+        <Table>
+          <TableCaption>User Answers</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead>User</TableHead>
+              <TableHead colSpan={userAnswers.length}>Answers</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
             {userAnswers.map((userAnswer) => (
-              <tr key={userAnswer.userId}>
-                <td>{userAnswer.userId}</td>
-                <td>
-                  <table>
-                    <thead>
-                      <tr>
-                        {tableHeaders.slice(1).map((header, index) => (
-                          <th key={index}>{header}</th>
-                        ))}
-                      </tr>
-                    </thead>
-                    <tbody>
+              <TableRow key={userAnswer.userId}>
+                <TableCell>{userAnswer.userName}</TableCell>
+                <TableCell>
+                  <Table>
+                    <TableBody>
                       {userAnswer.answers.map((answer, index) => (
-                        <tr key={index}>
-                          <td>{answer.question}</td>
-                          <td>{answer.correctAnswer}</td>
-                        </tr>
+                        <TableRow key={index + 1}>
+                          <TableCell>{answer.question}</TableCell>
+                          <TableCell>{answer.correctAnswer ? 'Correct' : 'Incorrect'}</TableCell>
+                        </TableRow>
                       ))}
-                    </tbody>
-                  </table>
-                </td>
-              </tr>
+                    </TableBody>
+                  </Table>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+          {userAnswers.length > 0 && (
+            <TableFooter>
+              <TableRow>
+                <TableCell colSpan={userAnswers.length}>Total</TableCell>
+              </TableRow>
+            </TableFooter>
+          )}
+        </Table>
       ) : (
         <p>No user answers yet.</p>
       )}

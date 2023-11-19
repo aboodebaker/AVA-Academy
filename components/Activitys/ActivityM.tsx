@@ -80,7 +80,7 @@ const Activity = ({ game, file }: Props) => {
       <div key="c" className='border border-solid border-gray-500 scrolling-wrapper'>
         <Summary summary={game.summary} id={game.uniqueId}/>
       </div>
-      <div key={'d'} className='scrolling-wrapper border border-solid border-text'><UserAnswerCorrect/></div>
+      <div key={'d'} className='scrolling-wrapper border border-solid border-text'><UserAnswerCorrect uniqueId={game.uniqueId}/></div>
       
     </ResponsiveGridLayout>
   );
