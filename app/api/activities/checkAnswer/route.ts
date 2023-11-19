@@ -44,7 +44,7 @@ export async function POST(req: Request, res: Response) {
       });
 
       console.log(userId)
-      pusherServer.trigger(userId, `incoming-student-answers-${userId}`, { question: questionNo, correctAnswer: isCorrect, userName: user.name });
+      await pusherServer.trigger(userId, `incoming-student-answers-${userId}`, { question: questionNo, correctAnswer: isCorrect, userName: user.name });
       return NextResponse.json({
         isCorrect: isCorrect,
       });

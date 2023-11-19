@@ -31,6 +31,24 @@ const UserAnswerCorrect = ({ uniqueId }: Props) => {
   const [userAnswers, setUserAnswers] = useState<UserAnswer[]>([]);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Your API request code goes here
+        const response = await fetch('https://api.example.com/data');
+        const data = await response.json();
+        console.log(data); // or do something with the data
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    // Set up the interval to call fetchData every 500 milliseconds (half a second)
+    const intervalId = setInterval(fetchData, 500);
+
+    // Cleanup the interval when the component unmounts or the useEffect dependency changes
+    return () => clearInterval(intervalId);
+  }, []);
     useEffect(() => {
     const fetchData = async () => {
       try {
