@@ -77,9 +77,9 @@ export default function RootLayout({
         <Providers>
         <div className="flex">
           <div className="">
-            <Sticky>
+            
               <Tester />
-             </Sticky>
+             
               {/* <MenuBarMobile setter={setShowSidebar} />
               <Sidebar show={showSidebar} setter={setShowSidebar} /> */}
             </div>
