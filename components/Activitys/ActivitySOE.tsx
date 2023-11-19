@@ -92,7 +92,7 @@ const Activity = ({ game, file, notes, note, userId }: Props) => {
       compactType="vertical"
     >
       <div key="a" className='border border-solid border-text scrolling-wrapper'>
-        <OpenEnded game={game} />
+        <OpenEnded game={game} userId={userId}/>
       </div>
       <div key="b" className='border border-solid border-text'><Adobe file={file}/></div>
       <div key="c" className='border border-solid border-text scrolling-wrapper'><Summary summary={game.summary} id={game.uniqueId}/></div>

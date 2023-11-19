@@ -14,7 +14,7 @@ import { useState } from 'react';
 import axios from 'axios'
 import { useEffect } from 'react';
 import MCQTeacherEdit from './MCQTeacherEdit';
-import UserAnswerCorrect from './userAnswerCorrectM';
+import UserAnswerCorrect from './userAnswerCorrect';
 interface Props {
   game: any;
   file: any;

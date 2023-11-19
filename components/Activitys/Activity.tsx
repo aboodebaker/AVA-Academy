@@ -13,7 +13,7 @@ import Notes from './Notes';
 import { useState } from 'react';
 import axios from 'axios'
 import { useEffect } from 'react';
-
+import UserAnswerCorrect from './userAnswerCorrectOE';
 interface Props {
   game: any;
   file: any;
@@ -43,13 +43,7 @@ const Activity = ({ game, file }: Props) => {
     }, []);
 
 
-  const layout = [
-    { i: 'a', x: 6, y: 0, w: 3, h: 11, },
-    { i: 'b', x: 0, y: 0, w: 6, h: 22, },
-    { i: 'c', x: 10, y: 0, w: 3, h: 22, isDraggable: false  },
-  ];
-
-  const layouts = {
+          const layouts = {
   lg: [
     { i: 'a', x: 6, y: 0, w: 3, h: 11, isDraggable: false},
     { i: 'b', x: 0, y: 0, w: 6, h: 22 },
@@ -59,26 +53,30 @@ const Activity = ({ game, file }: Props) => {
   md: [
     { i: 'a', x: 0, y: 22, w: 5, h: 15, isDraggable: false },
     { i: 'b', x: 0, y: 0, w: 6, h: 22 },
-    { i: 'c', x: 6, y: 0, w: 4, h: 22, isDraggable: false },
+    { i: 'c', x: 6, y: 0, w: 4, h: 11, isDraggable: false },
     { i: 'd', x: 5, y: 22, w: 5, h: 15, isDraggable: false },
   ],
   sm: [
     { i: 'a', x: 0, y: 22, w: 4, h: 11, isDraggable: false },
     { i: 'b', x: 0, y: 0, w: 6, h: 10 },
     { i: 'c', x: 0, y: 11, w: 3, h: 10, isDraggable: false },
+    { i: 'd', x: 4, y: 11, w: 3, h: 10, isDraggable: false },
   ],
   xs: [
-    { i: 'a', x: 0, y: 22, w: 4, h: 5 },
+    { i: 'a', x: 0, y: 17, w: 4, h: 5 },
     { i: 'b', x: 0, y: 0, w: 4, h: 5 },
     { i: 'c', x: 0, y: 11, w: 4, h: 5, isDraggable: false },
+    { i: 'd', x: 0, y: 23, w: 5, h: 5, isDraggable: false },
   ],
   xxs: [
-    { i: 'a', x: 0, y: 22, w: 2, h: 5 },
+    { i: 'a', x: 0, y: 17, w: 2, h: 5 },
     { i: 'b', x: 0, y: 0, w: 2, h: 5 },
     { i: 'c', x: 0, y: 11, w: 2, h: 5, isDraggable: false },
+    { i: 'd', x: 5, y: 23, w: 5, h: 5, isDraggable: false },
     
   ],
 };
+
 
   return (
     <ResponsiveGridLayout
@@ -96,6 +94,7 @@ const Activity = ({ game, file }: Props) => {
       <div key="c" className='border border-solid border-gray-500 scrolling-wrapper'>
         <Summary summary={game.summary} id={game.uniqueId}/>
       </div>
+      <div key={'d'} className='scrolling-wrapper border border-solid border-text'><UserAnswerCorrect uniqueId={game.uniqueId}/></div>
       
     </ResponsiveGridLayout>
   );
