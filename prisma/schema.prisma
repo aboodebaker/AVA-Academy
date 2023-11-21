@@ -47,6 +47,8 @@ model User {
   password      String
   emailVerified DateTime?
   image         String?
+  messages      Int        @default(0)
+  messageLimit  Int        @default(200)
   grade         String?
   class         String
   games         Game[]

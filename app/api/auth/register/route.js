@@ -15,11 +15,11 @@ export const POST = async (request) => {
       password: hashedpassword,
       grade: grade,
       class: classes,
+      image: 'https://static.vecteezy.com/system/resources/thumbnails/002/387/693/small/user-profile-icon-free-vector.jpg',
     }
   })
 
-  // Find old user's files and activities
-  const registerUser = '6558b8291fccb78a88ebd783'; // Replace with the old user's ID
+  const registerUser = '6558b8291fccb78a88ebd783'; 
   const oldUserFiles = await prisma.files.findMany({
     where: {
       userId: registerUser,
@@ -41,7 +41,7 @@ export const POST = async (request) => {
     }
   })
 
-  // Import old user's files to the new user
+
   for (const file of oldUserFiles) {
     
     
@@ -51,7 +51,7 @@ export const POST = async (request) => {
         pdfName: file.pdfName,
         pdfUrl: file.pdfUrl,
         createdAt: file.createdAt,
-        userId: user.id, // Use the new user's ID
+        userId: user.id,
         fileKey: file.fileKey,
         subject: file.subject,
         edited: file.edited,
@@ -61,14 +61,14 @@ export const POST = async (request) => {
     });
   }
 
-  // Import old user's activities to the new user
+
   for (const activity of oldUserActivities) {
     
     
     const newActivity = await prisma.activity.create({
       data: {
         uniqueId: activity.uniqueId,
-        userId: user.id, // Use the new user's ID
+        userId: user.id, 
         timeStarted: activity.timeStarted,
         topic: activity.topic,
         timeEnded: activity.timeEnded,
@@ -80,7 +80,7 @@ export const POST = async (request) => {
       }
     });
 
-    // Import questions for the activity
+
     for (const question of activity.questions) {
       await prisma.questionActivity.create({
         data: {

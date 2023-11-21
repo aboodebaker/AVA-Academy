@@ -37,7 +37,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
   const currentFile = files.find((file) => file.id === chatId);
   const isPro = true;
   const url = currentFile?.pdfUrl
-  console.log(url)
+
   return (
     <div className="flex h-screen">
       <div className="flex w-full max-h-screen overflow-scroll">

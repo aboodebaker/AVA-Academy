@@ -6,11 +6,14 @@ import { redirect } from "next/navigation";
 import Tables from "@/components/table/Table";
 import SignOutButton from "@/components/signOutButton";
 
+import UserAccountNav from "@/components/UserAccountNav";
 
 type Props = {};
 
 const Dashboard = async (props: Props) => {
   const session = await getAuthSession();
+    const user = session?.user as { id?: string };
+  const userId = user?.id;
 
   if (session) {
     const prisma = new PrismaClient();
@@ -19,12 +22,16 @@ const Dashboard = async (props: Props) => {
       include: { questions: true },
     });
 
+    const user = await prisma.user.findUnique({
+      where: { id: userId  },
+    });
 
 
     return (
     <div className="grid grid-rows-2 grid-cols-6 gap-4 w-full h-full">
       <div>
         <SignOutButton/>
+        <UserAccountNav user={user}/>
       </div>
       <div className="row-span-1 col-span-2">02</div>
       <div className="row-span-1 col-span-2">02</div>

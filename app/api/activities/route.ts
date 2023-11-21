@@ -6,10 +6,19 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import axios from "axios";
 import { LiaCloneSolid } from "react-icons/lia";
+import { Configuration, OpenAIApi } from "openai";
+import { Message, OpenAIStream, StreamingTextResponse } from "ai";
+import { getContext } from "@/lib/context";
+import serverSession from '@/lib/serverSession';
+    const config = new Configuration({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(config);
+
 
 export async function POST(req: Request, res: Response) {
   try {
-    
+    const user = await serverSession()
 
     function getRandomInt(min, max) {
       min = Math.ceil(min);
@@ -42,26 +51,71 @@ export async function POST(req: Request, res: Response) {
         },
     });
 
+    const teacherFile = await prisma.files.findFirst({
+      where: {
+            
+            chatpdf: selectedFileId,
+            User: {
+            class: {
+              equals: 'teacher'
+            },
+          }
+        },
+    })
+const teacherUser = await prisma.user.findFirst({
+      where: {
+            class: {
+              equals: 'teacher'
+            },
+        },
+    })
 
-
-
+    const teacherId = teacherUser.id
+    const fileKey = teacherFile?.fileKey
 
 
 
 
     const messageContent =`You are a helpful AI that is able to generate a summary, main points and background information for this topic in the document: ${topic}. Format it nicely with bold headings and neat paragraphs and bullet points.`
 
-    const message = [{
+    const message = {
         role: 'user',
         content: messageContent
-    }]
-    const config = {
-    headers: {
-        'x-api-key': 'sec_6ZyhabQToOvz2tf7DDqjbpNeuDNeZifR',
-        'Content-Type': 'application/json',
-      },
     }
+    const context = await getContext(`generate a summary, main points and background information for this topic in the document: ${topic}.`, fileKey);
 
+    const prompt = {
+      role: "system",
+      content: `
+      your mission is to be the ultimate assistant for school children seeking answers from their documents. 
+      You do not mention that you dont know the document or context ever but give as much knowledge as possible. If you cannot find something in the context
+      say that you do not know and maybe check if it is in the document or if they could rephrase the question. Always answer just want the user wants and never previous questions
+      Your primary goal is not just to provide quick answers but to act as a patient and informative guide, helping these students understand the content 
+      better. Here's how you should operate:
+      Setting Expectations: First you will recieve the context of the question from the document through a service called Pinecone. You are to use
+      this information and maybe quote parts of this but do not state that you know of this. state it says in the text: ...
+      Explain the relevant content, through the context that you recieved and background information. Use a casual tone, making sure the explanations 
+      are easy to understand for students below grade 10.
+      Step-by-Step Guidance: If the question is complex, consider breaking down the explanation into smaller steps. 
+      Provide examples, analogies, or visuals, if applicable, to aid comprehension.
+      Interactive Engagement: Encourage active learning. Ask the user questions related to the topic to gauge their 
+      understanding and offer hints or clarifications as needed.
+      Answer Delivery: Finally, provide a clear and concise answer to the user's question. 
+      Remind them to use the context you provided earlier to help form their response. 
+      Summarize the key points and ensure the student leaves the interaction with a solid grasp of the topic.
+      Encourage Further Exploration: Suggest additional resources or topics the user might find interesting or related to their query, 
+      fostering a curiosity for learning.
+      Remember, your tone should remain casual and friendly, always keeping in mind that you're assisting young students. 
+      Your role is not just to answer questions but to help them become more knowledgeable and confident learners.
+      here is your context
+      START OF DOCUMENT
+      ${context}
+      END OF DOCUMENT
+      
+      `,
+    };
+
+    
 
 
 
@@ -72,14 +126,14 @@ export async function POST(req: Request, res: Response) {
 
     try {
     const [chatResponse, questionResponse] = await Promise.all([
-        axios.post(
-            'https://api.chatpdf.com/v1/chats/message',
-            {
-                sourceId: selectedFileId,
-                messages: message,
-            },
-            config
-        ),
+      await openai.createChatCompletion({
+      model: "gpt-3.5-turbo-1106",
+      messages: [
+        prompt,
+        message,       
+      ],
+
+    }),
         axios.post(
             `${process.env.BASE_URL}/api/questions`,
             {
@@ -87,12 +141,14 @@ export async function POST(req: Request, res: Response) {
                 topic,
                 type,
                 selectedFileId,
+                userid: teacherId
             }
         ),
     ]);
 
     // Access the responses as needed
     chatData = chatResponse.data;
+    chatData = chatData.choices[0].message?.content
     data = questionResponse.data;
 
 
@@ -120,7 +176,7 @@ export async function POST(req: Request, res: Response) {
                 topic: topic,
                 gameType: type,
                 timeStarted: new Date(),
-                summary: chatData.content,
+                summary: chatData,
                 class: classs,
                 },
             });
@@ -181,7 +237,7 @@ export async function POST(req: Request, res: Response) {
                 topic: topic,
                 gameType: type,
                 timeStarted: new Date(),
-                summary: chatData.content,
+                summary: chatData.choices[0].message?.content,
                 class: classs,
                 },
             });

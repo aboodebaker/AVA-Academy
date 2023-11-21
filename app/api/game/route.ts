@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { prisma } from "@/lib/db";
 import { getAuthSession } from "@/lib/nextauth";
 import { quizCreationSchema } from "@/schemas/forms/quiz";
@@ -5,8 +6,11 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import axios from "axios";
 import { LiaCloneSolid } from "react-icons/lia";
+import serverSession from '@/lib/serverSession';
 
 export async function POST(req: Request, res: Response) {
+    const user = await serverSession()
+  if (user.messages + 1 < user.messageLimit) {
   try {
     const session = await getAuthSession();
     if (!session?.user) {
@@ -39,7 +43,8 @@ export async function POST(req: Request, res: Response) {
         amount,
         topic,
         type,
-        selectedFileId
+        selectedFileId,
+        userId
       }
     );
 
@@ -108,6 +113,9 @@ export async function POST(req: Request, res: Response) {
         }
       );
     }
+  }
+    } else {
+    return new NextResponse({error: 'Reached Message Limit'}, { status: 402 });
   }
 }
 export async function GET(req: Request, res: Response) {
