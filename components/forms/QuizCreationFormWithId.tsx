@@ -50,6 +50,7 @@ type Files = {
   edited: number;
   chatpdf: string | null;
   messages: Messages;
+  Subject: any,
 };
 
 type Messages = {
@@ -97,7 +98,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
   useEffect(() => {
     // Update the subjectFiles when the subject field changes
     const selectedSubject = form.getValues("subject");
-    const subjectFiles = files.filter((file) => file.subject === selectedSubject);
+    const subjectFiles = files.filter((file) => file.Subject.id === selectedSubject);
     setSubjectFiles(subjectFiles);
   }, [form.getValues("subject"), files]);
 
@@ -183,8 +184,8 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
                         <option value="" className="text-black">Select a subject</option>
                         {/* Add options for subjects based on your data */}
                         {files.map((file, index) => (
-                          <option key={index} value={file.subject}>
-                            {file.subject}
+                          <option key={index} value={file.Subject.id}>
+                            {file.Subject.name}
                           </option>
                         ))}
                       </select>

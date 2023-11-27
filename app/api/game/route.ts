@@ -25,16 +25,25 @@ export async function POST(req: Request, res: Response) {
     const userId = user.id;
 
     const { topic, type, amount, selectedFileId } = await req.json();
+
+    const file = await prisma.files.findFirst({
+      where: {
+        userId: userId,
+        chatpdf: selectedFileId,
+      }
+    })
+
+
     const game = await prisma.game.create({
       data: {
         gameType: type,
         timeStarted: new Date(),
         userId: userId,
         topic,
+        fileId: file?.id,
       },
     });
     
-
     console.log('here')
 
     const { data } = await axios.post(

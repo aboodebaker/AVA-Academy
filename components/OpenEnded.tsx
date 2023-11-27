@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import { cn, formatTimeDelta } from "@/lib/utils";
 import { Game, Question } from "@prisma/client";
@@ -19,25 +20,40 @@ import axios from "axios";
 import { useToast } from "./ui/use-toast";
 import Link from "next/link";
 import { Input } from "./ui/input";
+import { pusherClient } from '@/lib/pusher';
 
 type Props = {
   game: Game & { questions: Pick<Question, "id" | "question" | "answer">[] };
+    userId: string
 };
 
-const OpenEnded = ({ game }: Props) => {
+const OpenEnded = ({ game, userId }: Props) => {
   const [hasEnded, setHasEnded] = useState(false);
   const [questionIndex, setQuestionIndex] = useState(0);
   const [averagePercentage, setAveragePercentage] = useState(0);
   const [userAnswer, setUserAnswer] = useState("");
-  const currentQuestion = React.useMemo(() => {
-    return game.questions[questionIndex];
-  }, [questionIndex, game.questions]);
+  const [questions, setQuestions] = useState(game.questions)
+  const [currentQuestion, setCurrentQuestion] = useState(questions[questionIndex]);
+  const [loadingEnded, setLoadingEnded] = useState(false)
+
+  useEffect(() => {
+    setCurrentQuestion(questions[questionIndex]);
+  }, [questionIndex, questions]);
+
+
+
   const { mutate: endGame } = useMutation({
     mutationFn: async () => {
       const payload: z.infer<typeof endGameSchema> = {
         gameId: game.id,
       };
-      const response = await axios.post(`/api/endGame`, payload);
+      setLoadingEnded(true)
+      const response = await axios.post(`/api/activities/endGame`, payload, {
+        headers: {
+          'Content-Type': 'application/json',
+        }},);
+        setLoadingEnded(false)
+
       return response.data;
     },
   });
@@ -45,14 +61,50 @@ const OpenEnded = ({ game }: Props) => {
   const [now, setNow] = useState(new Date());
   const { mutate: checkAnswer, isLoading: isChecking } = useMutation({
     mutationFn: async () => {
-      const payload: z.infer<typeof checkAnswerSchema> = {
+      const payload:any = {
         questionId: currentQuestion.id,
         userInput: userAnswer, // User's entire answer
+        userId: userId,
+        questionNo: questionIndex,
       };
-      const response = await axios.post(`/api/checkAnswer`, payload);
-      return response.data;
+      const headers = {
+
+  'Content-Type': 'application/json',
+};
+console.log(userId)
+      const response = await fetch(`/api/activities/checkAnswer`, {
+        method: "POST",
+        body: JSON.stringify(payload),
+        headers: headers
+      });
+      
+      const responseJson = await response.json()
+      console.log(responseJson)
+      return responseJson;
     },
-  });
+    },
+  );
+
+  // Retrieve the last saved question index from localStorage on component mount
+      useEffect(() => {
+    const savedData = localStorage.getItem(`gameData_${game.id}`);
+    if (savedData !== null) {
+      const { savedIndex, savedPercentage, hasEnded } = JSON.parse(savedData);
+      setQuestionIndex(parseInt(savedIndex, 10));
+      setAveragePercentage(parseFloat(savedPercentage));
+      setHasEnded(hasEnded)
+    }
+  }, [game.id]);
+
+  // Save the current question index to localStorage whenever it changes
+  useEffect(() => {
+    const dataToSave = {
+      savedIndex: questionIndex.toString(),
+      savedPercentage: averagePercentage.toString(),
+      hasEnded: hasEnded
+    };
+    localStorage.setItem(`gameData_${game.id}`, JSON.stringify(dataToSave));
+  }, [questionIndex, averagePercentage, game.id])
 
   useEffect(() => {
     if (!hasEnded) {
@@ -63,31 +115,38 @@ const OpenEnded = ({ game }: Props) => {
     }
   }, [hasEnded]);
 
+    const handleRedo = () => {
+    // Clear the stored question index in localStorage and reset the component state
+    localStorage.removeItem(`gameData_${game.id}`);
+    setQuestionIndex(0);
+    setAveragePercentage(0);
+    setHasEnded(false);
+    setUserAnswer("");
+  };
+
   const handleNext = useCallback(() => {
     checkAnswer(undefined, {
       onSuccess: ({ percentageSimilar }) => {
+
         toast({
           title: `Your answer is ${percentageSimilar}% similar to the correct answer`,
         });
         setAveragePercentage((prev) => {
           return (prev + percentageSimilar) / (questionIndex + 1);
         });
-        if (questionIndex === game.questions.length - 1) {
+        
           endGame();
           setHasEnded(true);
+          const dataToSave = {
+            savedIndex: questionIndex.toString(),
+            savedPercentage: averagePercentage.toString(),
+            hasEnded: true
+            };
+            localStorage.setItem(`gameData_${game.id}`, JSON.stringify(dataToSave));
+
           return;
-        }
-        setQuestionIndex((prev) => prev + 1);
-        setUserAnswer(""); // Clear user's answer for the next question
-      },
-      onError: (error) => {
-        console.error(error);
-        toast({
-          title: "Something went wrong",
-          variant: "destructive",
-        });
-      },
-    });
+        }}
+    )
   }, [checkAnswer, questionIndex, toast, endGame, game.questions.length]);
 
   useEffect(() => {
@@ -103,26 +162,43 @@ const OpenEnded = ({ game }: Props) => {
     };
   }, [handleNext]);
 
- if (hasEnded) {
+  if (hasEnded) {
     return (
-      <div className="flex flex-col justify-center">
-        <div className="px-4 py-2 mt-2 font-semibold text-white bg-green-500 rounded-md whitespace-nowrap">
-          You Completed in{" "}
-          {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
+      <div className="absolute flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+        {loadingEnded ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : 
+        <div>
+          <MCQCounter
+            correct_answers={stats.correct_answers}
+            wrong_answers={stats.wrong_answers}
+          />
+          <div className="px-4 py-2 mt-2 font-semibold text-white bg-green-500 rounded-md whitespace-nowrap">
+            You Completed in{" "}
+            {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
+          </div>
+          <Link
+            href={`/statistics/${game.id}`}
+            className={cn(buttonVariants({ size: "lg" }), "mt-2")}
+          >
+            View Statistics
+            <BarChart className="w-4 h-4 ml-2" />
+          </Link>
+          <Button
+              variant="outline"
+              className="m-4 text-text border border-text"
+              onClick={handleRedo}
+            >
+              Redo
+            </Button>
         </div>
-        <Link
-          href={`/statistics/${game.id}`}
-          className={cn(buttonVariants({ size: "lg" }), "mt-2")}
-        >
-          View Statistics
-          <BarChart className="w-4 h-4 ml-2" />
-        </Link>
+        }
       </div>
     );
   }
 
   return (
-    <div className="">
+    
+    <div className="text-text">
+        <div>
       <div className="flex flex-row justify-between">
         <div className="flex flex-col w-1/2">
           <p>
@@ -140,7 +216,7 @@ const OpenEnded = ({ game }: Props) => {
       </div>
       <Card className=" mt-4">
         <CardHeader className="flex flex-row items-center">
-          <CardTitle className="mr-5 text-center divide-y divide-text text-text">
+          <CardTitle className="mr-5 text-center divide-y divide-text">
             <div>{questionIndex + 1}</div>
             <div className="text-base text-text">
               {game.questions.length}
@@ -157,19 +233,35 @@ const OpenEnded = ({ game }: Props) => {
           type="text"
           value={userAnswer}
           onChange={(e) => setUserAnswer(e.target.value)}
-          className="w-full max-w-2xl rounded bg-background text-text"
+          className="w-full max-w-2xl rounded bg- background text-text"
         />
-        <Button
-          variant="outline"
-          className="mt-4 border border-text"
-          disabled={isChecking || hasEnded}
-          onClick={handleNext}
-        >
-          {isChecking && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
-          Next <ChevronRight className="w-4 h-4 ml-2" />
-        </Button>
+
+        <div className="flex justify-center align-center text-black">
+                    
+              <Button
+                variant="outline"
+                className="m-4 text-text border border-text"
+                disabled={isChecking || hasEnded}
+                onClick={handleNext}
+              >
+                {isChecking && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                Next <ChevronRight className="w-4 h-4 ml-2" />
+              </Button>
+            
+            <Button
+            variant="outline"
+            className="m-4 text-text border border-text "
+            onClick={handleRedo}
+            >
+            Redo
+            </Button>
+
+        </div>
       </div>
+      </div>
+      
     </div>
+    
   );
 };
 

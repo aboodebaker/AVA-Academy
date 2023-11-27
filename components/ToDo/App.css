@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+
+.App {
+  text-align: center;
+}
+
+h1 {
+  color: var(--text);
+  margin-bottom: 0.5rem;
+  font-size: 1.75rem;
+}
+
+.TodoWrapper {
+  background: var(--background);
+  padding: 2rem;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.TodoForm {
+  width: 100%;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.todo-input {
+  outline: none;
+  background: none;
+  border: 1px solid var(--primary);
+  padding: 0.5rem 1rem;
+  width: 300px;
+  color: var(--text);
+}
+
+.todo-input::placeholder {
+  color: var(--text);
+}
+
+.todo-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 0.55rem;
+  cursor: pointer;
+}
+
+.Todo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--secondary);
+  color: var(--text);
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+  width: 100%;
+}
+
+.fa-trash {
+  margin-left: 0.75rem;
+}
+
+.incompleted {
+  color: var(--text);
+  cursor: pointer;
+}
+
+.completed {
+  color: var(--accent);
+  text-decoration: line-through;
+  cursor: pointer;
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+}
+ 

@@ -41,6 +41,7 @@ const MCQ =  ({ game, userId}: Props) => {
   const id = game.uniqueId
   const [questions, setQuestions] = useState(game.questions)  
   const [currentQuestion, setCurrentQuestion] = useState(questions[questionIndex]);
+  const [loadingEnded, setLoadingEnded] = useState(false)
 
   useEffect(() => {
     setCurrentQuestion(questions[questionIndex]);
@@ -130,7 +131,9 @@ console.log(userId)
       const payload: z.infer<typeof endGameSchema> = {
         gameId: game.id,
       };
+      setLoadingEnded(true)
       const response = await axios.post(`/api/activities/endGame`, payload);
+      setLoadingEnded(false)
       return response.data;
     },
   });
@@ -209,29 +212,32 @@ console.log(userId)
     return (
       
       <div className="absolute flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-        
-        <MCQCounter
-          correct_answers={stats.correct_answers}
-          wrong_answers={stats.wrong_answers}
-        />
-        <div className="px-4 py-2 mt-2 font-semibold text-white bg-green-500 rounded-md whitespace-nowrap">
-          You Completed in{" "}
-          {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
-        </div>
-        <Link
-          href={`/statistics/${game.id}`}
-          className={cn(buttonVariants({ size: "lg" }), "mt-2")}
-        >
-          View Statistics
-          <BarChart className="w-4 h-4 ml-2" />
-        </Link>
-        <Button
-                variant="outline"
-                className="m-4 text-text border border-text"
-                onClick={handleRedo}
+        {loadingEnded ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : 
+        <div>
+          <MCQCounter
+            correct_answers={stats.correct_answers}
+            wrong_answers={stats.wrong_answers}
+          />
+          <div className="px-4 py-2 mt-2 font-semibold text-white bg-green-500 rounded-md whitespace-nowrap">
+            You Completed in{" "}
+            {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
+          </div>
+          <Link
+            href={`/statistics/${game.id}`}
+            className={cn(buttonVariants({ size: "lg" }), "mt-2")}
+          >
+            View Statistics
+            <BarChart className="w-4 h-4 ml-2" />
+          </Link>
+          <Button
+              variant="outline"
+              className="m-4 text-text border border-text"
+              onClick={handleRedo}
             >
-                Redo
+              Redo
             </Button>
+        </div>
+        }
       </div>
     );
   }

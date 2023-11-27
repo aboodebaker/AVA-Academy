@@ -10,6 +10,8 @@ import { Configuration, OpenAIApi } from "openai";
 import { Message, OpenAIStream, StreamingTextResponse } from "ai";
 import { getContext } from "@/lib/context";
 import serverSession from '@/lib/serverSession';
+import { pusherServer } from '@/lib/pusher'
+
     const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -18,8 +20,6 @@ const openai = new OpenAIApi(config);
 
 export async function POST(req: Request, res: Response) {
   try {
-    const user = await serverSession()
-
     function getRandomInt(min, max) {
       min = Math.ceil(min);
       max = Math.floor(max);
@@ -34,7 +34,7 @@ export async function POST(req: Request, res: Response) {
     const body = await req.json();
     const { topic, type, amount, selectedFileId, classs } = quizCreationSchema.parse(body);
 
-
+    console.log('here')
     const usersWithFile = await prisma.user.findMany({
         where: {
             files: {
@@ -50,7 +50,7 @@ export async function POST(req: Request, res: Response) {
             files: true,
         },
     });
-
+    console.log('here')
     const teacherFile = await prisma.files.findFirst({
       where: {
             
@@ -76,7 +76,7 @@ const teacherUser = await prisma.user.findFirst({
 
 
 
-    const messageContent =`You are a helpful AI that is able to generate a summary, main points and background information for this topic in the document: ${topic}. Format it nicely with bold headings and neat paragraphs and bullet points.`
+    const messageContent =`You are a helpful AI that is able to generate a summary, main points and background information for this topic in the document: ${topic}. Format it nicely with bold headings and neat paragraphs and bullet points. Please refrain from saying anything such as sure, or i can help and get straight into the summary.`
 
     const message = {
         role: 'user',
@@ -123,7 +123,6 @@ const teacherUser = await prisma.user.findFirst({
     let data;
     let game:any = null;
 
-
     try {
     const [chatResponse, questionResponse] = await Promise.all([
       await openai.createChatCompletion({
@@ -152,7 +151,7 @@ const teacherUser = await prisma.user.findFirst({
     data = questionResponse.data;
 
 
-
+    console.log('here')
 
     // Continue with the rest of your code using chatData and questionData
     } catch (error:any) {
@@ -181,7 +180,8 @@ const teacherUser = await prisma.user.findFirst({
                 },
             });
 
-            console.log(game)
+
+
         
 
 
@@ -213,10 +213,21 @@ const teacherUser = await prisma.user.findFirst({
       await prisma.questionActivity.createMany({
         data: manyData,
       });
+
+
+          const activit = await prisma.activity.findUnique({
+      where: {
+        id: game.id
+      }, 
+      include: {
+        questions: true,
+      }
+    })
+
+    await pusherServer.trigger(user.id, 'incoming-activities', activit);
+
+
     }
-
-
-
 
 
 
@@ -241,11 +252,11 @@ const teacherUser = await prisma.user.findFirst({
                 class: classs,
                 },
             });
-
-      type openQuestion = {
-        question: string;
-        answer: string;
-      };
+      console.log('here')
+        type openQuestion = {
+          question: string;
+          answer: string;
+        };
 
 
       await prisma.questionActivity.createMany({
@@ -259,7 +270,18 @@ const teacherUser = await prisma.user.findFirst({
           };
         }),
       });
-    }
+
+      const activit = await prisma.activity.findUnique({
+      where: {
+        id: game.id
+      }, 
+      include: {
+        questions: true,
+      }
+    })
+
+    await pusherServer.trigger(user.id, 'incoming-activities', activit);
+  }
 }
 
     return NextResponse.json({ gameId: game.id }, { status: 200 });

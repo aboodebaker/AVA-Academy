@@ -33,6 +33,9 @@ const Quiz = async ({ params }: Props) => {
       userId: {
       equals: userId
       }
+    },
+    include: {
+      Subject: true,
     }
   })
 

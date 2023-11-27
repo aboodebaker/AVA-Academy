@@ -31,7 +31,11 @@ const FileUpload: React.FC<FileUploadProps> = ({ onFileKeyChange }) => {
   });
 
   const { getRootProps, getInputProps } = useDropzone({
-    accept: { "application/pdf": [".pdf"] },
+    accept: {
+        "application/pdf": [".pdf"],
+        "image/png": [".png"],
+        "image/jpeg": [".jpg", ".jpeg"]
+      },
     maxFiles: 1,
     onDrop: async (acceptedFiles) => {
       const file = acceptedFiles[0];

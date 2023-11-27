@@ -30,7 +30,7 @@ export async function POST(req: Request, res: Response) {
     const { amount, topic, type, selectedFileId, userId } = await req.json();
     let questions: any
     const prisma = new PrismaClient()
-
+    console.log('here')
     const chat = await prisma.files.findFirst({
       where: {
         chatpdf: selectedFileId,
@@ -43,17 +43,15 @@ export async function POST(req: Request, res: Response) {
 
 
     const fileKey = chat.fileKey;
-
+    console.log('here')
     const newMessage = {
       role: 'user',
       content:  `generate a quiz about this topic: ${topic}`
     }
     const context = await getContext(newMessage.content, fileKey);
     console.log(context)
-
-    const prompt = {
-      role: "system",
-      content: `
+    console.log('here')
+    const prompt = `
       your mission is to be the ultimate assistant for school children seeking answers from their documents. 
       You do not mention that you dont know the document or context ever but give as much knowledge as possible. If you cannot find something in the context
       say that you do not know and maybe check if it is in the document or if they could rephrase the question. Always answer just want the user wants and never previous questions
@@ -79,8 +77,7 @@ export async function POST(req: Request, res: Response) {
       ${context}
       END OF DOCUMENT
       
-      `,
-    };
+      `
 
     
 
@@ -93,33 +90,17 @@ export async function POST(req: Request, res: Response) {
 
 
 
-    if (type === "open_ended") {
+      if (type === "open_ended") {
       
       
-      const messageContent =`You are a helpful AI that is able to generate a pair of question and answers, the length of each answer should not be more than 15 words, store all the pairs of answers and questions in a JSON array You are to generate a random hard open-ended questions about ${topic} from your document. You are to generate ${amount} questions`
+        const messageContent =`You are a helpful AI that is able to generate a pair of question and answers, the length of each answer should not be more than 15 words, store all the pairs of answers and questions in a JSON array You are to generate a random hard open-ended questions about ${topic} from your document. You are to generate ${amount} questions`
 
-      const message = {
-        role: 'user',
-        content: messageContent
-      }
+        console.log('here')
 
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo-1106",
-      messages: [
+        questions = await strict_output(
         prompt,
-        message,
-      ],
-      // stream: true,
-    });
-
-
-        const stream = await response.data.choices[0].message?.content
-
-
-      questions = await strict_output(
-        "You are a helpful AI that is able to change questions and answers into a JSON array",
         new Array(amount).fill(
-          `You are to change these question and answers into a JSON array: ${stream}`
+          messageContent
         ),
         {
           question: "question",
@@ -130,39 +111,20 @@ export async function POST(req: Request, res: Response) {
       console.log(questions)
     } else if (type === "mcq") {
 
-
+      console.log('here')
       const messageContent =`You are a helpful AI that is able to generate multiple choice question and answers, the length of each answer should not be more than 15 words, store all the pairs of answers and questions in a JSON array You are to generate a random hard open-ended questions about ${topic} from your document. You are to generate ${amount} questions with 1 answer and 3 other choices.`
 
-      const message = {
-        role: 'user',
-        content: messageContent
-      }
-
-
-     
-    const response = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo-1106",
-      messages: [
-        prompt,
-        message,
-      ],
-      // stream: true,
-    });
-
-
-        const stream = await response.data.choices[0].message?.content
-
       questions = await strict_output(
-        "You are a helpful AI that is able to change questions and answers into a JSON array",
+        prompt,
         new Array(amount).fill(
-           `You are to change these question and answers into a JSON array and remove the letters before: ${stream}`
+           messageContent
         ),
         {
-          question: "question",
-          answer: "answer with max length of 15 words",
-          option1: "option1 with max length of 15 words",
-          option2: "option2 with max length of 15 words",
-          option3: "option3 with max length of 15 words",
+          "question": "question",
+          "answer": "answer with max length of 15 words",
+          "option1": "option1 with max length of 15 words",
+          "option2": "option2 with max length of 15 words",
+          "option3": "option3 with max length of 15 words"
         }
       );
     }

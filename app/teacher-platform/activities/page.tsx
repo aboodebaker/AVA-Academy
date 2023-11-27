@@ -10,7 +10,11 @@ const page = async () => {
 
 
 
-  const files = await prisma.files.findMany()
+  const files = await prisma.files.findMany({
+    include: {
+      Subject: true
+    }
+  })
 
   return (
     <QuizCreation topic={""} files={files} />

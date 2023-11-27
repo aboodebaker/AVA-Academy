@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { uploadToS3 } from '@/lib/s3'
 
-const FileCarasoul = ({ files }) => {
+const FileCarasoul = ({ files, user }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFile, setSelectedFile] = useState('')
   const filteredfiles = files.filter((files) =>
@@ -118,7 +118,7 @@ const handleSave = async (metaData, content, options) => {
         {filteredfiles.map((file, index) => (
           <div key={index} className="card">
             
-              <ClassCard title={file.pdfName} link={file.pdfUrl}  date={file.createdAt} height={file.id} clip={'title-clip'} divId={file.pdfName + index} selectedFile={handleFileChange} activities={file.activities} />
+              <ClassCard title={file.pdfName} link={file.pdfUrl}  date={file.createdAt} height={file.id} clip={'title-clip'} divId={file.pdfName + index} selectedFile={handleFileChange} activities={file.activities} userId={user.id}/>
                   
           </div>
         ))}

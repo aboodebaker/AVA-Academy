@@ -14,12 +14,16 @@ import {Card, CardBody, CardFooter, Image} from "@nextui-org/react";
 import './stylecopy.css'
 import { useEffect } from 'react';
 import ActivityCard from "./activitycard";
+import { pusherClient } from '@/lib/pusher';
+
 
 const { format } = require('date-fns');
 
-const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activities}) => {
+const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activities, userId,}) => {
   
   const [fdate, setFDate] = useState('')
+  const [activitiess, setactivitiess] = useState(activities)
+
   useEffect(() => {
   if (date != null) {
     const idk = format(date, 'dd/MM/yyyy');
@@ -27,6 +31,38 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
   }
   },[])
 
+  useEffect(() => {
+    pusherClient.subscribe(userId);
+
+    pusherClient.bind('incoming-activities', (activity) => {
+      setactivitiess([...activitiess, activity,  ]);
+      console.log(activity)
+    });
+
+
+
+    return () => {
+      pusherClient.unsubscribe(userId);
+    };
+  }, []); 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Your API request code goes here
+        const response = await fetch('https://api.example.com/data');
+        const data = await response.json();
+        console.log(data); // or do something with the data
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    // Set up the interval to call fetchData every 500 milliseconds (half a second)
+    const intervalId = setInterval(fetchData, 500);
+
+    // Cleanup the interval when the component unmounts or the useEffect dependency changes
+    return () => clearInterval(intervalId);
+  }, []);
   useEffect(() => {
     const loadAdobeDCViewSDK = () => {
       
@@ -99,7 +135,7 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
                     <button onClick={() => { router.push(`/chat/${height}`)}}>Chat with your module</button> */}
                     <div className="scrolling-wrapper">
                       <h1>Activities</h1>
-                    {activities.slice().reverse().map((file, index) => (
+                    {activitiess.slice().reverse().map((file, index) => (
                   <div key={index} className="card">
                     <Link href={`/activity/${file.gameType == 'open_ended' ? 'open-ended' : 'mcq'}/${file.id}`}>
                       <ActivityCard title={file.topic} link={`/activity/${file.gameType}/${file.id}`} img={'/maths.png'} date={file.timeStarted} />

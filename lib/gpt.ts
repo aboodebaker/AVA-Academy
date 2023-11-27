@@ -21,8 +21,8 @@ export async function strict_output(
   output_format: OutputFormat,
   default_category: string = "",
   output_value_only: boolean = false,
-  model: string = "gpt-3.5-turbo",
-  temperature: number = 1,
+  model: string = "gpt-3.5-turbo-1106",
+  temperature: number = 0,
   num_tries: number = 3,
   verbose: boolean = false
 ): Promise<
@@ -44,7 +44,7 @@ export async function strict_output(
   for (let i = 0; i < num_tries; i++) {
     let output_format_prompt: string = `\nYou are to output the following in json format: ${JSON.stringify(
       output_format
-    )}. \nDo not put quotation marks or escape character \\ in the output fields.`;
+    )}. \nDo not put quotation marks or escape character \\ in the output fields. put your json inside a []`;
 
     if (list_output) {
       output_format_prompt += `\nIf output field is a list, classify output into the best element of the list.`;
@@ -71,9 +71,8 @@ export async function strict_output(
         },
         { role: "user", content: user_prompt.toString() },
       ],
+      
     });
-
-    console.log(response)
 
     let res: string =
       response.data.choices[0].message?.content?.replace(/'/g, '"') ?? "";

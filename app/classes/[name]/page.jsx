@@ -13,13 +13,19 @@ const page = async ({params}) => {
   const session = await getServerSession(authOptions);
   const userid = session.user.id
 
+  const subject = await prisma.subject.findFirst({
+    where: {
+      name: data
+    }
+  })
+
   const files = await prisma.files.findMany({
     where: {
       userId:{
         equals: userid
       },
-      subject: {
-        equals: data
+      subjectid: {
+        equals: subject.id
       }
     },
     include: {
@@ -37,6 +43,12 @@ const page = async ({params}) => {
     }
   })
 
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userid
+    }
+  })
+
 
 
 
@@ -47,7 +59,7 @@ const page = async ({params}) => {
     <div className={styles.headertable}>
       <h1 className={styles.header}>{data}</h1>
     </div>
-    <FileCarasoul files={files} />
+    <FileCarasoul files={files} user={user}/>
     <Note notes={notes} />
   </div>
   </div>

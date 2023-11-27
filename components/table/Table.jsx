@@ -1,5 +1,15 @@
 'use client'
 import React, { useState } from "react";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableFooter,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table';
 // import { Dialog, Transition } from "@headlessui/react";
 // import { ArrowsExpandIcon } from "@heroicons/react/outline";
 // import { Button, Card, Text, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell } from "@tremor/react";
@@ -127,7 +137,35 @@ const Tables = ({ data }) => {
   //   </>
   // );
   return (
-    <p>hi</p>
+    <Table>
+
+      <TableHeader>
+        <TableRow>
+          <TableHead>User</TableHead>
+          <TableHead>Answers</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {data.map((answer, index) => (
+          <TableRow key={answer.id}>
+            <TableCell>{answer.id}</TableCell>
+            <TableCell>
+              <Table>
+                <TableBody>
+                  {answer.questions.map((qAnswer, qIndex) => (
+                    <TableRow key={qIndex + 1}>
+                      <TableCell>{qAnswer.question + 1}</TableCell>
+                      <TableCell>{qAnswer.correctAnswer ? 'Correct' : 'Incorrect'}</TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
+      
+    </Table>
   )
 }
 

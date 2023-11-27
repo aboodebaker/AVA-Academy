@@ -1,8 +1,6 @@
-// @ts-nocheck
 import { PrismaClient } from '@prisma/client';
 import { NextResponse } from 'next/server';
 import { loadS3IntoPinecone } from '@/lib/pinecone';
-import { getS3Url } from '@/lib/s3';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '../auth/[...nextauth]/route';
 
@@ -10,18 +8,28 @@ interface User {
   id: string;
   // Add other properties as needed
 }
-
+function getRandomInt(min: number, max: number) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 // /api/create-chat
 export async function POST(req: Request, res: Response) {
   const prisma = new PrismaClient();
 
   try {
     const body = await req.json();
-    const { file_key, file_name, grade, subject, chatpdf } = body;
-    console.log(file_key, file_name, grade, subject);
+    const { image, name, grade } = body;
+    console.log(image, name, grade);
 
-    await loadS3IntoPinecone(file_key);
-    const url = getS3Url(file_key)
+
+
+    var randomInteger = getRandomInt(1, 1000000000);
+
+    // Convert the random integer to a string
+    var uniqueId = randomInteger.toString();
+
+    
 
     const users = await prisma.user.findMany({
       where: {
@@ -32,22 +40,13 @@ export async function POST(req: Request, res: Response) {
     })
     console.log(users)
     for (const user of users) {
-
-      const subjects = await prisma.subject.findFirst({
-        where: {
-          uniqueId: subject,
-          userId: user.id,
-        }
-      })
-      const chat = await prisma.files.create({
+      const chat = await prisma.subject.create({
         data: {
-          pdfName: file_name,
-          pdfUrl: url,
-          userId: user.id, // Use the user's ID
-          subjectid: subjects.id,
-          fileKey: file_key,
-          chatpdf: chatpdf,
+          image: image,
+          name: name,
           grade: grade,
+          userId: user.id,
+          uniqueId: uniqueId,
         },
       });
       console.log(`Created chat for user ${user.id}`);

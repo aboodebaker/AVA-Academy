@@ -1,7 +1,7 @@
 .sidecontainer {
     border-radius: 86px;
     background: var(--primary);
-    height: 30vh;
+    height: 100%;
     width: 4vw;
     display: flex;
     flex-direction: column;
@@ -27,7 +27,7 @@
 .sidecontainer-closed {
     border-radius: 86px;
     background: var(--primary);
-    height: 30vh;
+    height: 100%;
     
     display: flex;
     flex-direction: column;

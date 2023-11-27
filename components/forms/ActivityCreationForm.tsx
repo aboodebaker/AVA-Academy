@@ -94,7 +94,14 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
     },
   });
   
-  const uniqueSubjects = Array.from(new Set(files.map(file => file.subject)));
+ const uniqueSubjects = Object.values(
+  files.reduce((acc, file) => {
+    const uniqueId = file.Subject.uniqueId;
+    acc[uniqueId] = file.Subject;
+    return acc;
+  }, {})
+);
+
 
   const uniqueChatpdfValues = Array.from(new Set(files.map(file => file.chatpdf)));
   const uniqueFiles = uniqueChatpdfValues.map(chatpdf => files.find(file => file.chatpdf === chatpdf));
@@ -104,7 +111,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       const selectedSubject = form.getValues("subject");
-      const filteredFiles = uniqueFiles.filter((file) => file.subject === selectedSubject);
+      const filteredFiles = uniqueFiles.filter((file) => file.Subject.uniqueId === selectedSubject);
       setSubjectFiles(filteredFiles);
     }, 500); // Run every 1 second
 
@@ -185,8 +192,8 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                         <option value="">Select a subject</option>
                         {/* Add options for subjects based on your data */}
                         {uniqueSubjects.map((subject, index) => (
-                          <option key={index} value={subject} className="text-text">
-                            {subject}
+                          <option key={index} value={subject.uniqueId} className="text-text">
+                            {subject.name}
                           </option>
                         ))}
                       </select>

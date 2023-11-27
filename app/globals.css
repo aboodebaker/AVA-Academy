@@ -16,6 +16,7 @@
   --paGradient: linear-gradient(90deg, rgba(102,124,183,1) 0%, rgba(76,88,123,1) 100%);
   --accent: #202d50;/* primary */
   --boxshadow: #ADC0DB;
+  --boxShadow: #00000033,
 }
 
 @media (prefers-color-scheme: dark) {
@@ -33,6 +34,8 @@
     --paGradient: -moz-linear-gradient(90deg, rgba(44,86,205,1) 0%, rgba(193,202,225,1) 100%);
     --paGradient: -webkit-linear-gradient(90deg, rgba(44,86,205,1) 0%, rgba(193,202,225,1) 100%);
     --paGradient: linear-gradient(90deg, rgba(44,86,205,1) 0%, rgba(193,202,225,1) 100%);
+    --boxShadow:  #ffffff33 ,
+    
   } 
 }
 
@@ -68,6 +71,11 @@ h6 {
   background-color: var(--background);
   width: 100%;
  
+}
+
+.box-grid-shadow {
+  box-shadow: 1px 3px 8px 2px var(--boxShadow); 
+  border-radius: 40px
 }
 
 .accentbg {
@@ -136,6 +144,7 @@ h6 {
   }
   .sidebar {
     width: 50px;
+    height: 100%
   }
 }
 @media only screen and (max-width: 1800px) {

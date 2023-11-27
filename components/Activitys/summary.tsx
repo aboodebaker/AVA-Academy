@@ -61,7 +61,9 @@ interface Props {
 }
 
 const Summary: React.FC<Props> = ({ summary, id }: Props) => {
-  const formattedSummary = summary.replace(/\n/g, '<br>');
+
+  var formattedSummary = summary.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+  formattedSummary = summary.replace(/\n/g, '<br>');
 
 
   const [editorState, setEditorState] = React.useState(formattedSummary);

@@ -10,12 +10,12 @@ const { format } = require('date-fns');
 
 const ActivityCard = ({title, link, img, date,}) => {
   const [fdate, setFDate] = useState('')
-  useEffect(() => {
-  if (date != null) {
-    const idk = format(date, 'dd/MM/yyyy');
-    setFDate('Date: ' + idk)
-  }
-  },[])
+  // useEffect(() => {
+  // if (date != null) {
+  //   const idk = format(date, 'dd/MM/yyyy');
+  //   setFDate('Date: ' + idk)
+  // }
+  // },[])
   return (
 <div className="gap-2 grid">
       <div className="border">

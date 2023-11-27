@@ -28,7 +28,7 @@ export async function getMatchesFromEmbeddings(embeddings: number[], fileKey: st
     if (queryResult.matches && Array.isArray(queryResult.matches)) {
       return queryResult.matches.filter(match => {
         if (match.metadata && match.metadata.text) {
-          return match.score && match.score > 0.1;
+          return match.score && match.score > 0.05;
         }
         return false;
       }) || [];

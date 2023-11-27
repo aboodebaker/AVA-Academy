@@ -5,6 +5,7 @@ import { getAuthSession } from "@/lib/nextauth";
 import { redirect } from "next/navigation";
 import Tables from "@/components/table/Table";
 import SignOutButton from "@/components/signOutButton";
+import {TodoWrapper} from '@/components/ToDo/TodoWrapper'
 
 import UserAccountNav from "@/components/UserAccountNav";
 
@@ -17,10 +18,12 @@ const Dashboard = async (props: Props) => {
 
   if (session) {
     const prisma = new PrismaClient();
-    const games = await prisma.game.findMany({
+    const games = await prisma.activity.findMany({
       where: { userId: session.user.id },
       include: { questions: true },
     });
+
+    console.log(games)
 
     const user = await prisma.user.findUnique({
       where: { id: userId  },
@@ -28,19 +31,17 @@ const Dashboard = async (props: Props) => {
 
 
     return (
-    <div className="grid grid-rows-2 grid-cols-6 gap-4 w-full h-full">
+    <div className="grid grid-rows-3 grid-cols-6 gap-4 w-full h-full">
       <div>
         <SignOutButton/>
         <UserAccountNav user={user}/>
       </div>
-      <div className="row-span-1 col-span-2">02</div>
-      <div className="row-span-1 col-span-2">02</div>
-      <div className="row-span-1 col-span-4 m-2">
+      <div className="row-span-1 col-span-2 box-grid-shadow">02</div>
+      <div className="row-span-1 col-span-2 box-grid-shadow"><TodoWrapper /></div>
+      <div className="row-span-2 col-span-4 m-2 box-grid-shadow">
         <Tables data={games} />
       </div>
-      <div className="auto-rows-max auto-cols-max" style={{ position: 'relative' }}>
-        <iframe src="/classes" frameBorder="0" className="w-full h-full" style={{ position: 'absolute', top: 0 }}></iframe>
-      </div>
+
     </div>
   );
   } else {
