@@ -5,8 +5,7 @@ type Props = {
     data: any
 }
 
-
-const TabsDemo = ({data} : Props) => (
+const TabsDemo = ({ data }: Props) => (
   <Tabs.Root
     className="flex flex-col w-[300px] shadow-[0_2px_10px] shadow-blackA2"
     defaultValue="tab1"
@@ -24,7 +23,7 @@ const TabsDemo = ({data} : Props) => (
       value="tab1"
     >
       <p className="mb-5 text-mauve11 text-[15px] leading-normal">
-        Make changes to your account here. Click save when you're done.
+        Make changes to your account here. Click save when you&apos;re done.
       </p>
     </Tabs.Content>
   </Tabs.Root>

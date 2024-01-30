@@ -21,6 +21,7 @@ import { useToast } from "./ui/use-toast";
 import Link from "next/link";
 import { Input } from "./ui/input";
 import { pusherClient } from '@/lib/pusher';
+import MCQCounter from "./MCQCounter";
 
 type Props = {
   game: Game & { questions: Pick<Question, "id" | "question" | "answer">[] };
