@@ -79,18 +79,21 @@ const Page = () => {
     <div className='flex justify-center align-center w-[800]'>
       <Card className='flex flex-col align-center justify-center'>
         <CardHeader >
-          <CardTitle className="text-2xl font-bold">Upload</CardTitle>
-          <CardDescription className='text-text'>Upload a file to a specific grade and class</CardDescription>
+          <CardTitle className="text-2xl font-bold">Create a new subject</CardTitle>
+          <CardDescription className='text-text'>Create a new subject to a specific grade</CardDescription>
         </CardHeader>
         <CardContent className='flex-col justify-center align-center '>
       <div >
+        <label htmlFor="nameInput" className='block mb-2 font-bold text-text'>
+          Cover Image of the Subject:
+        </label>
         <FileUpload onFileKeyChange={handleFileKeyChange}/>
       </div>
       <div className="formdiv">
         <form action="">
         <div className='input-container'>
         <label htmlFor="nameInput" className='block mb-2 font-bold text-text'>
-          Name of the file:
+          Name of the Subject:
         </label>
         <input
           type="text"

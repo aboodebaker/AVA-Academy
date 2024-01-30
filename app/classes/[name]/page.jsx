@@ -60,8 +60,12 @@ const page = async ({params}) => {
       <h1 className={styles.header}>{data}</h1>
     </div>
     <FileCarasoul files={files} user={user}/>
-    <Note notes={notes} />
+    <div className={styles.headertables}>
+      <Note notes={notes} />
+    </div>
+    
   </div>
+  
   </div>
   )
 }

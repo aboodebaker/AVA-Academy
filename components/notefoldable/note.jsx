@@ -17,7 +17,7 @@ const Note = ({notes}) => {
   );
 
   return (
-     <div className="contain ">
+     <div className="contain">
         <div
           className="headings headertable"
           onClick={toggleNotesSection}

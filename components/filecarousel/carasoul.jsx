@@ -89,7 +89,7 @@ const handleSave = async (metaData, content, options) => {
 
   return (
     
-    <div className='contain'>
+    <div className=''>
       <div className='inputsbox'>
       <div className='inputbox'>
       <input
