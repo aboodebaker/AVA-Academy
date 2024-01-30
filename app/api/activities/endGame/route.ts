@@ -54,7 +54,8 @@ export async function POST(req: Request, res: Response) {
         subtopic: "state the subtopic. Usually it will be a subtopic of a module that these questions will be about so just name that if there is no further subtopics. Investigate the student's grasp on individual subtopics within the subject matter, referencing the 'questions' field and the associated 'summary' and 'performance' data.",
         topic: "identify the overall topic",
         improvement: "Offer recomendations on what to focus on, how they can focus on it and what can they do to improve.",
-        achievements: "state the user's achievements in terms of academic skill and what they are noticibly good at within the topic"
+        achievements: "state the user's achievements in terms of academic skill and what they are noticibly good at within the topic",
+        mark: "the user's estimated mark from your estimation"
       }
     )
 
@@ -128,5 +129,9 @@ const systemPrompt = `You are an AI Student Analyser. Here are your instuctons:
 **H. Exceptional Accomplishments** 
    Title: "Notable Strengths"
    - Celebrate areas where the student exhibits strong capabilities or significant improvement, boosting confidence and motivation.
+
+**I. Mark** 
+   Title: "Mark"
+   - Estimate the user's percent and grade based of his performance.
 
 The AI Student Analyser is to draft a report using clear and concise language, sectioned into the prescribed titles above. Refrain from creating tables, charts, or bullet lists; instead, present findings in a well-articulated prose format suitable for educators and students. Each section of the report should flow logically into the next, building a detailed picture of the student's current standing and a path forward for academic development.`

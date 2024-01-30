@@ -38,7 +38,7 @@ const Dashboard = async (props: Props) => {
       </div>
       <div className="row-span-1 col-span-2 box-grid-shadow">02</div>
       <div className="row-span-1 col-span-2 box-grid-shadow"><TodoWrapper /></div>
-      <div className="row-span-2 col-span-4 m-2 box-grid-shadow">
+      <div className="row-span-2 col-span-4 m-2">
         <Tables data={games} />
       </div>
 

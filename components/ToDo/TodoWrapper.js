@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 import { EditTodoForm } from "./EditTodoForm";
 import './App.css'
 
-export const TodoWrapper = () => {
+export const TodoWrapper = (prop) => {
   const [todos, setTodos] = useState([]);
 
   const addTodo = (todo) => {

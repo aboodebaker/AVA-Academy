@@ -23,7 +23,7 @@ export async function strict_output(
   output_value_only: boolean = false,
   model: string = "gpt-3.5-turbo-1106",
   temperature: number = 0,
-  num_tries: number = 3,
+  num_tries: number = 10,
   verbose: boolean = false
 ): Promise<
   {
@@ -44,8 +44,8 @@ export async function strict_output(
   for (let i = 0; i < num_tries; i++) {
     let output_format_prompt: string = `\nYou are to output the following in json format: ${JSON.stringify(
       output_format
-    )}. \nDo not put quotation marks or escape character \\ in the output fields. put your json inside a []`;
-
+    )}. \nDo not put quotation marks or escape character \\ in the output fields. `;
+//put your json inside a []
     if (list_output) {
       output_format_prompt += `\nIf output field is a list, classify output into the best element of the list.`;
     }

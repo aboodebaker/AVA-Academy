@@ -34,7 +34,7 @@ h1 {
   background: none;
   border: 1px solid var(--primary);
   padding: 0.5rem 1rem;
-  width: 300px;
+  width: 100%;
   color: var(--text);
 }
 
@@ -45,6 +45,7 @@ h1 {
 .todo-btn {
   background: var(--primary);
   color: white;
+  min-width: 100px;
   border: none;
   padding: 0.55rem;
   cursor: pointer;

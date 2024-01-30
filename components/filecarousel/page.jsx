@@ -110,7 +110,7 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
               <div className="everythingbox">
                 <p className="dates">{fdate}</p>
                 
-                <Dialog className="bg-background text-black">
+                <Dialog className="bg-background text-black" >
                   <DialogTrigger>
                     <div>
                     <button className="bux">Options</button>
@@ -130,6 +130,10 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
                     <h1>Need to prepare for a test? Use our Quiz creation AI for an entire test or just a topic</h1>
                     <Link href={`/quiz/${height}`}>
                     <button className="bux-2">Get a quiz on your module</button>
+                    </Link>
+                    <h1>Do you want to evaluate your strengths and weaknesses for this file?</h1>
+                    <Link href={`/file-performance/${height}`}>
+                    <button className="bux-2">Evaluate yourself</button>
                     </Link>
                     {/* <h1>Have questions. Ask our AI based on your module</h1>
                     <button onClick={() => { router.push(`/chat/${height}`)}}>Chat with your module</button> */}

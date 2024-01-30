@@ -74,8 +74,7 @@ h6 {
 }
 
 .box-grid-shadow {
-  box-shadow: 1px 3px 8px 2px var(--boxShadow); 
-  border-radius: 40px
+  box-shadow: 6px 6px 8px 1px var(--text), -1px -1px 4px 0px var(--text)
 }
 
 .accentbg {

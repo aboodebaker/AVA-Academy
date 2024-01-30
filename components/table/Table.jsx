@@ -1,172 +1,105 @@
 'use client'
-import React, { useState } from "react";
 import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
-// import { Dialog, Transition } from "@headlessui/react";
-// import { ArrowsExpandIcon } from "@heroicons/react/outline";
-// import { Button, Card, Text, Table, TableHead, TableRow, TableHeaderCell, TableBody, TableCell } from "@tremor/react";
-// import { Fragment, } from "react";
+  AreaChart,
+  Card,
+  Metric,
+  TabList,
+  Tab,
+  TabGroup,
+  TabPanels,
+  TabPanel,
+} from "@tremor/react";
 
+const data = [
+  {
+    Month: "Jan 22",
+    Visitors: 289,
+    "Page Views": 1012,
+    "Bounce Rate": 0.5,
+  },
+  //...
+  {
+    Month: "Jan 23",
+    Visitors: 389,
+    "Page Views": 1232,
+    "Bounce Rate": 0.51,
+  },
+];
 
-const Tables = ({ data }) => {
-  // const [isOpen, setIsOpen] = useState(false);
+const numberFormatter = (value) => Intl.NumberFormat("us").format(value).toString();
 
-  // const openModal = () => setIsOpen(true);
-  // const closeModal = () => setIsOpen(false);
-
-  // return (
-  //   <>
-  //     <Card className="relative max-w-xxl mx-auto h-96 overflow-hidden">
-  //       <Table>
-  //         <TableHead>
-  //           <TableRow>
-  //             <TableHeaderCell>User</TableHeaderCell>
-  //             <TableHeaderCell className="text-right">Country</TableHeaderCell>
-  //             <TableHeaderCell className="text-right">Last Active</TableHeaderCell>
-  //             <TableHeaderCell className="text-right">Transactions</TableHeaderCell>
-  //           </TableRow>
-  //         </TableHead>
-  //         <TableBody>
-  //           {data.map((item) => (
-  //             <TableRow key={item.topic}>
-  //               <TableCell>{item.topic}</TableCell>
-  //               <TableCell className="text-right">
-  //                 <Text>{item.gameType}</Text>
-  //               </TableCell>
-  //               <TableCell className="text-right">
-  //                 <Text>{item.time}</Text>
-  //               </TableCell>
-  //               <TableCell className="text-right">
-  //                 <Text>{item.transactions}</Text>
-  //               </TableCell>
-  //             </TableRow>
-  //           ))}
-  //         </TableBody>
-  //       </Table>
-  //       <div className="inset-x-0 bottom-0 flex justify-center bg-gradient-to-t from-white pt-12 pb-8 absolute rounded-b-lg">
-  //         <Button
-  //           icon={ArrowsExpandIcon}
-  //           className="bg-white shadow-md border-gray-200 text-gray-500 hover:bg-gray-50 hover:border-gray-300"
-  //           onClick={openModal}
-  //         >
-  //           Show more
-  //         </Button>
-  //       </div>
-  //     </Card>
-  //     <Transition appear show={isOpen} as={Fragment}>
-  //       <Dialog as="div" className="relative z-50" onClose={closeModal}>
-  //         <Transition.Child
-  //           as={Fragment}
-  //           enter="ease-out duration-300"
-  //           enterFrom="opacity-0"
-  //           enterTo="opacity-100"
-  //           leave="ease-in duration-200"
-  //           leaveFrom="opacity-100"
-  //           leaveTo="opacity-0"
-  //         >
-  //           <div className="fixed inset-0 bg-gray-900 bg-opacity-25" />
-  //         </Transition.Child>
-  //         <div className="fixed inset-0 overflow-y-auto">
-  //           <div className="flex min-h-full items-center justify-center p-4 text-center">
-  //             <Transition.Child
-  //               as={Fragment}
-  //               enter="ease-out duration-300"
-  //               enterFrom="opacity-0 scale-95"
-  //               enterTo="opacity-100 scale-100"
-  //               leave="ease-in duration-200"
-  //               leaveFrom="opacity-100 scale-100"
-  //               leaveTo="opacity-0 scale-95"
-  //             >
-  //               <Dialog.Panel
-  //                 className="w-full max-w-xxl transform overflow-hidden ring-tremor bg-white
-  //                                   p-6 text-left align-middle shadow-tremor transition-all rounded-xl"
-  //               >
-  //                 <div className="relative mt-3">
-  //                   <Table className="h-[450px]">
-  //                     <TableHead>
-  //                       <TableRow>
-  //                         <TableHeaderCell className="bg-white">User</TableHeaderCell>
-  //                         <TableHeaderCell className="bg-white text-right">country</TableHeaderCell>
-  //                         <TableHeaderCell className="bg-white text-right">
-  //                           lastActive
-  //                         </TableHeaderCell>
-  //                         <TableHeaderCell className="bg-white text-right">
-  //                           transactions
-  //                         </TableHeaderCell>
-  //                       </TableRow>
-  //                     </TableHead>
-  //                     <TableBody>
-  //                       {data.map((item) => (
-  //                         <TableRow key={item.topic}>
-  //                           <TableCell>{item.topic}</TableCell>
-  //                           <TableCell className="text-right">
-  //                             <Text>{item.gameType}</Text>
-  //                           </TableCell>
-  //                           <TableCell className="text-right">
-  //                             <Text>{item.lastActive}</Text>
-  //                           </TableCell>
-  //                           <TableCell className="text-right">
-  //                             <Text>{item.transactions}</Text>
-  //                           </TableCell>
-  //                         </TableRow>
-  //                       ))}
-  //                     </TableBody>
-  //                     <div className="absolute inset-x-0 bottom-0 bg-gradient-to-b from-transparent to-white z-0 h-20 w-full" />
-  //                   </Table>
-  //                 </div>
-  //                 <Button
-  //                   className="mt-5 w-full bg-white border-gray-200 text-gray-500 hover:bg-gray-50 hover:border-gray-300"
-  //                   onClick={closeModal}
-  //                 >
-  //                   Go back
-  //                 </Button>
-  //               </Dialog.Panel>
-  //             </Transition.Child>
-  //           </div>
-  //         </div>
-  //       </Dialog>
-  //     </Transition>
-  //   </>
-  // );
-  return (
-    <Table>
-
-      <TableHeader>
-        <TableRow>
-          <TableHead>User</TableHead>
-          <TableHead>Answers</TableHead>
-        </TableRow>
-      </TableHeader>
-      <TableBody>
-        {data.map((answer, index) => (
-          <TableRow key={answer.id}>
-            <TableCell>{answer.id}</TableCell>
-            <TableCell>
-              <Table>
-                <TableBody>
-                  {answer.questions.map((qAnswer, qIndex) => (
-                    <TableRow key={qIndex + 1}>
-                      <TableCell>{qAnswer.question + 1}</TableCell>
-                      <TableCell>{qAnswer.correctAnswer ? 'Correct' : 'Incorrect'}</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableCell>
-          </TableRow>
-        ))}
-      </TableBody>
-      
-    </Table>
-  )
+const percentageFormatter = (value) =>
+  `${Intl.NumberFormat("us")
+    .format(value * 100)
+    .toString()}%`;
+    
+function sumArray(array, metric) {
+  return array.reduce((accumulator, currentValue) => accumulator + currentValue[metric], 0);
 }
 
-export default Tables
+export default function Tables() {
+  return (
+    <Card className="p-0 text-texts bg-transparent">
+      <TabGroup>
+        <TabList>
+          <Tab className="p-4 sm:p-6 text-left text-texts bg-backgrounds">
+            <p className="text-sm sm:text-base">Visitors</p>
+            <Metric className="mt-2 text-inherit text-texts bg-backgrounds">
+              {numberFormatter(sumArray(data, "Visitors"))}
+            </Metric>
+          </Tab>
+          <Tab className="p-4 sm:p-6 text-left text-texts bg-backgrounds">
+          <p className="text-sm sm:text-base">Page views</p>
+            <Metric className="mt-2 text-inherit text-texts bg-backgrounds">
+              {numberFormatter(sumArray(data, "Page Views"))}
+            </Metric>
+          </Tab>
+          <Tab className="p-4 sm:p-6 text-left text-texts bg-backgrounds">
+          <p className="text-sm sm:text-base">Bounce rate</p>
+            <Metric className="mt-2 text-inherit text-texts bg-backgrounds">
+              {percentageFormatter(sumArray(data, "Bounce Rate") / data.length)}
+            </Metric>
+          </Tab>
+        </TabList>
+        <TabPanels>
+          <TabPanel className="p-6 text-texts bg-backgrounds">
+            <AreaChart
+              className="h-80 mt-10 text-texts bg-backgrounds"
+              data={data}
+              index="Month"
+              categories={["Visitors"]}
+              colors={["blue"]}
+              valueFormatter={numberFormatter}
+              showLegend={false}
+              yAxisWidth={50}
+            />
+          </TabPanel>
+          <TabPanel className="p-6 text-texts bg-backgrounds">
+            <AreaChart
+              className="h-80 mt-10 text-texts bg-backgrounds"
+              data={data}
+              index="Month"
+              categories={["Page Views"]}
+              colors={["blue"]}
+              valueFormatter={numberFormatter}
+              showLegend={false}
+              yAxisWidth={50}
+            />
+          </TabPanel>
+          <TabPanel className="p-6 text-texts bg-backgrounds">
+            <AreaChart
+              className="h-80 mt-10 text-texts bg-backgrounds"
+              data={data}
+              index="Month"
+              categories={["Bounce Rate"]}
+              colors={["blue"]}
+              valueFormatter={percentageFormatter}
+              showLegend={false}
+              yAxisWidth={40}
+            />
+          </TabPanel>
+        </TabPanels>
+      </TabGroup>
+    </Card>
+  );
+}
