@@ -12,12 +12,15 @@ const page = async ({params}) => {
   const prisma = new PrismaClient();
   const session = await getServerSession(authOptions);
   const userid = session.user.id
+  console.log(userid)
 
   const subject = await prisma.subject.findFirst({
     where: {
       name: data
     }
   })
+
+  console.log(subject)
 
   const files = await prisma.files.findMany({
     where: {
@@ -32,6 +35,8 @@ const page = async ({params}) => {
       activities:true
     }
   })
+
+  console.log(files)
   const notes = await prisma.notes.findMany({
     where: {
       userId: {
