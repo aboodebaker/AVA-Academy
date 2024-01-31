@@ -36,22 +36,13 @@ export async function POST(req: Request) {
     title: name,
     image: image_url,
     userId: userId,
-    subject: subject,
+    subjectId: subject,
     shared: shared,
   },
 })
- const note = await prisma.notes.findMany({
-  where: {
-    title: name,
-    image: image_url,
-    userId: userId,
-    subject: subject,
-    shared: shared,
-  }
-});
-const note_id = note[0].id
+ 
 
   return NextResponse.json({
-    note_id: note_id,
+    note_id: note_ids.id,
   });
 }

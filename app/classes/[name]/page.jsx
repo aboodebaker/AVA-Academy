@@ -16,7 +16,11 @@ const page = async ({params}) => {
 
   const subject = await prisma.subject.findFirst({
     where: {
-      name: data
+      name: data,
+      userId: userid
+    },
+    include: {
+      files: true
     }
   })
 

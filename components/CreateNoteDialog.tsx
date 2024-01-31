@@ -1,3 +1,4 @@
+// @ts-nocheck
 "use client";
 import React from "react";
 import {
@@ -15,26 +16,13 @@ import { Button } from "./ui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 
-const subjectOptions = [
-  'Maths',
-  'English',
-  'Afrikaans',
-  'History',
-  'Geography',
-  'Physics',
-  'Life Science',
-  'ISW',
-  'ISO',
-  'Quraanic Arabic',
-  'Technology',
-  'Creative Arts',
-  'Coding and Robotics',
-  'Life Orientation',
-];
 
-type Props = {};
 
-const CreateNoteDialog = (props: Props) => {
+type Props = {
+  subjectOptions: any;
+};
+
+const CreateNoteDialog = ({subjectOptions}: Props) => {
   const router = useRouter();
   const [input, setInput] = React.useState("");
   const [subject, setSubject] = React.useState("");
@@ -100,8 +88,8 @@ const CreateNoteDialog = (props: Props) => {
               >
                 <option value="">Select a subject</option>
                 {subjectOptions.map((option) => (
-                  <option key={option} value={option}>
-                    {option}
+                  <option key={option.id} value={option.id}>
+                    {option.name}
                   </option>
                 ))}
               </select>

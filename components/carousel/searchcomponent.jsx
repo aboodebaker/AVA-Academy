@@ -5,7 +5,7 @@ import './style.css'
 import Link from "next/link";
 import CreateNoteDialog from '../CreateNoteDialog.tsx'
 
-const SCarousel = ({ notes, groupedNotes }) => {
+const SCarousel = ({ notes, groupedNotes, subjects }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
   const filteredNotesBySubject = (subject) => {
@@ -46,7 +46,7 @@ const SCarousel = ({ notes, groupedNotes }) => {
       </svg>
       </div>
       </div>
-      <CreateNoteDialog />
+      <CreateNoteDialog subjectOptions={subjects}/>
       </div>
 
       {Object.entries(groupedNotes).map(([subject, _], index) => (

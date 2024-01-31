@@ -45,6 +45,12 @@ const notes = await prisma.notes.findMany({
     }
 })
 
+const subjects = await prisma.subject.findMany({
+  where: {
+    userId: session.user.id
+  }
+})
+
 
 
 
@@ -70,7 +76,7 @@ const notes = await prisma.notes.findMany({
 
   return (
        <div>
-          <SCarousel notes={notes} groupedNotes={groupedNotes} />
+          <SCarousel notes={notes} groupedNotes={groupedNotes} subjects={subjects} />
       </div>
   );
 } 
