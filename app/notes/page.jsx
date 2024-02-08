@@ -52,18 +52,14 @@ const subjects = await prisma.subject.findMany({
 })
 
 
-
-
-
-
   const groupNotesBySubject = () => {
     const groupedNotes = {};
     notes.forEach((note) => {
-      const { subject } = note;
-      if (groupedNotes[subject]) {
-        groupedNotes[subject].unshift(note); // Use unshift to reverse the order
+      const { subjectId } = note;
+      if (groupedNotes[subjectId]) {
+        groupedNotes[subjectId].unshift(note); // Use unshift to reverse the order
       } else {
-        groupedNotes[subject] = [note];
+        groupedNotes[subjectId] = [note];
       }
     });
     return groupedNotes;

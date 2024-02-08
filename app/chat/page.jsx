@@ -49,7 +49,7 @@ const page = async() => {
   words; this is the best way to show you know something, or ask them for examples. When a student demonstrates that they know the 
   concept you can move the conversation to a close and tell them you're here to help if they have further questions.`
   return (
-    <div>
+    <div className="min-h-dvh">
       {user.messages + 1 < user.messageLimit ? 
     <div className="flex h-screen overflow-scroll">
       <div className="flex w-full flex-[1] max-h-screen overflow-scroll">

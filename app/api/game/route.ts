@@ -91,15 +91,16 @@ export async function POST(req: Request, res: Response) {
         question: string;
         answer: string;
       };
+
       await prisma.question.createMany({
-        data: data.questions.map((question: openQuestion) => {
-          return {
-            question: question.question,
-            answer: question.answer,
+        data: [
+          {
+            question: data.questions.question,
+            answer: data.questions.answer,
             gameId: game.id,
             questionType: "open_ended",
-          };
-        }),
+          },
+        ],
       });
     }
 

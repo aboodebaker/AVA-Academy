@@ -63,18 +63,18 @@ const page = async ({params}) => {
 
 
   return (
-    <div  className='h-screen' id="adobe-dc-view">
+    <div  className='min-h-dvh' id="adobe-dc-view">
   <div className={styles.container }>
     <div className={styles.headertable}>
       <h1 className={styles.header}>{data}</h1>
     </div>
     <FileCarasoul files={files} user={user}/>
-    <div className={styles.headertables}>
-      <Note notes={notes} />
-    </div>
+    
+
     
   </div>
   
+  <Note notes={notes} />
   </div>
   )
 }

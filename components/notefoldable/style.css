@@ -20,7 +20,7 @@
 
 /* Adjust the margin or padding for h1 elements as needed */
 .headings h1 {
-  margin: 1rem;
+
 }
 
 /* Make the second h1 element take up the available space */
@@ -251,39 +251,4 @@ background-color: var(--primary);
   letter-spacing: -1.92px;
   padding: 4rem;
   color: var(--text);
-}
-.subject-title {
-  color:var(--text);
-}
-/* Add media queries for tablet and phone layout */
-@media only screen and (max-width: 1800px) {
-  .column {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 70px; /* Add gap between columns */
-  }
-  .tester {
-    width: 45%; /* Adjust the width as needed for 2 columns on tablets */
-  }
-}
-
-@media only screen and (max-width: 900px) {
-  .column {
-    flex-direction: column; /* 1 column on phones */
-  }
-  .tester {
-    width: 90%; /* Adjust the width as needed for 1 column on phones */
-  }
-}
-
-/* Add a media query for desktop screens (4 columns) */
-@media only screen and (min-width: 1801px) {
-  .column {
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 70px; /* Add gap between columns */
-  }
-  .tester {
-    width: 29.3%; /* Adjust the width as needed for 4 columns on desktop */
-  }
 }

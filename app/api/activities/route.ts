@@ -193,29 +193,39 @@ const teacherUser = await prisma.user.findFirst({
         option3: string;
       };
 
-      const manyData = data.questions.map((question: mcqQuestion) => {
-        // mix up the options lol
+      console.log(data.questions);
+
+      const manyData = [];
+
+      // Loop over each question and process it
+      for (const questionData of data.questions) {
+        const question: mcqQuestion = questionData; // Assuming data structure is already in mcqQuestion format
+
+        // Mix up the options
         const options = [
           question.option1,
           question.option2,
           question.option3,
-          question.answer,
+          question.answer, // Assuming the correct answer is also included as an option
         ].sort(() => Math.random() - 0.5);
-        return {
+
+        // Add processed question data to manyData array
+        manyData.push({
           question: question.question,
           answer: question.answer,
-          options: JSON.stringify(options),
+          options: options,
           activityId: game.id,
           questionType: "mcq",
-        };
-      });
+        });
+      }
 
+      // Create question activities for all questions
       await prisma.questionActivity.createMany({
         data: manyData,
       });
 
 
-          const activit = await prisma.activity.findUnique({
+      const activit = await prisma.activity.findUnique({
       where: {
         id: game.id
       }, 
@@ -258,27 +268,25 @@ const teacherUser = await prisma.user.findFirst({
           answer: string;
         };
 
+        await prisma.questionActivity.createMany({
+          data: [
+            {
+              question: data.questions.question,
+              answer: data.questions.answer,
+              activityId: game.id,
+              questionType: "open_ended",
+            },
+          ],
+        });
 
-      await prisma.questionActivity.createMany({
-        data: data.questions.map((question: openQuestion) => {
-          return {
-            question: question.question,
-            answer: question.answer,
-            activityId: game.id,
-            questionType: "open_ended",
-            
-          };
-        }),
-      });
-
-      const activit = await prisma.activity.findUnique({
-      where: {
-        id: game.id
-      }, 
-      include: {
-        questions: true,
-      }
-    })
+        const activit = await prisma.activity.findUnique({
+          where: {
+            id: game.id,
+          },
+          include: {
+            questions: true,
+          },
+        });
 
     await pusherServer.trigger(user.id, 'incoming-activities', activit);
   }

@@ -20,12 +20,13 @@ interface Props {
   file: any;
   notes?: any;
   note?: any;
-  userId: string
+  userId: string;
+  actualNote: any;
 }
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
-const Activity =  ({ game, file, notes, note, userId }: Props) => {
+const Activity =  ({ game, file, notes, note, userId, actualNote }: Props) => {
 
 
   // useEffect(() => {
@@ -99,7 +100,11 @@ const Activity =  ({ game, file, notes, note, userId }: Props) => {
       </div>
       <div key="b" className='border border-solid border-text'><Adobe file={file}/></div>
       <div key="c" className='border border-solid border-text scrolling-wrappers'><Summary summary={game.summary} id={game.uniqueId}/></div>
-      <div key={'d'} className='scrolling-wrappers border border-solid border-text'><Notes notes={notes} note={note} activityId={game.id}/></div>
+      <div key={'d'} className='scrolling-wrappers border border-solid border-text'>
+        { actualNote ? <Notes notes={null} actualNote={actualNote} activityId={game.id}/>
+          : <Notes notes={notes} activityId={game.id}/>
+        }
+      </div>
     </ResponsiveGridLayout>
   );
 };

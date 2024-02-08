@@ -13,33 +13,40 @@ type Props = {};
 
 const Dashboard = async (props: Props) => {
   const session = await getAuthSession();
-    const user = session?.user as { id?: string };
+  const user = session?.user as { id?: string };
   const userId = user?.id;
 
   if (session) {
-    // const prisma = new PrismaClient();
-    // const games = await prisma.activity.findMany({
-    //   where: { userId: session.user.id },
-    //   include: { questions: true },
-    // });
+    const prisma = new PrismaClient();
+    const games = await prisma.activity.findMany({
+      where: { userId: session.user.id },
+      include: { questions: true },
+    });
 
-    // console.log(games)
+    console.log(games)
 
-    // const user = await prisma.user.findUnique({
-    //   where: { id: userId  },
-    // });
+    const user = await prisma.user.findUnique({
+      where: { id: userId  },
+    });
 
 
-    // return (
-    // <div className="w-full h-full">
-    //   <div>
-    //     <SignOutButton/>
-    //     <UserAccountNav user={user}/>
-    //   </div>
-    //   <TodoWrapperLocalStorage />
-    //   </div>
-    redirect('/classes')
+    return (
+    <div className="w-full h-full">
+      <div className="">
+        <div className="flex justify-end">
+        <UserAccountNav user={user}/>
+        </div>
+        <div className='headertable'>
+          <h1 className='header'>Homework</h1>
+        </div>
+        
+        </div>
+      
+      <TodoWrapperLocalStorage />
+      </div>
+      
 
+  );
   } else {
     redirect("/login");
     return null; // Add a return statement here or handle redirect appropriately

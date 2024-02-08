@@ -39,7 +39,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
   const url = currentFile?.pdfUrl
 
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-dvh">
       <div className="flex w-full max-h-screen overflow-scroll">
         {/* chat sidebar */}
         <div className="flex-[2] max-w-xs">

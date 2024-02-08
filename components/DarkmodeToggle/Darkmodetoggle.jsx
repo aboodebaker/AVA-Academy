@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import './dark.css';
 
@@ -10,6 +11,7 @@ const DarkModeSwitcher = () => {
     ? window.localStorage.getItem('darkMode') === 'true'
     : false;
 
+  // State to track dark mode preference
   const [darkMode, setDarkMode] = useState(savedDarkMode);
 
   useEffect(() => {
@@ -26,12 +28,17 @@ const DarkModeSwitcher = () => {
     }
   }, [darkMode, isLocalStorageAvailable]);
 
+  // Function to toggle dark mode
+  const toggleDarkMode = () => {
+    setDarkMode((prevDarkMode) => !prevDarkMode);
+  };
+
   return (
     <label className="ui-switch">
       <input
         type="checkbox"
         checked={darkMode}
-        onChange={() => setDarkMode((prevDarkMode) => !prevDarkMode)}
+        onChange={toggleDarkMode}
       />
       <div className="slider">
         <div className="circle"></div>
@@ -41,6 +48,7 @@ const DarkModeSwitcher = () => {
 };
 
 export default DarkModeSwitcher;
+
 
 
 

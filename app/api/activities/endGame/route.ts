@@ -37,7 +37,7 @@ export async function POST(req: Request, res: Response) {
       `you are to analyse the student's perfromance here: ${gameString}`,
       {
         strengths: "analyse the student's stengths. Do not only include things such as their ability to do work but also mention their skills such as memorisation, understanding and other skills but if there is not enough evidence in the questions alone state that it is a noticible feature. also Narratively describe the subjects and specific areas where the student consistently shows high performance, underpinning the analysis with data regarding 'percentageCorrect', 'isCorrect', and 'summary' when applicable.",
-        weaknesses: "analyse the student's weaknesses. Do not only include things such as their weaknesses in their work but also mention their skills such as memorisation, understanding and other skills but if there is not enough evidence in the questions alone state that it is a noticible weakness",
+        weaknesses: "analyse the student's weaknesses.Start with The student has a weakness in ... as seen in ... Do not only include things such as their weaknesses in their work but also mention their skills such as memorisation, understanding and other skills but if there is not enough evidence in the questions alone state that it is a noticible weakness",
         questionAnalysis: {
           question1: 'give an analysis on what the student did wrong and how he can fix it.',
           question2: 'give an analysis on what the student did wrong and how he can fix it. Say none if there is no question.',
@@ -80,6 +80,7 @@ export async function POST(req: Request, res: Response) {
       performance: performance,
     });
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       {
         message: "Something went wrong",

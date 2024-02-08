@@ -19,7 +19,7 @@ const MCQTeacherEdit: React.FC<Props> = ({ game }: Props) => {
     game.questions.map((q: any) => q.canAnswer)
   );
   const [options, setOptions] = useState(() =>
-    game.questions.map((q: any) => JSON.parse(q.options))
+    game.questions.map((q: any) => q.options)
   );
 
   const handleQuestionChange = (index: number, value: string) => {

@@ -126,8 +126,8 @@ import { useChat } from 'ai/react';
 import './page.css'
 
 export default function Chatcomp({systemprompt}) {
-  
-  const { messages, input, handleInputChange, handleSubmit } = useChat({api:'/api/chat-n', initialMessages: [{role:'system', content:systemprompt}], onResponse: async (message) => {await fetch(`/api/chat-n/check`, {method: 'POST', body: {anything: 'anything'}})}});
+  //onResponse: async (message) => {await fetch(`/api/chat-n/check`, {method: 'POST', body: {anything: 'anything'}})}
+  const { messages, input, handleInputChange, handleSubmit } = useChat({api:'/api/chat-n', initialMessages: [{role:'system', content:systemprompt}], });
  
   return (
     <div className="chat-container">

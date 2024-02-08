@@ -16,17 +16,17 @@ const Sidebar = () => {
         {isOpen ?
         <div >
         <div className="sidecontainer">
-        <Link href={'/'}>
-            <div>
-                <svg xmlns="http://www.w3.org/2000/svg" width="47" height="47" viewBox="0 0 47 47" fill="none">
-                <path d="M7.83331 41.125V17.625L23.5 5.875L39.1666 17.625V41.125H27.4166V27.4167H19.5833V41.125H7.83331Z" fill="white"/>
-                </svg>
-            </div>
-        </Link>
         <Link href={'/classes'}>
             <div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="47" height="47" viewBox="0 0 47 47" fill="none">
                 <path d="M9.79165 25.8108V33.6442L23.5 41.125L37.2083 33.6442V25.8108L23.5 33.2917L9.79165 25.8108ZM23.5 5.875L1.95831 17.625L23.5 29.375L41.125 19.7596V33.2917H45.0416V17.625L23.5 5.875Z" fill="white"/>
+                </svg>
+            </div>
+        </Link>
+        <Link href={'/homework'}>
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="47" height="47" viewBox="0 0 47 47" fill="none">
+                <path d="M7.83331 41.125V17.625L23.5 5.875L39.1666 17.625V41.125H27.4166V27.4167H19.5833V41.125H7.83331Z" fill="white"/>
                 </svg>
             </div>
         </Link>

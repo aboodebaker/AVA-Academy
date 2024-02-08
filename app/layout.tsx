@@ -118,7 +118,7 @@ export default function RootLayout({
         <title>AVA Academy</title>
       </head>
 
-      <body>
+      <body >
         <AuthProvider>
           <Providers>
           <div className="outer">
@@ -126,7 +126,7 @@ export default function RootLayout({
               <Sidebar />
             </div>
             <div className="inner">
-              <div  className="min-h-screen">
+              <div  className="h-screen h-dvh">
                 {children}
               </div>
             </div>

@@ -28,7 +28,8 @@
 
 .user {
   align-self: flex-end;
-  background-color: #d3ffd3;
+  background-color:var(--chat);
+  color: rgb(255, 255, 255) !important;
 }
 
 .assistant {

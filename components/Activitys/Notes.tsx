@@ -7,11 +7,11 @@ import CreateNoteDialog from '../CreateNoteDialogActivity';
 import axios from 'axios';
 import TipTapEditor from '../TipTapEditor';
 
-const Notes = ({ notes, activityId }) => {
+const Notes = ({ notes, actualNote, activityId }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [note, setNote] = useState('');
   const [once, setOnce] = useState(0);
-  const [actualNote, setActualNote] = useState(null);
+  const [actualnote, setActualNote] = useState(actualNote);
 
   const headers = {
     'Content-Type': 'application/json', // Adjust the content type based on your needs
@@ -29,14 +29,18 @@ const Notes = ({ notes, activityId }) => {
         });
     }
   }, [note, activityId, headers]);
-
+  if (notes !== null) {
   const filteredNotes = notes.filter((note) =>
     note.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
+  } else {
+    const filteredNotes = null
+  }
 
   return (
     <div>
-      {actualNote == null ? (
+      {actualnote == null ? (
+        <div>
         <div>
           <div className="inputsbox">
             <div className="inputbox">
@@ -54,10 +58,7 @@ const Notes = ({ notes, activityId }) => {
           </div>
           <CreateNoteDialog setter={setNote} />
         </div>
-      ) : (
-        <TipTapEditor note={actualNote} />
-      )}
-      <div className="scrolling-wrapper">
+        <div className="scrolling-wrapper">
         {filteredNotes.map((note, index) => (
           <div key={index} className="card">
             <ClassCard
@@ -71,6 +72,11 @@ const Notes = ({ notes, activityId }) => {
           </div>
         ))}
       </div>
+      </div>
+      ) : (
+        <TipTapEditor note={actualnote} />
+      )}
+      
     </div>
   );
 };

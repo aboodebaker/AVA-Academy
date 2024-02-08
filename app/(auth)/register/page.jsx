@@ -44,7 +44,7 @@ const Register = () => {
 
   return (
     <>
-    <div className="dives">
+    <div className="dives min-h-dvh">
             <form onSubmit={handleSubmit} className="form">
               <div className="inputgroup">
                 <input required type="text" name="text" autocomplete="off" class="input"/>

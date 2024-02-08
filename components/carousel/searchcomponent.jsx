@@ -8,13 +8,17 @@ import CreateNoteDialog from '../CreateNoteDialog.tsx'
 const SCarousel = ({ notes, groupedNotes, subjects }) => {
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredNotesBySubject = (subject) => {
+  const filteredNotesBySubject = (subjectId) => {
     // Filter notes for a specific subject
     return notes.filter((note) =>
-      note.subject === subject &&
+      note.subjectId === subjectId &&
       note.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
   };
+
+    const subjectsWithNotes = subjects.filter(subject =>
+    filteredNotesBySubject(subject.id).length > 0
+  );
 
   return (
     <div>
@@ -49,15 +53,14 @@ const SCarousel = ({ notes, groupedNotes, subjects }) => {
       <CreateNoteDialog subjectOptions={subjects}/>
       </div>
 
-      {Object.entries(groupedNotes).map(([subject, _], index) => (
-        <div key={subject} className="font-bold p-2">
-          <h1 className="subject-title">{subject}</h1>
+      {subjectsWithNotes.map((subject) => (
+        <div key={subject.id} className="font-bold p-2">
+          <h1 className="subject-title">{subject.name}</h1>
           {/* Pass filtered notes for the subject to CarouselItem */}
-          
-          <CarouselItem notes={filteredNotesBySubject(subject).reverse()} />
-          
+          <CarouselItem notes={filteredNotesBySubject(subject.id).reverse()} />
         </div>
       ))}
+    
     </div>
   );
 };

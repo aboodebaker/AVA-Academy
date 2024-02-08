@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { Configuration, OpenAIApi } from "openai";
 
 
@@ -22,8 +23,8 @@ export async function strict_output(
   default_category: string = "",
   output_value_only: boolean = false,
   model: string = "gpt-3.5-turbo-1106",
-  temperature: number = 0,
-  num_tries: number = 10,
+  temperature: number = 0.2,
+  num_tries: number = 3,
   verbose: boolean = false
 ): Promise<
   {
@@ -44,7 +45,7 @@ export async function strict_output(
   for (let i = 0; i < num_tries; i++) {
     let output_format_prompt: string = `\nYou are to output the following in json format: ${JSON.stringify(
       output_format
-    )}. \nDo not put quotation marks or escape character \\ in the output fields. `;
+    )}. \nDo not put quotation marks or escape character \\ in the output fields. Follow it exact and also keep the spacing and commas the same. Place commas at the end of every bracket. DO NOT EVER use a double quotation mark when inside a sting ever..`;
 //put your json inside a []
     if (list_output) {
       output_format_prompt += `\nIf output field is a list, classify output into the best element of the list.`;
@@ -76,6 +77,15 @@ export async function strict_output(
 
     let res: string =
       response.data.choices[0].message?.content?.replace(/'/g, '"') ?? "";
+
+    res = '[' + res + ']'
+
+
+    console.log(res)
+
+    res = JSON.parse(res)
+    return res
+    console.log(res)
 
     // ensure that we don't replace away apostrophes in text
     res = res.replace(/(\w)"(\w)/g, "$1'$2");
