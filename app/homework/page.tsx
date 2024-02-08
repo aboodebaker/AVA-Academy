@@ -18,20 +18,14 @@ const Dashboard = async (props: Props) => {
 
   if (session) {
     const prisma = new PrismaClient();
-    const games = await prisma.activity.findMany({
-      where: { userId: session.user.id },
-      include: { questions: true },
-    });
-
-    console.log(games)
-
+    
     const user = await prisma.user.findUnique({
       where: { id: userId  },
     });
 
 
     return (
-    <div className="w-full h-full">
+    <div className="w-full ">
       <div className="">
         <div className="flex justify-end">
         <UserAccountNav user={user}/>
