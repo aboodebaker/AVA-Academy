@@ -17,7 +17,7 @@ const ClassCard = ({title, link, img, date,  clip}) => {
   }
   },[])
   return (
-<div className="gap-2 grid">
+<div className="gap-2 grid mb-4">
       <div className="border">
         <Card shadow="sm" isPressable onPress={() => console.log("item pressed")}>
           <CardBody className="overflow-visible p-0">
