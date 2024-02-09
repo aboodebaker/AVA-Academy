@@ -18,13 +18,14 @@ export async function POST(req: Request) {
   const body = await req.json();
   const { name, subject, shared } = body;
   
-  const image_description = await generateImagePrompt(name);
-  if (!image_description) {
-    return new NextResponse("failed to generate image description", {
-      status: 500,
-    });
-  }
-  const image_url = await generateImage(image_description);
+  // const image_description = await generateImagePrompt(name);
+  // if (!image_description) {
+  //   return new NextResponse("failed to generate image description", {
+  //     status: 500,
+  //   });
+  // }
+  //   const image_url = await generateImage(image_description);
+  const image_url = await generateImage(name);
   if (!image_url) {
     return new NextResponse("failed to generate image ", {
       status: 500,

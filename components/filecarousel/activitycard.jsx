@@ -34,11 +34,11 @@ const ActivityCard = ({title, link, img, date,}) => {
           </CardBody>
           <CardFooter>
             <div className="flexing">
-              <div className="titlebox">
-                <h1>{title}</h1>
+              <div className="titlebox text-black">
+                <h1 className='text-black'>{title}</h1>
               </div>
-              <div className="everythingbox">
-                <p className="dates">{fdate}</p>
+              <div className="everythingbox text-black">
+                <p className="dates text-black">{fdate}</p>
                 <button className="bux">Open</button>
                 
               </div>

@@ -11,6 +11,7 @@ import { Message, OpenAIStream, StreamingTextResponse } from "ai";
 import { getContext } from "@/lib/context";
 import serverSession from '@/lib/serverSession';
 import { pusherServer } from '@/lib/pusher'
+import { generateImage, generateImagePrompt } from "@/lib/openai";
 
     const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -33,8 +34,10 @@ export async function POST(req: Request, res: Response) {
 
     const body = await req.json();
     const { topic, type, amount, selectedFileId, classs } = quizCreationSchema.parse(body);
+    console.log(topic)
+    const imagess = await generateImage(topic)
 
-    console.log('here')
+    console.log(imagess)
     const usersWithFile = await prisma.user.findMany({
         where: {
             files: {
@@ -177,6 +180,7 @@ const teacherUser = await prisma.user.findFirst({
                 timeStarted: new Date(),
                 summary: chatData,
                 class: classs,
+                image: imagess,
                 },
             });
 
@@ -260,6 +264,7 @@ const teacherUser = await prisma.user.findFirst({
                 timeStarted: new Date(),
                 summary: chatData.choices[0].message?.content,
                 class: classs,
+                image: imagess,
                 },
             });
       console.log('here')

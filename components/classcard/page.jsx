@@ -20,7 +20,7 @@ const ClassCard = ({title, link, img, date,  clip}) => {
 <div className="gap-2 grid mb-4">
       <div className="border">
         <Card shadow="sm" isPressable onPress={() => console.log("item pressed")}>
-          <CardBody className="overflow-visible p-0">
+          <CardBody className="overflow-hidden p-0">
             <div className='relative-global'>
               <Image
                 height={100}
@@ -28,7 +28,7 @@ const ClassCard = ({title, link, img, date,  clip}) => {
                 alt={title}
                 className="w-full object-cover"
                 src={img}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                sizes="(max-width: 300px) 100vw, (max-width: 1200px) 50vw, 33vw"
               />
             </div>
           </CardBody>

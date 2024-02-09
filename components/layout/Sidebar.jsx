@@ -64,8 +64,9 @@ const Sidebar= ({ show, setter }) => {
 
   return (
     <>
+    <Sticky>
       <div className={`${className}${appendClass}`}>
-        <Sticky>
+        
           <div className="flex flex-col justify-between  height">
             <div>
               <div className="p-2 flex justify-center items-center">
@@ -93,9 +94,9 @@ const Sidebar= ({ show, setter }) => {
               <DarkModeSwitcher />
             </div>
           </div>
-        </Sticky>
+        
       </div>
-
+      </Sticky>
       {show ? <ModalOverlay /> : <></>}
     </>
   );

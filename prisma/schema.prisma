@@ -217,6 +217,7 @@ model Activity {
   topic       String
   timeEnded   DateTime?
   gameType    ActivityType
+  image       String?
   summary     String?
   mpoints     String?
   class       String?

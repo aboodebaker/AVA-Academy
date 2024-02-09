@@ -18,12 +18,14 @@ type Props = {
   chats: Chat[]; // Define the correct type for chats
   chatId: string;
   isPro: boolean;
+  show: any;
+  setter: any;
 };
 
 
-const ChatSideBar = ({ chats, chatId, isPro }: Props) => {
+const ChatSideBar = ({ chats, chatId, isPro, show, setter  }: Props) => {
   const [loading, setLoading] = React.useState(false);
-
+  
   return (
     <div className="w-full h-screen overflow-hidden soff p-4 text-gray-200 bg-gray-900">
       <Link href="/chat">

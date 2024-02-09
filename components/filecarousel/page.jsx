@@ -103,46 +103,46 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
           <CardFooter>
             <div onClick={() => selectedFile(link)}>
             <div className="flexing">
-              <div className="titlebox">
+              <div className="titlebox text-black">
                 <h1 className={clip}>{title}</h1>
               </div>
               </div>
               <div className="everythingbox">
                 <p className="dates">{fdate}</p>
                 
-                <Dialog className="bg-background text-black" >
+                <Dialog className="bg-white text-black" >
                   <DialogTrigger>
                     <div>
                     <button className="bux">Options</button>
                   </div>
                   </DialogTrigger>
-                  <DialogContent className="bg-background">
-                    <DialogHeader className="bg-background">
+                  <DialogContent className="bg-white">
+                    <DialogHeader className="bg-white text-black">
                       <DialogTitle>Here are some options for your PDF</DialogTitle>
                       <DialogDescription>
                         
                       </DialogDescription>
                     </DialogHeader >
-                    <h1>Have questions? Ask our AI that is based on your module</h1>
+                    <h1 className=" text-black">Have questions? Ask our AI that is based on your module</h1>
                     <Link href={`/chat/${height}`}>
                     <button className="bux-2">Chat with your module</button>
                     </Link>
-                    <h1>Need to prepare for a test? Use our Quiz creation AI for an entire test or just a topic</h1>
+                    <h1 className=" text-black">Need to prepare for a test? Use our Quiz creation AI for an entire test or just a topic</h1>
                     <Link href={`/quiz/${height}`}>
                     <button className="bux-2">Get a quiz on your module</button>
                     </Link>
-                    <h1>Do you want to evaluate your strengths and weaknesses for this file?</h1>
+                    <h1 className=" text-black">Do you want to evaluate your strengths and weaknesses for this file?</h1>
                     <Link href={`/file-performance/${height}`}>
                     <button className="bux-2">Evaluate yourself</button>
                     </Link>
                     {/* <h1>Have questions. Ask our AI based on your module</h1>
                     <button onClick={() => { router.push(`/chat/${height}`)}}>Chat with your module</button> */}
                     <div className="scrolling-wrapper">
-                      <h1>Activities</h1>
+                      <h1 className=" text-black">Activities</h1>
                     {activitiess.slice().reverse().map((file, index) => (
                   <div key={index} className="card">
                     <Link href={`/activity/${file.gameType == 'open_ended' ? 'open-ended' : 'mcq'}/${file.id}`}>
-                      <ActivityCard title={file.topic} link={`/activity/${file.gameType}/${file.id}`} img={'/maths.png'} date={file.timeStarted} />
+                      <ActivityCard title={file.topic} link={`/activity/${file.gameType}/${file.id}`} img={file.image ? file.image : '/maths.png'} date={file.timeStarted}  />
                        </Link>   
                   </div>
                 ))}

@@ -4,7 +4,9 @@
   height: 100%;
   width: 100%;
   justify-content: space-between;
-  padding: 16px;
+  padding-bottom: 35px;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
 .message-container {
@@ -39,7 +41,7 @@
 
 .user {
   align-self: flex-end;
-  background-color: #d3ffd3;
+  background-color: var(--chat);
 }
 
 .system {

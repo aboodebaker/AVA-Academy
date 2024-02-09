@@ -46,31 +46,31 @@ const Activity = ({ game, file }: Props) => {
           const layouts = {
   lg: [
     { i: 'a', x: 6, y: 0, w: 3, h: 11, isDraggable: false},
-    { i: 'b', x: 0, y: 0, w: 6, h: 22 },
+    { i: 'b', x: 0, y: 0, w: 6, h: 22, isDraggable: false },
     { i: 'c', x: 10, y: 0, w: 3, h: 22, isDraggable: false },
     { i: 'd', x: 6, y: 11, w: 3, h: 11, isDraggable: false },
   ],
   md: [
     { i: 'a', x: 0, y: 22, w: 5, h: 15, isDraggable: false },
-    { i: 'b', x: 0, y: 0, w: 6, h: 22 },
+    { i: 'b', x: 0, y: 0, w: 6, h: 22, isDraggable: false },
     { i: 'c', x: 6, y: 0, w: 4, h: 11, isDraggable: false },
     { i: 'd', x: 5, y: 22, w: 5, h: 15, isDraggable: false },
   ],
   sm: [
     { i: 'a', x: 0, y: 22, w: 4, h: 11, isDraggable: false },
-    { i: 'b', x: 0, y: 0, w: 6, h: 10 },
+    { i: 'b', x: 0, y: 0, w: 6, h: 10, isDraggable: false },
     { i: 'c', x: 0, y: 11, w: 3, h: 10, isDraggable: false },
     { i: 'd', x: 4, y: 11, w: 3, h: 10, isDraggable: false },
   ],
   xs: [
     { i: 'a', x: 0, y: 17, w: 4, h: 5 },
-    { i: 'b', x: 0, y: 0, w: 4, h: 5 },
+    { i: 'b', x: 0, y: 0, w: 4, h: 5, isDraggable: false },
     { i: 'c', x: 0, y: 11, w: 4, h: 5, isDraggable: false },
     { i: 'd', x: 0, y: 23, w: 5, h: 5, isDraggable: false },
   ],
   xxs: [
-    { i: 'a', x: 0, y: 17, w: 2, h: 5 },
-    { i: 'b', x: 0, y: 0, w: 2, h: 5 },
+    { i: 'a', x: 0, y: 17, w: 2, h: 5, isDraggable: false },
+    { i: 'b', x: 0, y: 0, w: 2, h: 5, isDraggable: false },
     { i: 'c', x: 0, y: 11, w: 2, h: 5, isDraggable: false },
     { i: 'd', x: 5, y: 23, w: 5, h: 5, isDraggable: false },
     

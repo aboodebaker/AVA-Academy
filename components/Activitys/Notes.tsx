@@ -16,7 +16,7 @@ const Notes = ({ notes, actualNote, activityId }) => {
   const headers = {
     'Content-Type': 'application/json', // Adjust the content type based on your needs
   };
-
+  let filteredNotes = {}
   useEffect(() => {
     if (note !== '') {
       axios
@@ -29,12 +29,12 @@ const Notes = ({ notes, actualNote, activityId }) => {
         });
     }
   }, [note, activityId, headers]);
-  if (notes !== null) {
-  const filteredNotes = notes.filter((note) =>
+  try{
+  filteredNotes = notes.filter((note) =>
     note.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  } else {
-    const filteredNotes = null
+  } catch (err) {
+    filteredNotes = {}
   }
 
   return (
@@ -52,7 +52,7 @@ const Notes = ({ notes, actualNote, activityId }) => {
                 className="input"
               />
               <div className="inputiconbox">
-                {/* Your SVG goes here */}
+                
               </div>
             </div>
           </div>

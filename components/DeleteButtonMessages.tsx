@@ -40,7 +40,7 @@ const DeleteButton = ({ chatId }: Props) => {
         });
       }}
     >
-      <Trash />
+      <Trash color='var(--text)' />
     </Button>
   );
 };

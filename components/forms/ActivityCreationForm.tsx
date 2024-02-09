@@ -192,7 +192,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                         <option value="">Select a subject</option>
                         {/* Add options for subjects based on your data */}
                         {uniqueSubjects.map((subject, index) => (
-                          <option key={index} value={subject.uniqueId} className="text-text">
+                          <option key={index} value={subject.uniqueId} className="text-black">
                             {subject.name}
                           </option>
                         ))}
@@ -216,7 +216,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                       <select {...field} className="mt-1 block w-full py-2 px-3 border border-text bg-background rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a file</option>
                         {subjectFiles.map((file, index) => (
-                          <option key={index} value={file?.chatpdf} >
+                          <option key={index} value={file?.chatpdf} className="text-black" >
                             {file?.pdfName} Grade {file?.grade}
                           </option>
                         ))}
@@ -240,10 +240,10 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
                     <FormControl>
                       <select {...field} className="mt-1 block w-full py-2 px-3 border border-text bg-background rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                         <option value="">Select a class</option>
-                        <option value='A' >A</option>
-                        <option value='B' >B</option>
-                        <option value='C' >C</option>
-                        <option value='D' >D</option>
+                        <option value='A' className="text-black">A</option>
+                        <option value='B' className="text-black">B</option>
+                        <option value='C' className="text-black">C</option>
+                        <option value='D' className="text-black">D</option>
                       </select>
                     </FormControl>
                     </div>

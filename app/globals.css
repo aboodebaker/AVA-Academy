@@ -167,7 +167,7 @@ color: var(--text);
     width: 50px;
   }
     .header {
-      font-size: 32px;
+      font-size: 48px;
   }
 }
 @media only screen and (max-width: 1800px) {

@@ -66,7 +66,7 @@ const CreateNoteDialog = ({subjectOptions}: Props) => {
       </DialogTrigger>
       <DialogContent className="bg-white">
         <DialogHeader>
-          <DialogTitle>New Note Book</DialogTitle>
+          <DialogTitle className="text-black">New Note</DialogTitle>
           <DialogDescription>
             You can create a new note by clicking the button below.
           </DialogDescription>

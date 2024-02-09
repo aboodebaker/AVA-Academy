@@ -1,5 +1,6 @@
 // @ts-nocheck
 import { Configuration, OpenAIApi } from "openai";
+import axios from 'axios';
 
 const config = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -46,16 +47,23 @@ export async function generateImagePrompt(name: string) {
 }
 
 export async function generateImage(image_description: string) {
-  try {
-    const response = await openai.createImage({
-  model: "dall-e-3",
-  prompt: image_description,
-  n: 1,
-  size: "1792x1024",
-});
- const image_url = response.data.data[0].url;
-    return image_url as string;
-  } catch (error) {
-    console.error(error);
-  }
+//   try {
+//     const response = await openai.createImage({
+//   model: "dall-e-3",
+//   prompt: image_description,
+//   n: 1,
+//   size: "1792x1024",
+// });
+//  const image_url = response.data.data[0].url;
+//     return image_url as string;
+//   } catch (error) {
+//     console.error(error);
+//   }
+
+  const { data } = await axios.get(`
+    https://api.unsplash.com/search/photos?per_page=1&query=${image_description}&client_id=${process.env.UNSPLASH_API_KEY}&orientation=landscape
+    `);
+
+  console.log(data.results[0].urls.small_s3)
+  return data.results[0].urls.small_s3;
 }

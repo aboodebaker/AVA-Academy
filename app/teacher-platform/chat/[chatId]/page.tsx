@@ -1,5 +1,5 @@
-import ChatComponent from "@/components/ChatComponent";
-import ChatSideBarComplete from "@/components/ChatSidebarComp";
+import ChatComponent from "@/components/ChatComponentTeacher";
+import ChatSideBarComplete from "@/components/ChatSidebarCompTeacher";
 import PDFViewer from "@/components/PDFViewer";
 import { redirect } from "next/navigation";
 import React from "react";
@@ -40,7 +40,6 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
   return (
     <div className="flex min-h-dvh ">
       <div className="flex w-full max-h-screen">
-        {/* chat sidebar */}
         <div className=" max-h-screen md:flex-[2] max-w-xs sm:flex-[0.001]">
           <ChatSideBarComplete chats={files} chatId={chatId} isPro={isPro} />
         </div>

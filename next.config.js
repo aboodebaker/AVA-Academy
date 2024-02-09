@@ -4,7 +4,7 @@ const withPWA = require('next-pwa')({
 
 module.exports = withPWA({
   images: {
-    domains: ['oaidalleapiprodscus.blob.core.windows.net', 'ava-academy.s3.eu-north-1.amazonaws.com', 'static.vecteezy.com'],
+    domains: ['oaidalleapiprodscus.blob.core.windows.net', 'ava-academy.s3.eu-north-1.amazonaws.com', 'static.vecteezy.com', 's3.us-west-2.amazonaws.com'],
   },
   // Your other Next.js configuration options
   async headers() {
