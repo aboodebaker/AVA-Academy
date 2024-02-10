@@ -1,6 +1,5 @@
 // @ts-nocheck
 "use client";
-// Use client
 import { quizCreationSchema } from "@/schemas/forms/quiz";
 import React, { useState, useEffect } from "react";
 import { z } from "zod";
@@ -49,7 +48,7 @@ type Files = {
   edited: number;
   chatpdf: string | null;
   messages: Messages;
-  Subject: any,
+  Subject: any;
 };
 
 type Messages = {
@@ -65,10 +64,10 @@ type Input = z.infer<typeof quizCreationSchema>;
 
 const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) => {
   const router = useRouter();
+  const { toast } = useToast();
   const [showLoader, setShowLoader] = useState(false);
   const [finishedLoading, setFinishedLoading] = useState(false);
   const [selectedType, setSelectedType] = useState("mcq");
-  const { toast } = useToast();
   const { mutate: getQuestions, isLoading } = useMutation({
     mutationFn: async ({ amount, topic, type, selectedFileId }: Input) => {
       const response = await axios.post("/api/game", {
@@ -96,13 +95,9 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) 
 
   useEffect(() => {
     const uniqueSubjects = Array.from(new Set(files.map(file => file.subject)));
-    const uniqueSubjectFiles: Files[] = [];
-    uniqueSubjects.forEach(subject => {
-      const fileForSubject = files.find(file => file.subject === subject);
-      if (fileForSubject) {
-        uniqueSubjectFiles.push(fileForSubject);
-      }
-    });
+    const uniqueSubjectFiles: Files[] = uniqueSubjects.map(subject => {
+      return files.find(file => file.subject === subject);
+    }).filter(Boolean) as Files[];
     setSubjectFiles(uniqueSubjectFiles);
   }, [files]);
 
@@ -213,7 +208,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) 
                         <FormControl className="text-text bg-background">
                           <select {...field} className="mt-1 block w-full py-2 px-3 border border-text bg-background text-text rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                             <option value="">Select a file</option>
-                            {subjectFiles.map((file) => (
+                            {files.map((file) => (
                               <option key={file.chatpdf} value={file.chatpdf} className="text-black">
                                 {file.pdfName}
                               </option>
@@ -305,3 +300,4 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) 
 };
 
 export default QuizCreation;
+

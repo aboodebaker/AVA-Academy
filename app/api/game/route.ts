@@ -91,17 +91,20 @@ export async function POST(req: Request, res: Response) {
         question: string;
         answer: string;
       };
-
+      
+      data.questions.map(async (question: mcqQuestion) => {
       await prisma.question.createMany({
         data: [
           {
-            question: data.questions.question,
-            answer: data.questions.answer,
+            question: question.question,
+            answer: question.answer,
             gameId: game.id,
             questionType: "open_ended",
           },
         ],
       });
+    }
+  )
     }
 
     return NextResponse.json({ gameId: game.id }, { status: 200 });
