@@ -63,7 +63,7 @@ export async function POST(req: Request, res: Response) {
     await prisma.activityPerformance.create({
       data: {
         activityId: gameId,
-        performanceData: performance.performance,
+        performanceData: JSON.stringify(performance),
         date: new Date(),
       }
     })

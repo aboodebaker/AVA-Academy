@@ -17,6 +17,7 @@ const Notes = ({ notes, actualNote, activityId }) => {
     'Content-Type': 'application/json', // Adjust the content type based on your needs
   };
 
+  let filteredNotes = null
   useEffect(() => {
     if (note !== '') {
       axios
@@ -30,11 +31,11 @@ const Notes = ({ notes, actualNote, activityId }) => {
     }
   }, [note, activityId, headers]);
   if (notes !== null) {
-  const filteredNotes = notes.filter((note) =>
+    filteredNotes = notes.filter((note) =>
     note.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
   } else {
-    const filteredNotes = null
+    filteredNotes = null
   }
 
   return (

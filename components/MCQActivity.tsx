@@ -22,6 +22,7 @@ import { useToast } from "./ui/use-toast";
 import { useState, useEffect } from "react";
 import { pusherClient } from "@/lib/pusher";
 import { getSession } from "next-auth/react";
+import TabsDemo from '@/components/tabs'
 
 type Props = {
   game: Game & { questions: Pick<Question, "id" | "options" | "question">[] };
@@ -42,6 +43,7 @@ const MCQ =  ({ game, userId}: Props) => {
   const [questions, setQuestions] = useState(game.questions)  
   const [currentQuestion, setCurrentQuestion] = useState(questions[questionIndex]);
   const [loadingEnded, setLoadingEnded] = useState(false)
+  const [tab, setTab] = useState(null)
 
   useEffect(() => {
     setCurrentQuestion(questions[questionIndex]);
@@ -133,6 +135,7 @@ console.log(userId)
       };
       setLoadingEnded(true)
       const response = await axios.post(`/api/activities/endGame`, payload);
+      setTab(response.data.performance)
       setLoadingEnded(false)
       return response.data;
     },
@@ -229,6 +232,7 @@ console.log(userId)
             View Statistics
             <BarChart className="w-4 h-4 ml-2" />
           </Link>
+          <TabsDemo data={tab} />
           <Button
               variant="outline"
               className="m-4 text-text border border-text"
