@@ -50,13 +50,13 @@ const Activity = ({ game, file }: Props) => {
     { i: 'd', x: 4, y: 11, w: 3, h: 10, isDraggable: false },
   ],
   xs: [
-    { i: 'a', x: 0, y: 17, w: 4, h: 5 },
+    { i: 'a', x: 0, y: 17, w: 4, h: 5, isDraggable: false },
     { i: 'b', x: 0, y: 0, w: 4, h: 5, isDraggable: false },
     { i: 'c', x: 0, y: 11, w: 4, h: 5, isDraggable: false },
     { i: 'd', x: 0, y: 23, w: 5, h: 5, isDraggable: false },
   ],
   xxs: [
-    { i: 'a', x: 0, y: 17, w: 2, h: 5 },
+    { i: 'a', x: 0, y: 17, w: 2, h: 5, isDraggable: false  },
     { i: 'b', x: 0, y: 0, w: 2, h: 5, isDraggable: false },
     { i: 'c', x: 0, y: 11, w: 2, h: 5, isDraggable: false },
     { i: 'd', x: 5, y: 23, w: 5, h: 5, isDraggable: false },
