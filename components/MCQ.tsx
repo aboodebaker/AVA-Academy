@@ -66,8 +66,8 @@ const MCQ =  ({ game, userId}: Props) => {
 
   'Content-Type': 'application/json',
 };
-console.log(userId)
-      const response = await fetch(`/api/activities/checkAnswer`, {
+
+      const response = await fetch(`/api/checkAnswer`, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: headers
@@ -117,7 +117,7 @@ console.log(userId)
         gameId: game.id,
       };
       setLoadingEnded(true)
-      const response = await axios.post(`/api/activities/endGame`, payload);
+      const response = await axios.post(`/api/endGame`, payload);
       setLoadingEnded(false)
       return response.data;
     },
@@ -227,7 +227,7 @@ console.log(userId)
   }
 
   return (
-    <div className=" max-w-4xl text-black">
+    <div className="absolute  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 max-w-4xl text-black">
         <div>
       <div className="flex flex-row justify-between">
         <div className="flex flex-col">
@@ -267,7 +267,7 @@ console.log(userId)
                 <Button
                   key={option}
                   variant={selectedChoice === index ? "default" : "outline"}
-                  className={`justify-start w-full py-8 mb-4 text-black`}
+                  className={`justify-start w-full py-8 mb-4 text-black ${selectedChoice === index ? "outline outline-primary" : ""}`}
                   onClick={() => setSelectedChoice(index)}
                 >
                   <div className="flex items-center justify-start">

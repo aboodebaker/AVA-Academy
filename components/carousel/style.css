@@ -1,4 +1,6 @@
-
+.subject-title {
+  font-weight: 800;
+}
 
 .scrolling-wrapper {
   overflow-x: scroll;

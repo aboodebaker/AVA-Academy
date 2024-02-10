@@ -9,7 +9,7 @@ import Image from "next/image";
 import { skip } from "node:test";
 import { redirect } from "next/navigation";
 import { url } from "node:inspector";
-import ClassCard from "../../components/classcard/page";
+import ClassCard from "@/components/classcard/page";
 import { PrismaClient } from '@prisma/client';
 
 const Page = async () => {

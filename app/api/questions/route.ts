@@ -85,7 +85,7 @@ export async function POST(req: Request, res: Response) {
 
 
 
-
+      let questionss = []
 
 
 
@@ -96,7 +96,7 @@ export async function POST(req: Request, res: Response) {
         const messageContent =`You are a helpful AI that is able to generate a pair of question and answers, the length of each answer should not be more than 15 words, store all the pairs of answers and questions in a JSON array You are to generate a random hard open-ended questions about ${topic} from your document. You are to generate ${amount} questions`
 
         console.log('here')
-
+        for (let i = 0; i < amount; i++) {
         questions = await strict_output(
         prompt,
         new Array(amount).fill(
@@ -107,13 +107,30 @@ export async function POST(req: Request, res: Response) {
           answer: "answer with max length of 15 words",
         }
       );
+      questionss.push(questions)
 
-      console.log(questions)
+    }
+
+
+
+
+
+
+
+
+
+
+
+
     } else if (type === "mcq") {
 
       console.log('here')
+      
       const messageContent =`You are a helpful AI that is able to generate multiple choice question and answers, the length of each answer should not be more than 15 words, store all the pairs of answers and questions in a JSON array You are to generate a random hard open-ended questions about ${topic} from your document. You are to generate ${amount} questions with 1 answer and 3 other choices.`
-
+      
+      
+      
+      for (let i = 0; i < amount; i++) {
       questions = await strict_output(
         prompt,
         new Array(amount).fill(
@@ -127,16 +144,43 @@ export async function POST(req: Request, res: Response) {
           "option3": "<option3 with max length of 15 words>"
         }
       );
+      questionss.push(questions)
+
     }
-    console.log(questions)
+    }
+    
+    
+    
+    console.log(questionss)
+    
+    
     return NextResponse.json(
       {
-        questions: questions,
+        questions: questionss,
       },
       {
         status: 200,
       }
     );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   } catch (error) {
     if (error instanceof ZodError) {
       return NextResponse.json(

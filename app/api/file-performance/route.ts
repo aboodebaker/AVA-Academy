@@ -66,11 +66,11 @@ export async function POST(req: Request, res: Response) {
         mark: "the user's estimated mark from your estimation"
       }
     )
-
+    
     await prisma.filePerformance.create({
       data: {
         fileId: fileId,
-        performanceData: performance,
+        performanceData: JSON.stringify(performance),
         date: new Date(),
       }
     })
@@ -79,6 +79,7 @@ export async function POST(req: Request, res: Response) {
       performance: performance,
     });
   } catch (error) {
+    console.log(error)
     return NextResponse.json(
       {
         message: "Something went wrong",

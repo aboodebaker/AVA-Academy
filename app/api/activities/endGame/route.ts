@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { prisma } from "@/lib/db";
 import { endGameSchema } from "@/schemas/questions";
 import { NextResponse } from "next/server";
@@ -62,7 +63,7 @@ export async function POST(req: Request, res: Response) {
     await prisma.activityPerformance.create({
       data: {
         activityId: gameId,
-        performanceData: performance,
+        performanceData: performance.performance,
         date: new Date(),
       }
     })

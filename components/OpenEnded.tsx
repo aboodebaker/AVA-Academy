@@ -49,7 +49,7 @@ const OpenEnded = ({ game, userId }: Props) => {
         gameId: game.id,
       };
       setLoadingEnded(true)
-      const response = await axios.post(`/api/activities/endGame`, payload, {
+      const response = await axios.post(`/api/endGame`, payload, {
         headers: {
           'Content-Type': 'application/json',
         }},);
@@ -73,7 +73,7 @@ const OpenEnded = ({ game, userId }: Props) => {
   'Content-Type': 'application/json',
 };
 console.log(userId)
-      const response = await fetch(`/api/activities/checkAnswer`, {
+      const response = await fetch(`/api/checkAnswer`, {
         method: "POST",
         body: JSON.stringify(payload),
         headers: headers

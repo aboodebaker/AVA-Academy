@@ -165,7 +165,7 @@ export default function RootLayout({
               <Sidebar />
             </div>
             <div className="inner">
-              <div  className=" min-h-dvh">
+              <div  className=" full-screen">
                 {children}
               </div>
             </div>

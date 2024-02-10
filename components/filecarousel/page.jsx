@@ -104,7 +104,7 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
             <div onClick={() => selectedFile(link)}>
             <div className="flexing">
               <div className="titlebox text-black">
-                <h1 className={clip}>{title}</h1>
+                <h1 className={clip + 'text-black'}>{title}</h1>
               </div>
               </div>
               <div className="everythingbox">

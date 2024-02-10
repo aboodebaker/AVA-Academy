@@ -7,7 +7,7 @@ import { PrismaClient } from '@prisma/client';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Chatcomp from '@/components/chat/page'
-
+import ChatSideBarComplete from "@/components/ChatSidebarComp";
 
 const page = async() => {
   const prisma = new PrismaClient()
@@ -51,8 +51,8 @@ const page = async() => {
     <div className="min-h-dvh">
       {user.messages + 1 < user.messageLimit ? 
     <div className="flex h-screen overflow-scroll">
-      <div className="flex w-full flex-[1] max-h-screen overflow-scroll">
-        <ChatSideBar chats={files} chatId={null} isPro={isPro} />
+        <div className=" max-h-screen md:flex-[2] max-w-xs sm:flex-[0.001]">
+          <ChatSideBarComplete chats={files} chatId={null} isPro={isPro} />
         </div>
         <div className="max-h-screen p-4  flex-[5]">
           <Chatcomp systemprompt={systemprompt} />

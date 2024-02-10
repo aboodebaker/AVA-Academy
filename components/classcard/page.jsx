@@ -1,35 +1,35 @@
 'use client'
 import * as React from 'react';
-import { useState } from 'react';
-import {Card, CardBody, CardFooter,} from "@nextui-org/react";
-import './style.css'
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { Card, CardBody, CardFooter } from "@nextui-org/react";
+import './style.css';
 import Image from 'next/image';
+import { format } from 'date-fns';
 
-const { format } = require('date-fns');
-
-const ClassCard = ({title, link, img, date,  clip}) => {
-  const [fdate, setFDate] = useState('')
+const ClassCard = ({ title, link, img, date, clip }) => {
+  const [fdate, setFDate] = useState('');
+  
   useEffect(() => {
-  if (date != null) {
-    const idk = format(date, 'dd/MM/yyyy');
-    setFDate('Date: ' + idk)
-  }
-  },[])
+    if (date != null) {
+      const formattedDate = format(date, 'dd/MM/yyyy');
+      setFDate('Date: ' + formattedDate);
+    }
+  }, [date]);
+
   return (
-<div className="gap-2 grid mb-4">
+    <div className="gap-2 grid mb-4">
       <div className="border">
-        <Card shadow="sm" isPressable onPress={() => console.log("item pressed")}>
+        <Card shadow="sm" isPressable onPress={() => console.log("item pressed")} className='w-full h-full'>
           <CardBody className="overflow-hidden p-0">
-            <div className='relative-global'>
-              <Image
-                height={100}
-                width={100}
-                alt={title}
-                className="w-full object-cover"
-                src={img}
-                sizes="(max-width: 300px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
+            <div className="aspect-r">
+              <div className="relative h-full">
+                <Image
+                  layout="fill"
+                  objectFit="cover"
+                  alt={title}
+                  src={img}
+                />
+              </div>
             </div>
           </CardBody>
           <CardFooter>
@@ -40,14 +40,13 @@ const ClassCard = ({title, link, img, date,  clip}) => {
               <div className="everythingbox">
                 <p className="dates">{fdate}</p>
                 <button className="bux">Open</button>
-                
               </div>
             </div>
           </CardFooter>
         </Card>
-        </div>
+      </div>
     </div>
-  )
+  );
 }
 
-export default ClassCard
+export default ClassCard;

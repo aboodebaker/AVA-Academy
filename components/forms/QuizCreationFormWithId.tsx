@@ -34,9 +34,8 @@ import LoadingQuestions from "../LoadingQuestions";
 
 type Props = {
   topic: string;
-  files: Files[]; // Ensure that "files" is an array
+  files: Files[];
   id: string;
-
 };
 
 type Files = {
@@ -64,7 +63,7 @@ type Messages = {
 
 type Input = z.infer<typeof quizCreationSchema>;
 
-const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Props) => {
+const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) => {
   const router = useRouter();
   const [showLoader, setShowLoader] = useState(false);
   const [finishedLoading, setFinishedLoading] = useState(false);
@@ -86,38 +85,45 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
     resolver: zodResolver(quizCreationSchema),
     defaultValues: {
       topic: topicParam,
-      subject: "", // Add a new field for subject
+      subject: "",
       type: "mcq",
       amount: 3,
-      selectedFileId: "", // Add a new field for selectedFileId
+      selectedFileId: "",
     },
   });
 
   const [subjectFiles, setSubjectFiles] = useState<Files[]>([]);
 
   useEffect(() => {
-    // Update the subjectFiles when the subject field changes
-    const selectedSubject = form.getValues("subject");
-    const subjectFiles = files.filter((file) => file.Subject.id === selectedSubject);
-    setSubjectFiles(subjectFiles);
-  }, [form.getValues("subject"), files]);
+    const uniqueSubjects = Array.from(new Set(files.map(file => file.subject)));
+    const uniqueSubjectFiles: Files[] = [];
+    uniqueSubjects.forEach(subject => {
+      const fileForSubject = files.find(file => file.subject === subject);
+      if (fileForSubject) {
+        uniqueSubjectFiles.push(fileForSubject);
+      }
+    });
+    setSubjectFiles(uniqueSubjectFiles);
+  }, [files]);
 
   useEffect(() => {
     if (id) {
-      // Find the subject and file based on the file ID
       const selectedFile = files.find((file) => file.id === id);
-      console.log(selectedFile)
-
       if (selectedFile) {
-        // Set the selected subject and file
-        form.setValue("subject", selectedFile.subject);
+        form.setValue("subject", selectedFile.Subject.id);
         form.setValue("selectedFileId", selectedFile.chatpdf);
-      }}
-}, [id])
+      }
+    }
+  }, [id, files, form]);
 
   const onSubmit = async (data: Input) => {
     setShowLoader(true);
-    getQuestions({ selectedFileId: form.getValues("selectedFileId"), type: form.getValues("type"), amount: form.getValues('amount'), topic: form.getValues('topic')  }, {
+    getQuestions({
+      selectedFileId: form.getValues("selectedFileId"),
+      type: form.getValues("type"),
+      amount: form.getValues('amount'),
+      topic: form.getValues('topic')
+    }, {
       onError: (error) => {
         setShowLoader(false);
         if (error instanceof AxiosError) {
@@ -142,6 +148,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
       },
     });
   }
+
   if (showLoader) {
     return <LoadingQuestions finished={finishedLoading} />;
   }
@@ -149,151 +156,150 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id,   }: Prop
   return (
     <div className='flex justify-center align-center w-[800]'>
       <div className='flex flex-col justify-center align-center '>
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold">Quiz Creation</CardTitle>
-          <CardDescription className="text-text">Choose a topic and subject</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="topic"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-text">Topic</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Enter a topic" {...field} className="text-text" />
-                    </FormControl>
-                    <FormDescription className="text-text">
-                      Please provide any topic you would like to be quizzed on here.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="subject"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-text">Subject</FormLabel>
-                    <FormControl className="bg-background text-text">
-                      <select {...field} className="mt-1  bg-background text-text  block w-full py-2 px-3 border border-text  rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
-                        <option value="" className="text-black">Select a subject</option>
-                        {/* Add options for subjects based on your data */}
-                        {files.map((file, index) => (
-                          <option key={index} value={file.Subject.id}>
-                            {file.Subject.name}
-                          </option>
-                        ))}
-                      </select>
-                    </FormControl>
-                    <FormDescription className="text-text">
-                      Please select the subject for the quiz.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="selectedFileId"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className=" ">
-                    <FormLabel className="pr-5 text-text">Choose a file</FormLabel>
-                    <FormControl className="text-text bg-background">
-                      <select {...field} className="mt-1 block w-full py-2 px-3 border border-text bg-background text-text rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
-                        <option value="">Select a file</option>
-                        {subjectFiles.map((file) => (
-                          <option key={file.chatpdf} value={file.chatpdf} className="text-black">
-                            {file.pdfName}
-                          </option>
-                        ))}
-                      </select>
-                    </FormControl>
-                    </div>
-                    <FormDescription className="text-text">
-                      Select a file for the quiz based on the chosen subject.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="amount"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="text-text">Number of Questions</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="How many questions?"
-                        type="number"
-                        {...field}
-                        onChange={(e) => {
-                          form.setValue("amount", parseInt(e.target.value));
-                        }}
-                        min={1}
-                        max={10}
-                         className="text-text bg-background"
-                      />
-                    </FormControl>
-                    <FormDescription className="text-text">
-                      You can choose how many questions you would like to be
-                      quizzed on here.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl font-bold">Quiz Creation</CardTitle>
+            <CardDescription className="text-text">Choose a topic and subject</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <Form {...form}>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <FormField
+                  control={form.control}
+                  name="topic"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-text">Topic</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter a topic" {...field} className="text-text" />
+                      </FormControl>
+                      <FormDescription className="text-text">
+                        Please provide any topic you would like to be quizzed on here.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="subject"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-text">Subject</FormLabel>
+                      <FormControl className="bg-background text-text">
+                        <select {...field} className="mt-1  bg-background text-text  block w-full py-2 px-3 border border-text  rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
+                          <option value="" className="text-black">Select a subject</option>
+                          {subjectFiles.map((file, index) => (
+                            <option key={index} value={file.Subject.id}>
+                              {file.Subject.name}
+                            </option>
+                          ))}
+                        </select>
+                      </FormControl>
+                      <FormDescription className="text-text">
+                        Please select the subject for the quiz.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="selectedFileId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className=" ">
+                        <FormLabel className="pr-5 text-text">Choose a file</FormLabel>
+                        <FormControl className="text-text bg-background">
+                          <select {...field} className="mt-1 block w-full py-2 px-3 border border-text bg-background text-text rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
+                            <option value="">Select a file</option>
+                            {subjectFiles.map((file) => (
+                              <option key={file.chatpdf} value={file.chatpdf} className="text-black">
+                                {file.pdfName}
+                              </option>
+                            ))}
+                          </select>
+                        </FormControl>
+                      </div>
+                      <FormDescription className="text-text">
+                        Select a file for the quiz based on the chosen subject.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="amount"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-text">Number of Questions</FormLabel>
+                      <FormControl>
+                        <Input
+                          placeholder="How many questions?"
+                          type="number"
+                          {...field}
+                          onChange={(e) => {
+                            form.setValue("amount", parseInt(e.target.value));
+                          }}
+                          min={1}
+                          max={10}
+                          className="text-text bg-background"
+                        />
+                      </FormControl>
+                      <FormDescription className="text-text">
+                        You can choose how many questions you would like to be
+                        quizzed on here.
+                      </FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-               <div className="flex justify-between">
-                <Button
-                  variant={
-                    selectedType === "mcq" ? "default" : "destructive"
-                  }
-                  className={`w-1/2 rounded-none rounded-l-lg ${
-                    selectedType === "mcq" ? "bg-primarys font-extrabold text-white" : "text-text border border-text"
-                  }`}
-                  onClick={() => {
-                    setSelectedType("mcq");
-                    form.setValue("type", "mcq"); // Update the selected type
-                    console.log(form.getValues('type'))
-                  }}
-                  type="button"
-                >
-                  <CopyCheck className="w-4 h-4 mr-2" /> Multiple Choice
+                <div className="flex justify-between">
+                  <Button
+                    variant={
+                      selectedType === "mcq" ? "default" : "destructive"
+                    }
+                    className={`w-1/2 rounded-none rounded-l-lg ${
+                      selectedType === "mcq" ? "bg-primarys font-extrabold text-white" : "text-text border border-text"
+                    }`}
+                    onClick={() => {
+                      setSelectedType("mcq");
+                      form.setValue("type", "mcq");
+                      console.log(form.getValues('type'))
+                    }}
+                    type="button"
+                  >
+                    <CopyCheck className="w-4 h-4 mr-2" /> Multiple Choice
+                  </Button>
+                  <Separator orientation="vertical" />
+                  <Button
+                    variant={
+                      selectedType === "open_ended"
+                        ? "default"
+                        : "secondary"
+                    }
+                    className={`w-1/2 rounded-none rounded-l-lg ${
+                      selectedType === "open_ended" ? "bg-primarys font-extrabold text-white" : "text-text border border-text"
+                    }`}
+                    onClick={() => {
+                      setSelectedType("open_ended");
+                      form.setValue("type", "open_ended");
+                    }}
+                    type="button"
+                  >
+                    <BookOpen className="w-4 h-4 mr-2" /> Open Ended
+                  </Button>
+                </div>
+                <Button disabled={isLoading} onClick={onSubmit} type="submit" className="text-text border border-text">
+                  Submit
                 </Button>
-                <Separator orientation="vertical" />
-                <Button
-                  variant={
-                    selectedType === "open_ended"
-                      ? "default"
-                      : "secondary"
-                  }
-                  className={`w-1/2 rounded-none rounded-l-lg ${
-                    selectedType === "open_ended" ? "bg-primarys font-extrabold text-white" : "text-text border border-text"
-                  }`}
-                  onClick={() => {
-                    setSelectedType("open_ended");
-                    form.setValue("type", "open_ended"); // Update the selected type
-                  }}
-                  type="button"
-                >
-                  <BookOpen className="w-4 h-4 mr-2" /> Open Ended
-                </Button>
-              </div>
-              <Button disabled={isLoading} onClick={onSubmit} type="submit" className="text-text border border-text">
-                Submit
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-    </div>
+              </form>
+            </Form>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   );
 };

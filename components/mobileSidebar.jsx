@@ -21,7 +21,7 @@ const MobileSidebar = ({ chats, chatId, isPro }) => {
             </button>
             
             {/* Sidebar */}
-            <div className={`md:flex  md:flex-col md:bg-gray-900 md:text-gray-200 ${showSidebar ? 'block' : 'hidden'} md:relative`}>
+            <div className={`md:flex  md:flex-col bg-gray-900 text-gray-200 ${showSidebar ? 'block' : 'hidden'} md:relative`}>
                 {/* <nav className="md:hidden absolute top-0 left-0 mb-4 z-20 h-[60px] flex [&>*]:my-auto px-2 justify-between items-center ">
                     <button
                         className="text-l flex text-text"
@@ -33,13 +33,16 @@ const MobileSidebar = ({ chats, chatId, isPro }) => {
                     </button>
                 </nav> */}
 
-                 <Link href="/chat">
-                    <Button className="w-full border-dashed border-white border m-5 text-text">
+                 
+                <div className="flex h-screen w-full overflow-hidden pb-20 flex-col gap-2 mt-4">
+                <div className='flex justify-center align-center w-full'>
+                    <Link href="/chat">
+                    <Button className="w-90 border-dashed border-white border m-5 text-white">
                     
                     Normal Chat
                     </Button>
                 </Link>
-                <div className="flex h-screen w-full overflow-hidden pb-20 flex-col gap-2 mt-4">
+                </div>
                     {chats.map((chat) => (
                         <Link key={chat.id} href={`/chat/${chat.id}`}>
                             <div
