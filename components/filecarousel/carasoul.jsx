@@ -38,6 +38,8 @@ const handleSave = async (metaData, content, options) => {
       });
     }
   } catch (error) {
+
+    console.log(error)
     return Promise.reject({
       code: AdobeDC.View.Enum.ApiResponseCode.FAIL,
       data: { /* optional error data */ }
