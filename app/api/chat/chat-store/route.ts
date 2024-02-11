@@ -1,19 +1,20 @@
+// @ts-nocheck
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 
+import { Configuration, OpenAIApi } from "openai";
+import { Message, OpenAIStream, StreamingTextResponse } from "ai";
 import { getContext } from "@/lib/context";
 import {UserSystemEnum } from "@prisma/client";
 import { NextResponse } from "next/server";
-
+import serverSession from '@/lib/serverSession';
 
 
 export async function POST(req: Request) {
   try {
     const { user, assistant, chatId } = await req.json();
-    
+    const users = await serverSession()
       
     await prisma.message.create({
         data: {

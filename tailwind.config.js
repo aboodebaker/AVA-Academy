@@ -29,7 +29,7 @@ module.exports = {
         background: "var(--background)",
         primarys: "var(--primary)",
         secondarys: "var(--secondary)",
-        'accent': "var(--accent)",
+        accents: "var(--accent)",
         'backgroundAccent': 'rgba(255, 255, 255, 0.04)',
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

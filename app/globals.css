@@ -162,6 +162,9 @@ color: var(--text);
   min-height: 100dvh;
 }
 
+.transparent {
+  background-color: transparent;
+}
 @media only screen and (max-width: 600px) {
   .outer {
     padding: 0rem;

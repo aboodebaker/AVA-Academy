@@ -1,4 +1,4 @@
-// @ts-nocheck
+
 "use client";
 import React from "react";
 import {
@@ -87,24 +87,12 @@ const CreateNoteDialog = ({subjectOptions}: Props) => {
                 onChange={(e) => setSubject(e.target.value)}
               >
                 <option value="">Select a subject</option>
-                {subjectOptions.map((option) => (
+                {subjectOptions.map((option: any) => (
                   <option key={option.id} value={option.id}>
                     {option.name}
                   </option>
                 ))}
               </select>
-            </div>
-            <div className="mb-4">
-              <label htmlFor="shared" className="block font-semibold">
-                Shared:
-              </label>
-              <input
-                type="checkbox"
-                id="shared"
-                className="w-4 h-4 mt-2"
-                checked={shared}
-                onChange={(e) => setIsShared(e.target.checked)}
-              />
             </div>
           <div className="h-4"></div>
           <div className="flex items-center gap-2">

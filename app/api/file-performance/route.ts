@@ -67,7 +67,7 @@ export async function POST(req: Request, res: Response) {
         summary:"Integrate the data to provide a comprehensive summary of the student's academic performance inside these topics. Do not make it to long nor too short.",
         improvement: "Offer recomendations on what to focus on, how they can focus on it and what can they do to improve.",
         achievements: "state the user's achievements in terms of academic skill and what they are noticibly good at within the topic",
-        mark: "the user's estimated mark from your estimation"
+        mark: "give an estimated mark for what you would feel the user would get in that subject. Never leave out always give an estimate."
       }
     )
     
@@ -94,7 +94,7 @@ export async function POST(req: Request, res: Response) {
 }
 
 
-const systemPrompt = `You are an AI Student Analyser. Here are your instuctons:
+const systemPrompt = `You are an AI Student Analyser. You are here to analyse a file which the student uses. Usually it is 1 term worth of work or just 1 topic in that term. Here are your instuctons:
 
 1. Extract the necessary data from the database models 'Activity' and 'QuestionActivity' including, but not limited to, user ID, topic, gameType, question details, and performance metrics. The answer is the correct answer to the question while the userAnswer is the users answer .
 

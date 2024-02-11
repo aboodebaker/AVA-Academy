@@ -25,7 +25,7 @@ const FilePerformance = ({fileId}: Props) => {
     <div className='min-h-screen flex items-center justify-center'>
         {
         loading 
-        ? <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+        ? <Loader2 className="w-4 h-4 mr-2 animate-spin text-text" />
         : <TabsDemo data={data} />
         }
     </div>

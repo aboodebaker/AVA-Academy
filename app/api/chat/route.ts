@@ -126,7 +126,7 @@ export async function POST(req: Request) {
         }
       })
 
-return new NextResponse(response.data.choices[0]?.message?.content || '', { status: 200 });
+    return new NextResponse(response.data.choices[0]?.message?.content || '', { status: 200 });
 
   } catch (error) {
     console.log(error)

@@ -87,14 +87,14 @@ const TipTapEditor = ({ note }: Props) => {
 
   return (
     <>
-      <div className="flex bg-white">
+      <div className="flex bg-background">
         {editor && <TipTapMenuBar editor={editor} />}
-        <Button disabled variant={"outline"} onClick={handleAutocompleteClick} className="text-black  rounded-lg shadow-3xl w-[9rem]">
+        <Button disabled variant={"outline"} onClick={handleAutocompleteClick} className="text-text bg-primarys rounded  rounded-lg shadow-3xl w-[9rem]">
           {saveNote.isLoading ? "Saving..." : "Saved"}
         </Button>
       </div>
 
-      <div className="prose prose-sm w-full mt-4 bg-white">
+      <div className="prose prose-sm w-full mt-4 transparent">
         <EditorContent editor={editor} />
       </div>
       <div className="h-4"></div>
