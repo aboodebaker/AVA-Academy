@@ -91,9 +91,11 @@ export async function POST(req: Request, res: Response) {
         question: string;
         answer: string;
       };
+
+      console.log(data.questions)
       
       data.questions.map(async (question: mcqQuestion) => {
-      await prisma.question.createMany({
+      let q = await prisma.question.createMany({
         data: [
           {
             question: question.question,
@@ -103,6 +105,7 @@ export async function POST(req: Request, res: Response) {
           },
         ],
       });
+      console.log(q)
     }
   )
     }
