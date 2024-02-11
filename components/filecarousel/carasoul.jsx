@@ -13,26 +13,13 @@ const FileCarasoul = ({ files, user }) => {
     files.pdfName.toLowerCase().includes(searchQuery.toLowerCase())
   );
   
-  const uploadToCloudinary = async (pdfContent) => {
-    const blob = new Blob[pdfContent]
-   const data = uploadToS3(blob)
-   console.log(data)
-   try {
-    await fetch('/api/edit-pdf', {
-      method: 'POST',
-      body: JSON.stringify({file_key: data.file_key, oldUrl: selectedFile})
-    })
-   } catch (error) {
-    console.log(error)
-   }
-  return data
-};
+  
 
 // Callback for SAVE_API
 const handleSave = async (metaData, content, options) => {
   try {
     // Upload modified PDF content to Cloudinary
-    const cloudinaryResponse = await uploadToCloudinary(content);
+    const cloudinaryResponse = await uploadToS3(content);
 
     if (cloudinaryResponse && cloudinaryResponse.file_key) {
       return Promise.resolve({
@@ -40,14 +27,14 @@ const handleSave = async (metaData, content, options) => {
         data: {
           metaData: {
             fileName: metaData.fileName,
-            cloudinaryUrl: getS3Url(file_key)
+            cloudinaryUrl: getS3Url(cloudinaryResponse.file_key)
           }
         }
       });
     } else {
       return Promise.reject({
         code: AdobeDC.View.Enum.ApiResponseCode.FAIL,
-        data: { /* optional error data */ }
+        data: 'Please try again later'
       });
     }
   } catch (error) {
