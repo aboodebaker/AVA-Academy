@@ -5,6 +5,7 @@ import './style.css'
 import Link from 'next/link';
 import { useEffect } from 'react';
 import { uploadToS3 } from '@/lib/s3'
+import Head from 'next/head'
 
 const FileCarasoul = ({ files, user }) => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -79,6 +80,15 @@ const handleSave = async (metaData, content, options) => {
   return (
     
     <div className=''>
+      {selectedFile !== '' ? 
+      < meta
+            httpEquiv="Content-Security-Policy"
+            content="script-src 'self' 'unsafe-eval' use.typekit.net assets.adobedtm.com www.adobe.com/marketingtech/ prod.adobeccstatic.com/utilnav/ widget.uservoice.com by2.uservoice.com/t2/ assets.adobe.com api.demandbase.com/api/v2/ip.json commerce.adobe.com"
+        />
+       : 
+       <>
+       </>
+       }
       <div className='inputsbox'>
       <div className='inputbox'>
       <input
