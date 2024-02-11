@@ -3,7 +3,7 @@ import { prisma } from "@/lib/db";
 import { getAuthSession } from "@/lib/nextauth";
 import { LucideLayoutDashboard } from "lucide-react";
 import Link from "next/link";
-
+import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import React from "react";
 import ResultsCard from "@/components/statistics/ResultsCard";
@@ -50,18 +50,18 @@ const Statistics = async ({ params: { gameId } }: Props) => {
 
   return (
     <>
-      <div className="p-8 mx-auto max-w-7xl">
+      <div className="p-8 mx-auto max-w-7xl text-text">
         <div className="flex items-center justify-between space-y-2">
-          <h2 className="text-3xl font-bold tracking-tight">Summary</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-text">Summary</h2>
           <div className="flex items-center space-x-2">
             <Link href="/dashboard" className={buttonVariants()}>
-              <LucideLayoutDashboard className="mr-2" />
+              <LucideLayoutDashboard className="mr-2 text-text" />
               Back to Dashboard
             </Link>
           </div>
         </div>
 
-        <div className="grid gap-4 mt-4 md:grid-cols-7">
+        <div className="grid gap-4 mt-4 md:grid-cols-7 text-text">
           <ResultsCard accuracy={accuracy} />
           <AccuracyCard accuracy={accuracy} />
           <TimeTakenCard
@@ -70,6 +70,11 @@ const Statistics = async ({ params: { gameId } }: Props) => {
           />
         </div>
         <QuestionsList questions={game.questions} />
+        <Link href={`/play/${game.gameType == 'mcq' ? 'mcq' : 'open-ended'}/${gameId}`}>
+            <Button className="bg-primarys text-text rounded" size="sm">
+              Go To Activity
+            </Button>
+        </Link>
       </div>
     </>
   );

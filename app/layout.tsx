@@ -154,6 +154,8 @@ export default function RootLayout({
         <meta name="manifest" content="/manifest.json"/>
         <meta name="theme-color" content="#ffffff"/>
         <link rel="icon" href="/favicon.ico"/>
+        
+
         <title>AVA Academy</title>
       </head>
 
