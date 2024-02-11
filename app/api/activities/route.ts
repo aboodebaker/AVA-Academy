@@ -273,16 +273,20 @@ const teacherUser = await prisma.user.findFirst({
           answer: string;
         };
 
+        data.questions.map(async (question: mcqQuestion) => {
         await prisma.questionActivity.createMany({
           data: [
-            {
-              question: data.questions.question,
-              answer: data.questions.answer,
-              activityId: game.id,
-              questionType: "open_ended",
-            },
-          ],
-        });
+                {
+                  question: question.question,
+                  answer: question.answer,
+                  gameId: game.id,
+                  questionType: "open_ended",
+                },
+              ],
+            });
+          }
+        )
+
 
         const activit = await prisma.activity.findUnique({
           where: {

@@ -150,8 +150,7 @@ console.log(userId)
           return (prev + percentageSimilar) / (questionIndex + 1);
         });
         
-          endGame();
-          setHasEnded(true);
+          
           const dataToSave = {
             savedIndex: questionIndex.toString(),
             savedPercentage: averagePercentage.toString(),
@@ -163,7 +162,15 @@ console.log(userId)
         }
         setQuestionIndex((prev) => prev + 1);
         setUserAnswer(""); // Clear user's answer for the next question
+
+        if (questionIndex === game.questions.length - 1) {
+            endGame();
+            setHasEnded(true);
+            return;
+          }
       }},
+
+      
       );
   }, [checkAnswer, questionIndex, toast, endGame, game.questions.length]);
 
@@ -185,10 +192,7 @@ console.log(userId)
       <div className="absolute flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
         {loadingEnded ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : 
         <div>
-          <MCQCounter
-            correct_answers={stats.correct_answers}
-            wrong_answers={stats.wrong_answers}
-          />
+          <OpenEndedPercentage percentage={averagePercentage} />
           <div className="px-4 py-2 mt-2 font-semibold text-white bg-green-500 rounded-md whitespace-nowrap">
             You Completed in{" "}
             {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
@@ -253,7 +257,7 @@ console.log(userId)
           type="text"
           value={userAnswer}
           onChange={(e) => setUserAnswer(e.target.value)}
-          className="w-full max-w-2xl rounded bg- background text-text"
+          className="w-full max-w-2xl rounded bg-background text-text"
         />
 
         <div className="flex justify-center align-center text-black">

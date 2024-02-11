@@ -19,17 +19,17 @@ const ActivityCard = ({title, link, img, date,}) => {
   return (
 <div className="gap-2 grid">
       <div className="border">
-        <Card shadow="sm" isPressable onPress={() => console.log("item pressed")}>
-          <CardBody className="overflow-visible p-0">
-            <div className='relative-global'>
+        <Card shadow="sm" isPressable onPress={() => console.log("item pressed")} className='w-full h-full'>
+          <CardBody className="overflow-hidden p-0">
+            <div className="aspect-r">
+              <div className="relative h-full">
               <Image
-                height={100}
-                width={100}
-                alt={title}
-                className="w-full object-cover"
-                src={img}
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              />
+                  layout="fill"
+                  objectFit="cover"
+                  alt={title}
+                  src={img}
+                />
+              </div>
             </div>
           </CardBody>
           <CardFooter>
