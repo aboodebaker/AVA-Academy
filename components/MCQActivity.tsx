@@ -288,14 +288,14 @@ console.log(userId)
                 <Button
                   key={option}
                   variant={selectedChoice === index ? "default" : "outline"}
-                  className={`justify-start w-full py-8 mb-4 text-black`}
+                  className={`justify-start w-full py-8 mb-4 text-text`}
                   onClick={() => setSelectedChoice(index)}
                 >
                   <div className="flex items-center justify-start">
                     <div className="p-2 px-3 mr-5 border rounded-md" text-black>
                       {index + 1}
                     </div>
-                    <div className="text-start">{option}</div>
+                    <div className="text-text">{option}</div>
                   </div>
                 </Button>
           );

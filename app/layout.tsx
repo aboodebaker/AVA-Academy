@@ -84,15 +84,15 @@ export default function RootLayout({
         <AuthProvider>
         <Providers>
         <div className="flex">
-          <div className="">
-            
+          <div className="w-[250] flex-[250] bg-secondarys">
+                        {/* <Sticky> */}
               <Tester />
-             
+             {/* </Sticky> */}
               {/* <MenuBarMobile setter={setShowSidebar} />
               <Sidebar show={showSidebar} setter={setShowSidebar} /> */}
             </div>
 
-            <div className="flex flex-col flex-grow  md:w-full min-h-screen inner">
+            <div className="flex flex-col  md:w-full min-h-screen inner">
                 {children}
             </div>
         </div>

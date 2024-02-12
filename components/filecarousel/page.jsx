@@ -15,12 +15,12 @@ import './stylecopy.css'
 import { useEffect } from 'react';
 import ActivityCard from "./activitycard";
 import { pusherClient } from '@/lib/pusher';
-
+import { usePathname } from "next/navigation";
 
 const { format } = require('date-fns');
 
 const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activities, userId,}) => {
-  
+    const pathname = usePathname();
   const [fdate, setFDate] = useState('')
   const [activitiess, setactivitiess] = useState(activities)
 
@@ -124,7 +124,7 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
                       </DialogDescription>
                     </DialogHeader >
                     <h1 className=" text-black">Have questions? Ask our AI that is based on your module</h1>
-                    <Link href={`/chat/${height}`}>
+                    <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/chat/${height}`}>
                     <button className="bux-2">Chat with your module</button>
                     </Link>
                     <h1 className=" text-black">Need to prepare for a test? Use our Quiz creation AI for an entire test or just a topic</h1>
@@ -141,7 +141,7 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
                       <h1 className=" text-black">Activities</h1>
                     {activitiess.slice().reverse().map((file, index) => (
                   <div key={index} className="card">
-                    <Link href={`/activity/${file.gameType == 'open_ended' ? 'open-ended' : 'mcq'}/${file.id}`}>
+                    <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/${pathname.includes('/teacher-platform') ? 'activities' : 'activity'}/${file.gameType == 'open_ended' ? 'open-ended' : 'mcq'}/${file.id}`}>
                       <ActivityCard title={file.topic} link={`/activity/${file.gameType}/${file.id}`} img={file.image ? file.image : '/maths.png'} date={file.timeStarted}  />
                        </Link>   
                   </div>

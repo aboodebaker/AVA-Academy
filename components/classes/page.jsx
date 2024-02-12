@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import styles from './page.module.css';
 import ClassCard from '../classcard/page';
+import { usePathname } from "next/navigation";
 
 const Class = ({ subjects }) => {
   const [searchQuery, setSearchQuery] = useState('');
-
+  const pathname = usePathname();
   const filteredResponses = subjects.filter((subject) =>
     subject.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -36,6 +37,15 @@ const Class = ({ subjects }) => {
           </svg>
           </div>
         </div>
+        {pathname.includes('/teacher-platform') ?
+        <Link href={'/teacher-platform/newsubject'}>
+      <div>
+        <button className="rounded-xl text-xl font-bold bg-primarys text-white p-6">+New</button>
+      </div>
+      </Link>
+        : <></>
+      
+      }
       </div>
       <div className={styles.flexbox}>
         <div className={styles.column}>
@@ -46,7 +56,7 @@ const Class = ({ subjects }) => {
                 filteredResponses.includes(subject) ? styles.fadeIn : styles.fadeOut
               }`}
             >
-              <Link href={`/classes/${subject.name}`}>
+              <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/classes/${subject.name}`}>
                  <ClassCard title={subject.name} img={subject.image} link={subject.name} height={'100%'} clip={'title'}/>
               </Link>
             </div>
