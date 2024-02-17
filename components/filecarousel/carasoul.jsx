@@ -17,61 +17,8 @@ const FileCarasoul = ({ files, user }) => {
   
 
 // Callback for SAVE_API
-const handleSave = async (metaData, content, options) => {
-  try {
-    // Upload modified PDF content to Cloudinary
-    const cloudinaryResponse = await uploadToS3(content);
 
-    if (cloudinaryResponse && cloudinaryResponse.file_key) {
-      return Promise.resolve({
-        code: AdobeDC.View.Enum.ApiResponseCode.SUCCESS,
-        data: {
-          metaData: {
-            fileName: metaData.fileName,
-            cloudinaryUrl: getS3Url(cloudinaryResponse.file_key)
-          }
-        }
-      });
-    } else {
-      return Promise.reject({
-        code: AdobeDC.View.Enum.ApiResponseCode.FAIL,
-        data: 'Please try again later'
-      });
-    }
-  } catch (error) {
 
-    console.log(error)
-    return Promise.reject({
-      code: AdobeDC.View.Enum.ApiResponseCode.FAIL,
-      data: { /* optional error data */ }
-    });
-  }
-};
-
-  useEffect(() => {
-    if (!selectedFile == '') {
-    const embedOptions = {
-      clientId: '1c9773d18f39418aab4d3510b525c51c',
-    };
-
-    const adobeDCView = new window.AdobeDC.View(embedOptions);
-    adobeDCView.registerCallback(
-      AdobeDC.View.Enum.CallbackType.SAVE_API,
-      handleSave,
-      {
-        autoSaveFrequency: 0,
-        enableFocusPolling: false,
-        showSaveButton: true
-      }
-    );
-    adobeDCView.previewFile(
-      {
-        content: { location: { url: selectedFile } },
-        metaData: { fileName: 'PDF Document' }, // You can customize the file name here
-      },{embedMode: 'FULL_WINDOW', exitPDFViewerType: "CLOSE"}
-      
-    );}
-  }, [selectedFile]);
 
   const handleFileChange = (FileSelected) => {
     setSelectedFile(FileSelected);
@@ -117,7 +64,7 @@ const handleSave = async (metaData, content, options) => {
         {filteredfiles.map((file, index) => (
           <div key={index} className="card">
             
-              <ClassCard title={file.pdfName} link={file.pdfUrl}  date={file.createdAt} height={file.id} clip={'title-clip'} divId={file.pdfName + index} selectedFile={handleFileChange} activities={file.activities} userId={user.id}/>
+              <ClassCard title={file.pdfName} link={file.pdfUrl}  date={file.createdAt} height={file.id} clip={'title-clip'} divId={file.pdfName + index} selectedFile={handleFileChange} activities={file.activities} userId={user.id} fileId={file.id}/>
                   
           </div>
         ))}

@@ -10,6 +10,8 @@ import { ThemeProvider } from '@/components/DarkmodeToggle/shadCn'
 import Providers from '@/components/Providers'
 import { usePathname } from "next/navigation";
 import Sticky from 'react-stickynode';
+import { Toaster } from "@/components/ui/toaster";
+
 const inter = Inter({ subsets: ['latin'] })
 
 // export const metadata = {
@@ -95,6 +97,7 @@ export default function RootLayout({
             <div className="flex flex-col  md:w-full min-h-screen inner">
                 {children}
             </div>
+            <Toaster />
         </div>
         </Providers>
         </AuthProvider>

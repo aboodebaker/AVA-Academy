@@ -59,6 +59,7 @@ model User {
   sessions      Session[]
   activities    Activity[]
   performance   PerformanceSummary[]
+  courses       Course[]
 }
 
 model Subject {
@@ -263,4 +264,51 @@ model PerformanceSummary {
   User                   User   @relation(fields: [userId], references: [id])
 
   @@index([userId])
+}
+
+model Course {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  userId String @db.ObjectId
+  name   String
+  image  String
+  units  Unit[]
+  User   User   @relation(fields: [userId], references: [id])
+}
+
+// unit contains many chapters
+model Unit {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  courseId String @db.ObjectId
+
+  name     String
+  course   Course    @relation(fields: [courseId], references: [id])
+  chapters Chapter[]
+
+  @@index([courseId], name: "courseId")
+}
+
+model Chapter {
+  id     String @id @default(auto()) @map("_id") @db.ObjectId
+  unitId String @db.ObjectId
+
+  name               String
+  youtubeSearchQuery String
+  videoId            String?
+  summary            String?
+  unit               Unit             @relation(fields: [unitId], references: [id])
+  questions          QuestionCourse[]
+
+  @@index([unitId], name: "unitId")
+}
+
+model QuestionCourse {
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  chapterId String @db.ObjectId
+
+  question String
+  answer   String
+  options  String
+  chapter  Chapter @relation(fields: [chapterId], references: [id])
+
+  @@index([chapterId], name: "chapterId")
 }

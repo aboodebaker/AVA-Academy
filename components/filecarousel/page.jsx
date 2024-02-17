@@ -19,7 +19,7 @@ import { usePathname } from "next/navigation";
 
 const { format } = require('date-fns');
 
-const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activities, userId,}) => {
+const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activities, userId, fileId}) => {
     const pathname = usePathname();
   const [fdate, setFDate] = useState('')
   const [activitiess, setactivitiess] = useState(activities)
@@ -83,9 +83,10 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
 
   return (
 <div className="gap-2 grid">
+  <Link href={`/file/${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/${fileId}`}>
       <div className="border">
         <Card shadow="sm">
-          <div onClick={() => selectedFile(link)}>
+          <div>
           <CardBody className="overflow-visible p-0">
             {/* <Image
               shadow="sm"
@@ -137,8 +138,9 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
                     </Link>
                     {/* <h1>Have questions. Ask our AI based on your module</h1>
                     <button onClick={() => { router.push(`/chat/${height}`)}}>Chat with your module</button> */}
+                    <h1 className=" text-black">Activities</h1>
                     <div className="scrolling-wrapper">
-                      <h1 className=" text-black">Activities</h1>
+                      
                     {activitiess.slice().reverse().map((file, index) => (
                   <div key={index} className="card">
                     <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/${pathname.includes('/teacher-platform') ? 'activities' : 'activity'}/${file.gameType == 'open_ended' ? 'open-ended' : 'mcq'}/${file.id}`}>
@@ -152,9 +154,11 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
                 
               </div>
             </div>
+            
           </CardFooter>
         </Card>
         </div>
+        </Link>
     </div>
   )
 }
