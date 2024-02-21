@@ -13,12 +13,12 @@ import { pusherClient } from '@/lib/pusher';
 import { usePathname } from "next/navigation";
 import './stylecopy.css'
 
-const PDFViewer = ({ id, pdf_Url, activities,userId }, {children} ) => {
+const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) => {
 
      const pathname = usePathname();
   const [fdate, setFDate] = useState('')
   const [activitiess, setactivitiess] = useState(activities)
-
+  const [activeTab, setActiveTab] = useState(true);
 
 
   useEffect(() => {
@@ -86,7 +86,7 @@ const PDFViewer = ({ id, pdf_Url, activities,userId }, {children} ) => {
   }
 };
   useEffect(() => {
-
+ if (activeTab === true) {
     const embedOptions = {
       clientId: '1c9773d18f39418aab4d3510b525c51c',
     };
@@ -105,22 +105,32 @@ const PDFViewer = ({ id, pdf_Url, activities,userId }, {children} ) => {
       {
         content: { location: { url: pdf_Url } },
         metaData: { fileName: 'PDF Document' }, // You can customize the file name here
-      },{embedMode: 'FULL_WINDOW', exitPDFViewerType: "CLOSE"}
+      },{embedMode: 'FULL_WINDOW'}
       
     );
-  }, []);
+
+  }
+  }, [pdf_Url, activeTab]);
+
+
+  const handleTabChange = () => {
+    setActiveTab(!activeTab);
+  };
 
   return (
     <div className="w-full h-full">
     
 
-    <Tabs defaultValue="viewer" >
+    <Tabs defaultValue="viewer" onChange={handleTabChange}>
       <TabsList className="grid w-full grid-cols-2">
         <TabsTrigger value="viewer">PDF Viewer</TabsTrigger>
         <TabsTrigger value="options">Options</TabsTrigger>
       </TabsList>
       <TabsContent value="viewer">
+        <div>
         <div id="adobe-dc-view" className="w-full h-screen"></div>
+
+        </div>
       </TabsContent>
 
 
@@ -144,6 +154,17 @@ const PDFViewer = ({ id, pdf_Url, activities,userId }, {children} ) => {
               <div key={index} className="card">
                 <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/${pathname.includes('/teacher-platform') ? 'activities' : 'activity'}/${file.gameType == 'open_ended' ? 'open-ended' : 'mcq'}/${file.id}`}>
                     <ActivityCard title={file.topic} link={`/activity/${file.gameType}/${file.id}`} img={file.image ? file.image : '/maths.png'} date={file.timeStarted}  />
+                </Link>   
+              </div>
+            ))}
+        </div>
+
+        <h1 className=" text-black">Courses</h1>
+          <div className="scrolling-wrapper">         
+            {courses.slice().reverse().map((file, index) => (
+              <div key={index} className="card">
+                <Link href={`/course/${file.id}/0/0`}>
+                    <ActivityCard title={file.name} link={`/course/${file.id}`} img={file.image ? file.image : '/maths.png'} date={null}  />
                 </Link>   
               </div>
             ))}

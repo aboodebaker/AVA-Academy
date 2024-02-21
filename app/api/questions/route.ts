@@ -126,18 +126,23 @@ export async function POST(req: Request, res: Response) {
 
       console.log('here')
       
-      const messageContent =`You are a helpful AI that is able to generate multiple choice question and answers, the length of each answer should not be more than 15 words, store all the pairs of answers and questions in a JSON array You are to generate a random hard open-ended questions about ${topic} from your document. You are to generate ${amount} questions with 1 answer and 3 other choices.`
+      
       
       
       
       for (let i = 0; i < amount; i++) {
+
+      const messageContent =
+      `You are a helpful AI that is able to generate multiple choice question and answers, the length of each answer should not be more than 15 words, store all the pairs of answers and questions in a JSON array You are to generate a random hard open-ended questions about ${topic} from your document. You are to generate ${amount} questions with 1 answer and 3 other choices.
+      ${questionss[0] ? `do not use these questions: ${questionss[0]}` : ''} ${questionss[1] ? `or this question: ${questionss[1]}` : ''}
+      `
       questions = await strict_output(
         prompt,
         new Array(amount).fill(
            messageContent
         ),
         {
-          "question": "<question>",
+          "question": `<question>. ${questionss[0] ? `do not use these questions: ${questionss[0]}` : ''} ${questionss[1] ? `or this question: ${questionss[1]}` : ''} `,
           "answer": "<answer with max length of 15 words>",
           "option1": "<option1 with max length of 15 words>",
           "option2": "<option2 with max length of 15 words>",
