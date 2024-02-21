@@ -37,6 +37,7 @@ const OpenEnded = ({ game, userId }: Props) => {
   const [currentQuestion, setCurrentQuestion] = useState(questions[questionIndex]);
   const [loadingEnded, setLoadingEnded] = useState(false)
   const [tab, setTab] = useState(null)
+  const [customId, setCustomId] = useState(null)
   useEffect(() => {
     setCurrentQuestion(questions[questionIndex]);
   }, [questionIndex, questions]);
@@ -54,6 +55,7 @@ const OpenEnded = ({ game, userId }: Props) => {
           'Content-Type': 'application/json',
         }},);
         setTab(response.data.performance)
+        setCustomId(response.data.gameId)
         setLoadingEnded(false)
 
       return response.data;
@@ -91,10 +93,12 @@ console.log(userId)
       useEffect(() => {
     const savedData = localStorage.getItem(`gameData_${game.id}`);
     if (savedData !== null) {
-      const { savedIndex, savedPercentage, hasEnded } = JSON.parse(savedData);
+      const { savedIndex, savedPercentage, hasEnded, tabs, id } = JSON.parse(savedData);
       setQuestionIndex(parseInt(savedIndex, 10));
       setAveragePercentage(parseFloat(savedPercentage));
-      setHasEnded(hasEnded)
+      setHasEnded(hasEnded),
+            setTab(tabs),
+      setCustomId(id)
     }
   }, [game.id]);
 
@@ -103,7 +107,9 @@ console.log(userId)
     const dataToSave = {
       savedIndex: questionIndex.toString(),
       savedPercentage: averagePercentage.toString(),
-      hasEnded: hasEnded
+      hasEnded: hasEnded,
+      tabs: tab,
+      id: customId,
     };
     localStorage.setItem(`gameData_${game.id}`, JSON.stringify(dataToSave));
   }, [questionIndex, averagePercentage, game.id])
@@ -124,6 +130,8 @@ console.log(userId)
     setAveragePercentage(0);
     setHasEnded(false);
     setUserAnswer("");
+    setCustomId(null)
+    setTab(null)
   };
 
   const handleNext = useCallback(() => {
@@ -191,7 +199,7 @@ console.log(userId)
             View Statistics
             <BarChart className="w-4 h-4 ml-2" />
           </Link>
-          <TabsDemo data={tab} />
+          <TabsDemo data={tab} id={customId} />
           <Button
               variant="outline"
               className="m-4 text-text border border-text"

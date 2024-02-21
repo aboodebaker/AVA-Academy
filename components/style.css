@@ -142,6 +142,15 @@ border-radius: 38px;
   font-size: 24px;
 }
 
+.button2 {
+  background-color: var(--primary);
+  color: white;
+  padding: 0.5rem 5rem;
+  border-radius: 1rem;
+  font-weight: 600;
+  font-size: 14px;
+}
+
 .headertable {
   border-radius: 11px;
 background: var(--background);

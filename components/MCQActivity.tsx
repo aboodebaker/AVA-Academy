@@ -44,6 +44,7 @@ const MCQ =  ({ game, userId}: Props) => {
   const [currentQuestion, setCurrentQuestion] = useState(questions[questionIndex]);
   const [loadingEnded, setLoadingEnded] = useState(false)
   const [tab, setTab] = useState(null)
+  const [customId, setCustomId] = useState(null)
 
   useEffect(() => {
     setCurrentQuestion(questions[questionIndex]);
@@ -99,10 +100,12 @@ console.log(userId)
     React.useEffect(() => {
     const savedData = localStorage.getItem(`mcqGameData_${game.id}`);
     if (savedData !== null) {
-      const { savedIndex, savedStats, hasEnded } = JSON.parse(savedData);
+      const { savedIndex, savedStats, hasEnded, tabs, id } = JSON.parse(savedData);
       setQuestionIndex(parseInt(savedIndex, 10));
       setStats(savedStats);
-      setHasEnded(hasEnded)
+      setHasEnded(hasEnded),      
+      setTab(tabs),
+      setCustomId(id)
     }
   }, [game.id]);
 
@@ -112,6 +115,8 @@ console.log(userId)
       savedIndex: questionIndex.toString(),
       savedStats: stats,
       hasEnded: hasEnded,
+      tabs: tab,
+      id: customId,
     };
     localStorage.setItem(`mcqGameData_${game.id}`, JSON.stringify(dataToSave));
   }, [questionIndex, stats, hasEnded, game.id]);
@@ -126,6 +131,8 @@ console.log(userId)
     });
     setHasEnded(false);
     setSelectedChoice(0);
+    setCustomId(null)
+    setTab(null)
   }, [game.id]);
 
   const { mutate: endGame } = useMutation({
@@ -136,6 +143,7 @@ console.log(userId)
       setLoadingEnded(true)
       const response = await axios.post(`/api/activities/endGame`, payload);
       setTab(response.data.performance)
+      setCustomId(response.data.gameId)
       setLoadingEnded(false)
       return response.data;
     },
@@ -232,7 +240,7 @@ console.log(userId)
             View Statistics
             <BarChart className="w-4 h-4 ml-2" />
           </Link>
-          <TabsDemo data={tab} />
+          <TabsDemo data={tab} id={customId} />
           <Button
               variant="outline"
               className="m-4 text-text border border-text"

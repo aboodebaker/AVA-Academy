@@ -114,6 +114,8 @@ const MCQ =  ({ game, userId}: Props) => {
       wrong_answers: 0,
     });
     setHasEnded(false);
+    setCustomId(null)
+    setTab(null)
     setSelectedChoice(0);
   }, [game.id]);
 

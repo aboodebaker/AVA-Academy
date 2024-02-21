@@ -31,6 +31,9 @@ const CreateChapters = async ({ params: { courseId } }: Props) => {
   if (!course) {
     return redirect("/create");
   }
+  if (course.units[0].chapters[0].videoId !== null) {
+    return redirect(`/course/${courseId}/0/0`)
+  }
   return (
     <div className="flex flex-col items-start max-w-xl mx-auto my-16">
       <h5 className="text-sm uppercase text-seconday-foreground/60">

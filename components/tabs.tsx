@@ -37,7 +37,7 @@ const TabsDemo = ({ data, id }: Props) => (
               <div>
                 <p>{data.weaknesses.analysis}</p>
                 <Link href={`/create/${id}`}>
-                <button className='button'>Create Course on your Weaknesses</button>
+                <button className='button2'>Create Course on your Weaknesses</button>
                 </Link>
               </div>
               </>

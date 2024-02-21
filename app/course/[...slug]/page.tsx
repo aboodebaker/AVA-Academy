@@ -1,3 +1,4 @@
+// @ts-nocheck
 import CourseSideBar from "@/components/CourseSideBar";
 import MainVideoSummary from "@/components/MainVideoSummary";
 import QuizCards from "@/components/QuizCards";
