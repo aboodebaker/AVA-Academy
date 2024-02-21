@@ -11,6 +11,7 @@ import Providers from '@/components/Providers'
 import { usePathname } from "next/navigation";
 import Sticky from 'react-stickynode';
 import { Toaster } from "@/components/ui/toaster";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -54,6 +55,7 @@ export default function RootLayout({
                 <div className="inner">
                   <div  className="min-h-screen" >
                     {children}
+                    <SpeedInsights />
                   </div>
                 </div>
                 <div className='dark-switch'>
