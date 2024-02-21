@@ -11,11 +11,13 @@ type Props = {
 const FilePerformance = ({fileId}: Props) => {
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState('')
+  const [id, setId] = useState(null)
   
   useEffect(() => {
     const func = async () => {
         const response = await axios.post('/api/file-performance', {fileId})
         setData(response.data.performance)
+        setId(response.data.gameId)
         setLoading(false)
     }
     func()
@@ -26,7 +28,7 @@ const FilePerformance = ({fileId}: Props) => {
         {
         loading 
         ? <Loader2 className="w-4 h-4 mr-2 animate-spin text-text" />
-        : <TabsDemo data={data} />
+        : <TabsDemo data={data} id={id} />
         }
     </div>
   )
