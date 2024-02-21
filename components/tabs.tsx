@@ -1,13 +1,17 @@
+// @ts-nocheck
 'use client'
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Link from 'next/link';
+import './style.css'
 
 type Props = {
-  data: any
+  data: any,
+  id: string,
 }
 
-const TabsDemo = ({ data }: Props) => (
+const TabsDemo = ({ data, id }: Props) => (
 
   
   <div className="w-[400px]">
@@ -27,7 +31,20 @@ const TabsDemo = ({ data }: Props) => (
               <CardTitle className="mb-2">{key}</CardTitle> {/* Add margin to the card title */}
             </CardHeader>
             <CardContent className="overflow-auto text-text">
-              {renderContent(data[key])}
+              
+              {key=='weaknesses' ? 
+              <>
+              <div>
+                <p>{data.weaknesses.analysis}</p>
+                <Link href={`/create/${id}`}>
+                <button className='button'>Create Course on your Weaknesses</button>
+                </Link>
+              </div>
+              </>
+
+              :
+              renderContent(data[key])
+              }
             </CardContent>
           </Card>
         </TabsContent>

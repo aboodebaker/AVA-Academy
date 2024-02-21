@@ -25,7 +25,7 @@ const page = async ({params}: Props) => {
     }
   })
   return (
-    <div className='h-full w-full'><PDFViewer pdf_Url={file?.pdfUrl} activities={activities} userId={file?.userId}></PDFViewer></div>
+    <div className='h-full w-full'><PDFViewer id={data} pdf_Url={file?.pdfUrl} activities={activities} userId={file?.userId}></PDFViewer></div>
   )
 }
 

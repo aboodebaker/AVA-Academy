@@ -1,14 +1,14 @@
-import { getAuthSession } from "@/lib/auth";
 import React from "react";
 import { redirect } from "next/navigation";
 import { InfoIcon } from "lucide-react";
 import CreateCourseForm from "@/components/CreateCourseForm";
-
+import { getServerSession } from "next-auth";
+import {authOptions} from '@/app/api/auth/[...nextauth]/route'
 
 type Props = {};
 
 const CreatePage = async (props: Props) => {
-  const session = await getAuthSession();
+  const session = await getServerSession(authOptions);;
   if (!session?.user) {
     return redirect("/gallery");
   }

@@ -13,7 +13,7 @@ import { pusherClient } from '@/lib/pusher';
 import { usePathname } from "next/navigation";
 import './stylecopy.css'
 
-const PDFViewer = ({ pdf_Url, activities,userId }, {children} ) => {
+const PDFViewer = ({ id, pdf_Url, activities,userId }, {children} ) => {
 
      const pathname = usePathname();
   const [fdate, setFDate] = useState('')
@@ -126,15 +126,15 @@ const PDFViewer = ({ pdf_Url, activities,userId }, {children} ) => {
 
       <TabsContent value="options">
         <h1 className=" text-black">Have questions? Ask our AI that is based on your module</h1>
-        <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/chat/${activities.fileId}`}>
+        <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/chat/${id}`}>
           <button className="bux-2">Chat with your module</button>
         </Link>
         <h1 className=" text-black">Need to prepare for a test? Use our Quiz creation AI for an entire test or just a topic</h1>
-        <Link href={`/quiz/${activities.fileId}`}>
+        <Link href={`/quiz/${id}`}>
           <button className="bux-2">Get a quiz on your module</button>
         </Link>
         <h1 className=" text-black">Do you want to evaluate your strengths and weaknesses for this file?</h1>
-        <Link href={`/file-performance/${activities.fileId}`}>
+        <Link href={`/file-performance/${id}`}>
           <button className="bux-2">Evaluate yourself</button>
         </Link>
 

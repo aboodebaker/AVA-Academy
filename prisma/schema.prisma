@@ -72,6 +72,7 @@ model Subject {
   files       Files[]
   notes       Notes[]
   performance SubjectPerformance[]
+  course      Course[]
   User        User                 @relation(fields: [userId], references: [id])
 }
 
@@ -147,6 +148,7 @@ model Files {
   messages    Message[]         @relation("FileMessages")
   activities  Activity[]
   performance FilePerformance[]
+  courses     Course[]
   User        User              @relation(fields: [userId], references: [id])
   Subject     Subject           @relation(fields: [subjectid], references: [id])
 }
@@ -267,12 +269,16 @@ model PerformanceSummary {
 }
 
 model Course {
-  id     String @id @default(auto()) @map("_id") @db.ObjectId
-  userId String @db.ObjectId
-  name   String
-  image  String
-  units  Unit[]
-  User   User   @relation(fields: [userId], references: [id])
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String   @db.ObjectId
+  fileId    String?  @db.ObjectId
+  subjectId String?  @db.ObjectId
+  name      String
+  image     String
+  units     Unit[]
+  User      User     @relation(fields: [userId], references: [id])
+  File      Files?   @relation(fields: [fileId], references: [id])
+  Subject   Subject? @relation(fields: [subjectId], references: [id])
 }
 
 // unit contains many chapters

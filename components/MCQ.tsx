@@ -43,6 +43,7 @@ const MCQ =  ({ game, userId}: Props) => {
   const [currentQuestion, setCurrentQuestion] = useState(questions[questionIndex]);
   const [loadingEnded, setLoadingEnded] = useState(false)
     const [tab, setTab] = useState(null)
+  const [customId, setCustomId] = useState(null)
 
   useEffect(() => {
     setCurrentQuestion(questions[questionIndex]);
@@ -83,10 +84,12 @@ const MCQ =  ({ game, userId}: Props) => {
     React.useEffect(() => {
     const savedData = localStorage.getItem(`mcqGameData_${game.id}`);
     if (savedData !== null) {
-      const { savedIndex, savedStats, hasEnded } = JSON.parse(savedData);
+      const { savedIndex, savedStats, hasEnded, tabs, id } = JSON.parse(savedData);
       setQuestionIndex(parseInt(savedIndex, 10));
       setStats(savedStats);
       setHasEnded(hasEnded)
+      setTab(tabs),
+      setCustomId(id)
     }
   }, [game.id]);
 
@@ -96,9 +99,11 @@ const MCQ =  ({ game, userId}: Props) => {
       savedIndex: questionIndex.toString(),
       savedStats: stats,
       hasEnded: hasEnded,
+      tabs: tab,
+      id: customId,
     };
     localStorage.setItem(`mcqGameData_${game.id}`, JSON.stringify(dataToSave));
-  }, [questionIndex, stats, hasEnded, game.id]);
+  }, [questionIndex, stats, hasEnded, game.id, tab, customId]);
 
   const handleRedo = React.useCallback(() => {
     // Clear the stored data in localStorage and reset the component state
@@ -120,6 +125,7 @@ const MCQ =  ({ game, userId}: Props) => {
       setLoadingEnded(true)
       const response = await axios.post(`/api/endGame`, payload);
       setTab(response.data.performance)
+      setCustomId(response.data.gameId)
       setLoadingEnded(false)
       return response.data;
     },
@@ -208,7 +214,7 @@ const MCQ =  ({ game, userId}: Props) => {
             You Completed in{" "}
             {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
           </div>
-          <TabsDemo data={tab} />
+          <TabsDemo data={tab} id={customId} />
           <Link
             href={`/statistics/${game.id}`}
             className={cn(buttonVariants({ size: "lg" }), "mt-2")}
