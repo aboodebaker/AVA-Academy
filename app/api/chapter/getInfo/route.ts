@@ -10,6 +10,7 @@ import {
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { Configuration, OpenAIApi } from "openai";
+import { ca } from "date-fns/locale";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -29,6 +30,22 @@ export async function POST(req: Request, res: Response) {
         id: chapterId,
       },
     });
+
+    const unit = await prisma.unit.findUnique({
+      where: {
+        id: chapter?.unitId
+      }
+    })
+    try {
+    const course = await prisma.course.update({
+        where: {
+          id: unit?.courseId
+        },
+        data: {
+          show: true,
+        }
+      })
+    } catch(error) {}
     if (!chapter) {
       return NextResponse.json(
         {

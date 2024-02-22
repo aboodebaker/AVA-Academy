@@ -4,7 +4,7 @@ import { prisma } from "@/lib/db";
 import { getAuthSession } from "@/lib/nextauth";
 import { LucideLayoutDashboard } from "lucide-react";
 import Link from "next/link";
-
+import { Button } from "@/components/ui/button";
 import { redirect } from "next/navigation";
 import React from "react";
 import ResultsCard from "@/components/statistics/ResultsCard";
@@ -71,6 +71,11 @@ const Statistics = async ({ params: { gameId } }: Props) => {
           />
         </div>
         <QuestionsList questions={game.questions} />
+        <Link href={`/play/${game.gameType == 'mcq' ? 'mcq' : 'open-ended'}/${gameId}`}>
+            <Button className="bg-primarys text-white rounded" size="sm">
+              Go To Activity
+            </Button>
+        </Link>
       </div>
     </>
   );

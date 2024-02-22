@@ -71,7 +71,7 @@ const Statistics = async ({ params: { gameId } }: Props) => {
         </div>
         <QuestionsList questions={game.questions} />
         <Link href={`/play/${game.gameType == 'mcq' ? 'mcq' : 'open-ended'}/${gameId}`}>
-            <Button className="bg-primarys text-text rounded" size="sm">
+            <Button className="bg-primarys text-white rounded" size="sm">
               Go To Activity
             </Button>
         </Link>

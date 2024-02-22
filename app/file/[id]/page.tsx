@@ -27,7 +27,8 @@ const page = async ({params}: Props) => {
 
   const courses = await prisma.course.findMany({
     where: {
-      fileId: data
+      fileId: data,
+      show: true,
     }
   })
   return (

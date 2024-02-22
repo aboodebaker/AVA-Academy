@@ -132,7 +132,8 @@ export async function POST(req: Request, res: Response) {
         image: course_image,
         userId: session.user.id,
         subjectId: file?.subjectid,
-        fileId: file.id
+        fileId: file.id,
+        show: false,
       },
     });
 

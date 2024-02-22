@@ -275,6 +275,7 @@ model Course {
   subjectId String?  @db.ObjectId
   name      String
   image     String
+  show      Boolean  @default(true)
   units     Unit[]
   User      User     @relation(fields: [userId], references: [id])
   File      Files?   @relation(fields: [fileId], references: [id])

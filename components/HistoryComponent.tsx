@@ -18,7 +18,16 @@ const HistoryComponent = async ({ limit, userId }: Props) => {
     orderBy: {
       timeStarted: "desc",
     },
+    include: {
+      File: {
+        include: {
+          Subject: true,
+        }
+      },
+    }
   });
+
+  
   return (
     <div className="space-y-8 text-text">
       {games.map((game) => {
@@ -43,6 +52,12 @@ const HistoryComponent = async ({ limit, userId }: Props) => {
                 </p>
                 <p className="text-sm text-muted-foreground text-text">
                   {game.gameType === "mcq" ? "Multiple Choice" : "Open-Ended"}
+                </p>
+                <p className="text-sm text-muted-foreground text-text">
+                  {game.File?.pdfName}
+                </p>
+                <p className="text-sm text-muted-foreground text-text">
+                  {game.File?.Subject.name}
                 </p>
               </div>
             </div>
