@@ -68,11 +68,25 @@ h6 {
   color: var(--text);
 }
 
+.flex {
+  display: flex;
+}
+
+/* .sidebar {
+  flex: 0 0 15%; 
+  background-color: var(--secondary);
+  z-index: 1000;
+  overflow-y: auto;
+  border-radius: 0 20px 20px 0;
+  padding: 1rem; 
+  transition: width 0.3s; 
+} */
+
 .inner {
   background-color: var(--background);
-  width: 100%;
  
 }
+
 
 .box-grid-shadow {
   box-shadow: 6px 6px 8px 1px var(--text), -1px -1px 4px 0px var(--text)
@@ -93,18 +107,18 @@ h6 {
   background-color: var(--secondary);
 }
 
-.sidebar {
-  position: fixed;
-  left: 20px;
-  top: 50%;
-  transform: translateY(-50%); /* Center vertically */
-  width: 4vw; /* Adjust the width as needed */
-  background-color: transparent; /* Match the background color of .outer */
-  /* Add scroll if content overflows */
-  z-index: 1000;
+ .sidebar {
+  position: sticky;
+  top: 0;
+  left: 0;
+  background-color: transparent; 
+  flex: content;
+  z-index: 50;
   border-radius: 86px;
+  height: 100vh;
+  margin-right: 40px;
   
-}
+} 
 .dark-switch {
   position: fixed;
   left: 20px;
@@ -166,19 +180,8 @@ color: var(--text);
   background-color: transparent;
 }
 @media only screen and (max-width: 600px) {
-  .outer {
-    padding: 0rem;
-  }
-  .sidebar {
-    width: 50px;
-  }
+
     .header {
       font-size: 48px;
-  }
-}
-@media only screen and (max-width: 1800px) {
-  
-  .sidebar {
-    width: 55px;
   }
 }

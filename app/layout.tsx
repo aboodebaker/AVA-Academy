@@ -4,7 +4,7 @@ import './globals.css'
 import { Inter } from 'next/font/google'
 import AuthProvider from '@/components/AuthProvider/AuthProvider'
 import Tester from '@/components/layout/tester'
-import Sidebar from '@/components/navbar/sidebar'
+import Sidebars from '@/components/navbar/sidebar.tsx'
 import DarkModeSwitcher from '@/components//DarkmodeToggle/Darkmodetoggle'
 import { ThemeProvider } from '@/components/DarkmodeToggle/shadCn'
 import Providers from '@/components/Providers'
@@ -49,7 +49,7 @@ export default function RootLayout({
               <div className="outer-none">
                 
                 <div className="sidebar">
-                  <Sidebar /> 
+                  <Sidebars /> 
                 </div>
                 
                 <div className="inner">
@@ -163,18 +163,21 @@ export default function RootLayout({
 
         <title>AVA Academy</title>
       </head>
-
+{/* className="outer" */}
       <body >
         <AuthProvider>
           <Providers>
-          <div className="outer">
-            <div className="sidebar">
-              <Sidebar />
+
+          <div className=''>
+            <div className='flex'>
+            <div className="sidebar h-full ">
+                <Sidebars />
             </div>
-            <div className="inner">
-              <div  className=" full-screen">
+            <div className="flex-grow w-full min-h-screen inner">
+              <div  className="">
                 {children}
               </div>
+            </div>
             </div>
             <div className='dark-switch'>
             <DarkModeSwitcher />
@@ -186,4 +189,3 @@ export default function RootLayout({
     </html>
   );
 }
-
