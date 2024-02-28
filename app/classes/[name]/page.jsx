@@ -63,7 +63,7 @@ const page = async ({params}) => {
 
 
   return (
-    <div   id="adobe-dc-view">
+
   <div className={styles.container }>
     <div className={styles.headertable}>
       <h1 className={styles.header}>{data}</h1>
@@ -73,9 +73,8 @@ const page = async ({params}) => {
 
     
   </div>
-{/*   
-  <Note notes={notes} /> */}
-  </div>
+ 
+
   )
 }
 
