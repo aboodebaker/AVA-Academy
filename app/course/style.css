@@ -1,0 +1,32 @@
+.subject-title {
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.headertable {
+  border-radius: 11px;
+background: var(--background);
+box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
+display: flex;
+justify-content: center;
+align-items: center;
+margin: 2rem;
+
+}
+
+.header {
+  font-size: 96px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+letter-spacing: -1.92px;
+padding: 4rem;
+color: var(--text);
+}
+@media only screen and (max-width: 1200px) {
+
+  .header {
+    font-size: 84px;
+  }
+}

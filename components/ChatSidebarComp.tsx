@@ -8,7 +8,7 @@ import MobileSidebar from './mobileSidebar'
 const ChatSideBarComplete = ({ chats, chatId, isPro }) => {
     return (
         <div className='max-h-screen'>
-            <MobileSidebar chats={chats} chatId={chatId} isPro={isPro} />
+            <MobileSidebar chats={chats} chatId={chatId} isPro={isPro} useClient={true} />
         </div>
     );
 };

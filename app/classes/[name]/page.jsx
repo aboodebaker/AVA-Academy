@@ -63,7 +63,7 @@ const page = async ({params}) => {
 
 
   return (
-    <div  className='min-h-dvh h-screen h-full max-w-screen' id="adobe-dc-view">
+    <div   id="adobe-dc-view">
   <div className={styles.container }>
     <div className={styles.headertable}>
       <h1 className={styles.header}>{data}</h1>

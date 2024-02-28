@@ -41,7 +41,7 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
     <div className="flex min-h-dvh ">
       <div className="flex w-full max-h-screen">
         {/* chat sidebar */}
-        <div className=" max-h-screen md:flex-[2] max-w-xs sm:flex-[0.001]">
+        <div className=" max-h-screen  max-w-xs sm:flex-[0.001]">
           <ChatSideBarComplete chats={files} chatId={chatId} isPro={isPro} />
         </div>
         {/* pdf viewer - hide on small screens */}

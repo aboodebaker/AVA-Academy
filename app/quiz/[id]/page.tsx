@@ -42,7 +42,12 @@ const Quiz = async ({ params }: Props) => {
 
 
 
-  return <QuizCreation topic={params.topic ?? ""} files={files} id={data} />;
+  return (
+  
+  <div style={{ display: "flex", justifyContent: "center" }}>
+  <QuizCreation topic={params.topic ?? ""} files={files} id={data} />;
+</div>
+  )
 };
 
 export default Quiz;

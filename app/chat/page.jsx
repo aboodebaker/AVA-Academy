@@ -48,10 +48,10 @@ const page = async() => {
   concept you can move the conversation to a close and tell them you're here to help if they have further questions. Do not generate essays,
   letters or transaction writings ever.`
   return (
-    <div className="min-h-dvh">
+    <div className="h-screen">
       {user.messages + 1 < user.messageLimit ? 
     <div className="flex h-screen overflow-scroll">
-        <div className=" max-h-screen md:flex-[2] max-w-xs sm:flex-[0.001]">
+        <div className=" max-h-screen max-w-xs flex-[0.001]">
           <ChatSideBarComplete chats={files} chatId={null} isPro={isPro} />
         </div>
         <div className="max-h-screen p-4  flex-[5]">

@@ -30,13 +30,23 @@ const Quiz = async ({ searchParams }: Props) => {
       userId: {
       equals: userId
       }
+    },
+    include: {
+      Subject: true,
     }
   })
 
+  const id = null
 
 
 
-  return <QuizCreation topic={searchParams.topic ?? ""} files={files} />;
+
+  return (
+  
+  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+  <QuizCreation topic={""} files={files} id={id} />;
+</div>
+  )
 };
 
 export default Quiz;

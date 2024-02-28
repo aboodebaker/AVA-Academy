@@ -137,6 +137,7 @@ import { Badge } from './components/Badge';
 import { Typography } from './components/Typography';
 import { PackageBadges } from './components/PackageBadges';
 import Sticky from 'react-stickynode';
+import Link from 'next/link'
 
 type Theme = 'light' | 'dark';
 
@@ -160,7 +161,7 @@ const themes = {
   },
   dark: {
     sidebar: {
-      backgroundColor: '#0b2948',
+      backgroundColor: '#2e4686',
       color: '#8ba1b7',
     },
     menu: {
@@ -193,6 +194,37 @@ const Sidebars = () => {
   const [rtl, setRtl] = React.useState(false);
   const [hasImage, setHasImage] = React.useState(false);
   const [theme, setTheme] = React.useState<Theme>('light');
+
+  React.useEffect(() => {
+  // Define the effect function
+  const checkDarkMode = () => {
+    // Check local storage for dark mode preference
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+    const savedDarkMode = isLocalStorageAvailable
+      ? window.localStorage.getItem('darkMode') === 'true'
+      : false;
+
+    // Check if body has dark mode class
+    const bodyHasDarkModeClass = document.body.classList.contains('dark-mode');
+
+    // Synchronize dark mode state with local storage and body class
+    if (savedDarkMode || bodyHasDarkModeClass) {
+      setTheme('dark');
+    }
+    else {
+      setTheme('light');
+    }
+  };
+
+  // Run the effect continuously by including all dependencies
+  checkDarkMode();
+
+  // Set up an interval to continuously check for changes
+  const intervalId = setInterval(checkDarkMode, 10); // Adjust the interval time as needed
+
+  // Clean up by clearing the interval when the component unmounts
+  return () => clearInterval(intervalId);
+}, []); 
 
   // handle on RTL change event
   const handleRTLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -272,9 +304,40 @@ const Sidebars = () => {
               </Typography>
             </div>
             <Menu menuItemStyles={menuItemStyles}>
-                <MenuItem> Pie charts</MenuItem>
-                <MenuItem> Line charts</MenuItem>
-                <MenuItem> Bar charts</MenuItem>
+              <Link href={'/classes'}>
+                <MenuItem icon={<Book />}> Classes</MenuItem>
+              </Link>
+              <Link href={'/notes'}>
+                <MenuItem icon={<InkBottle />}>Notes</MenuItem>
+              </Link>
+              <Link href={'/course'}>
+                <MenuItem icon={<InkBottle />}>Courses</MenuItem>
+              </Link>
+                
+            </Menu>
+
+            <div style={{ padding: '0 24px', marginBottom: '8px', marginTop: '32px' }}>
+              <Typography
+                variant="body2"
+                fontWeight={600}
+                style={{ opacity: collapsed ? 0 : 0.7, letterSpacing: '0.5px' }}
+              >
+                AI
+              </Typography>
+            </div>
+
+            <Menu menuItemStyles={menuItemStyles}>
+              
+              <Link href={'/chat'}>
+              <MenuItem icon={<Calendar />} >
+                Chat
+              </MenuItem>
+              </Link>
+              <Link href={'/quiz'}>
+              <MenuItem icon={<Global />} >
+                Quiz
+              </MenuItem>
+              </Link>
             </Menu>
 
             <div style={{ padding: '0 24px', marginBottom: '8px', marginTop: '32px' }}>
@@ -288,76 +351,74 @@ const Sidebars = () => {
             </div>
 
             <Menu menuItemStyles={menuItemStyles}>
-              <MenuItem icon={<Calendar />} suffix={<Badge variant="success">New</Badge>}>
-                Calendar
+              
+              <Link href={'/homework'}>
+              <MenuItem icon={<Service />}>
+                Homework
               </MenuItem>
-              <MenuItem icon={<Book />}>Documentation</MenuItem>
-              <MenuItem disabled icon={<Service />}>
-                Examples
+              </Link>
+              <Link href={'/history'}>
+              <MenuItem icon={<Global />} >
+                History
               </MenuItem>
+              </Link>
             </Menu>
           </div>
-          <SidebarFooter collapsed={collapsed} />
-          <div style={{ marginBottom: 16 }}>
+          {/* <SidebarFooter collapsed={collapsed} /> */}
+          <div style={{ marginBottom: 30, display:"flex", alignItems:"center", justifyContent:"center" }}>
               <Switch
                 id="collapse"
                 checked={collapsed}
                 onChange={() => setCollapsed(!collapsed)}
-                label="Collapse"
+                label={collapsed ? "" : "Collapse"}
               />
             </div>
-            <div style={{ marginBottom: '16px' }}>
-            {broken && (
-              <button className="sb-button" onClick={() => setToggled(!toggled)}>
-                Toggle
-              </button>
-            )}
-          </div>
+            
         </div>
       </Sidebar>
 
-      <main>
-        <div>
-          <div>
-            {broken && (
-              <button className="sb-button" onClick={() => setToggled(!toggled)}>
-                Toggle
-              </button>
-            )}
-          </div>
-          {/* <div style={{ marginBottom: '48px' }}>
-            <Typography variant="h4" fontWeight={600}>
-              React Pro Sidebar
-            </Typography>
-            <Typography variant="body2">
-              React Pro Sidebar provides a set of components for creating high level and
-              customizable side navigation
-            </Typography>
-            <PackageBadges />
-          </div>
+      <main style={{ position: 'absolute', top: 0, left: 0 }}>
+  <div>
+    <div>
+      {broken && (
+        <button className="sb-button" onClick={() => setToggled(!toggled)}>
+          Toggle
+        </button>
+      )}
+    </div>
+    {/* <div style={{ marginBottom: '48px' }}>
+      <Typography variant="h4" fontWeight={600}>
+        React Pro Sidebar
+      </Typography>
+      <Typography variant="body2">
+        React Pro Sidebar provides a set of components for creating high level and
+        customizable side navigation
+      </Typography>
+      <PackageBadges />
+    </div>
 
-          <div style={{ padding: '0 8px' }}>
-            
+    <div style={{ padding: '0 8px' }}>
+      
 
-            <div style={{ marginBottom: 16 }}>
-              <Switch id="rtl" checked={rtl} onChange={handleRTLChange} label="RTL" />
-            </div>
+      <div style={{ marginBottom: 16 }}>
+        <Switch id="rtl" checked={rtl} onChange={handleRTLChange} label="RTL" />
+      </div>
 
-            <div style={{ marginBottom: 16 }}>
-              <Switch
-                id="theme"
-                checked={theme === 'dark'}
-                onChange={handleThemeChange}
-                label="Dark theme"
-              />
-            </div>
+      <div style={{ marginBottom: 16 }}>
+        <Switch
+          id="theme"
+          checked={theme === 'dark'}
+          onChange={handleThemeChange}
+          label="Dark theme"
+        />
+      </div>
 
-            <div style={{ marginBottom: 16 }}>
-              <Switch id="image" checked={hasImage} onChange={handleImageChange} label="Image" />
-            </div>
-          </div> */}
-        </div>
-      </main>
+      <div style={{ marginBottom: 16 }}>
+        <Switch id="image" checked={hasImage} onChange={handleImageChange} label="Image" />
+      </div>
+    </div> */}
+  </div>
+</main>
     </div>
     </div>
   );
