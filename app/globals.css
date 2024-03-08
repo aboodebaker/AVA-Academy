@@ -84,6 +84,7 @@ h6 {
 
 .inner {
   background-color: var(--background);
+  flex-grow: 100000000000;
 }
 
 

@@ -75,9 +75,11 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
           }, { embedMode: 'IN_LINE', exitPDFViewerType: "CLOSE" });
         }
 
-      
+      setTimeout(function() {
+       loadAdobeDCViewSDK();
+}, 2000); 
 
-    loadAdobeDCViewSDK();
+
   }, []);
 
 

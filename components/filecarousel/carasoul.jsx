@@ -6,17 +6,60 @@ import Link from 'next/link';
 import { useEffect } from 'react';
 import { uploadToS3 } from '@/lib/s3'
 import Head from 'next/head'
+import React, { useRef } from 'react';
 
 const FileCarasoul = ({ files, user }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFile, setSelectedFile] = useState('')
+  const [number, setNumber] = useState(0)
   const filteredfiles = files.filter((files) =>
     files.pdfName.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  
-  
 
-// Callback for SAVE_API
+  React.useEffect(() => {
+  // Define the effect function
+  const checkDarkMode = () => {
+    // Check local storage for dark mode preference
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+    const savedDarkMode = isLocalStorageAvailable
+      ? window.localStorage.getItem('s-c') === 'true'
+      : false
+
+    // Synchronize dark mode state with local storage and body class
+    if (savedDarkMode) {
+      setNumber(50);
+    }
+    else {
+      setNumber(250);
+    }
+  };
+
+  // Run the effect continuously by including all dependencies
+  checkDarkMode();
+
+  // Set up an interval to continuously check for changes
+  const intervalId = setInterval(checkDarkMode, 10); // Adjust the interval time as needed
+
+  // Clean up by clearing the interval when the component unmounts
+  return () => clearInterval(intervalId);
+}, []); 
+
+  
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
 
 
 
@@ -26,16 +69,7 @@ const FileCarasoul = ({ files, user }) => {
 
   return (
     
-    <div className=''>
-      {selectedFile !== '' ? 
-      < meta
-            httpEquiv="Content-Security-Policy"
-            content="script-src 'self' 'unsafe-eval' use.typekit.net assets.adobedtm.com www.adobe.com/marketingtech/ prod.adobeccstatic.com/utilnav/ widget.uservoice.com by2.uservoice.com/t2/ assets.adobe.com api.demandbase.com/api/v2/ip.json commerce.adobe.com"
-        />
-       : 
-       <>
-       </>
-       }
+    <div className='container'>
       <div className='inputsbox'>
       <div className='inputbox'>
       <input
@@ -60,7 +94,8 @@ const FileCarasoul = ({ files, user }) => {
       </div>
       </div>
       </div>
-      <div className="scrolling-wrapper">
+      
+      <div className={`scrolling-wrapper `} style={{width: `${screenWidth-number-70}px`}}>
         {filteredfiles.map((file, index) => (
           <div key={index} className="card">
             

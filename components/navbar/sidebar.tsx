@@ -196,6 +196,42 @@ const Sidebars = () => {
   const [theme, setTheme] = React.useState<Theme>('light');
 
   React.useEffect(() => {
+    const checkDarkMode = () => {
+    const collapsd = collapsed ? 'true' : 'false'
+    localStorage.setItem('s-c', collapsd )
+
+    }
+
+  const intervalId = setInterval(checkDarkMode, 10); // Adjust the interval time as needed
+
+  // Clean up by clearing the interval when the component unmounts
+  return () => clearInterval(intervalId);
+  },[])
+
+//    React.useEffect(() => {
+//   // Define the effect function
+//   const checkDarkMode = () => {
+//     // Check local storage for dark mode preference
+//     const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+//     const savedDarkMode = isLocalStorageAvailable
+//       ? window.localStorage.getItem('s-c') === 'true'
+//       : false;
+
+//     // Synchronize dark mode state with local storage and body class
+//     if (savedDarkMode ) {
+//       setCollapsed(false);
+//     }
+//     else {
+//       setCollapsed(true);
+//     }
+//   };
+
+//   // Run the effect continuously by including all dependencies
+//   checkDarkMode();
+
+// }, [collapsed]); 
+
+  React.useEffect(() => {
   // Define the effect function
   const checkDarkMode = () => {
     // Check local storage for dark mode preference

@@ -132,7 +132,7 @@ export default function RootLayout({
             <div className="sidebar h-full ">
                 <Sidebars />
             </div>
-            <div className="flex-grow  min-h-screen inner">
+            <div className="flex-grow flex-shrink min-h-screen inner">
               <div  className="">
                 {children}
               </div>

@@ -6,12 +6,16 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import FileCarasoul from '@/components/filecarousel/carasoul.jsx'
 import Note from '@/components/notefoldable/note';
 import { getS3Url, uploadToS3 } from '@/lib/s3';
+import { redirect } from "next/navigation";
+
 const page = async ({params}) => {
 
   const data = decodeURIComponent(params.name.replace(/%20/g, ' '));
   const prisma = new PrismaClient();
   const session = await getServerSession(authOptions);
   const userid = session.user.id
+
+  if (session.user) {
   
 
   const subject = await prisma.subject.findFirst({
@@ -76,6 +80,11 @@ const page = async ({params}) => {
  
 
   )
+
+  }  else {
+    // Handle the case where no session is found
+    redirect("/login");
+  }
 }
 
 export default page
