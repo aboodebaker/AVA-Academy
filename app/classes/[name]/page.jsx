@@ -68,7 +68,7 @@ const page = async ({params}) => {
 
   return (
 
-  <div className={styles.container }>
+  <div >
     <div className={styles.headertable}>
       <h1 className={styles.header}>{data}</h1>
     </div>

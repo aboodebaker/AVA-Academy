@@ -77,7 +77,7 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
 
       setTimeout(function() {
        loadAdobeDCViewSDK();
-}, 2000); 
+}, 200); 
 
 
   }, []);

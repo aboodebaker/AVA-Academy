@@ -12,10 +12,7 @@ const FileCarasoul = ({ files, user }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFile, setSelectedFile] = useState('')
   const [number, setNumber] = useState(0)
-  const filteredfiles = files.filter((files) =>
-    files.pdfName.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
+  
   React.useEffect(() => {
   // Define the effect function
   const checkDarkMode = () => {
@@ -60,7 +57,17 @@ const FileCarasoul = ({ files, user }) => {
   }, []);
 
 
+  useEffect(() => {
+    const divWidth = screenWidth - number;
+    document.querySelector('.scrolling-wrapper').style.width = `${divWidth}px`;
+  }, [number, screenWidth]);
 
+  
+  const filteredfiles = files.filter((files) =>
+    files.pdfName.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  
 
 
   const handleFileChange = (FileSelected) => {
@@ -69,7 +76,7 @@ const FileCarasoul = ({ files, user }) => {
 
   return (
     
-    <div className='container'>
+    <div className=''>
       <div className='inputsbox'>
       <div className='inputbox'>
       <input
@@ -94,8 +101,8 @@ const FileCarasoul = ({ files, user }) => {
       </div>
       </div>
       </div>
-      
-      <div className={`scrolling-wrapper `} style={{width: `${screenWidth-number-70}px`}}>
+      {/* style={{width: `${screenWidth-number}px`}} */}
+      <div className={`scrolling-wrapper `} >
         {filteredfiles.map((file, index) => (
           <div key={index} className="card">
             

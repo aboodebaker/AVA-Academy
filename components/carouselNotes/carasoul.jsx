@@ -5,6 +5,56 @@ import './style.css'
 import Link from 'next/link';
 const CarouselItem = ({ notes }) => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [number, setNumber] = useState(0)
+  
+  React.useEffect(() => {
+  // Define the effect function
+  const checkDarkMode = () => {
+    // Check local storage for dark mode preference
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+    const savedDarkMode = isLocalStorageAvailable
+      ? window.localStorage.getItem('s-c') === 'true'
+      : false
+
+    // Synchronize dark mode state with local storage and body class
+    if (savedDarkMode) {
+      setNumber(50);
+    }
+    else {
+      setNumber(250);
+    }
+  };
+
+  // Run the effect continuously by including all dependencies
+  checkDarkMode();
+
+  // Set up an interval to continuously check for changes
+  const intervalId = setInterval(checkDarkMode, 10); // Adjust the interval time as needed
+
+  // Clean up by clearing the interval when the component unmounts
+  return () => clearInterval(intervalId);
+}, []); 
+
+  
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const divWidth = screenWidth - number;
+    document.querySelector('.scrolling-wrapper').style.width = `${divWidth}px`;
+  }, [number, screenWidth]);
 
   const filteredNotes = notes.filter((note) =>
     note.name.toLowerCase().includes(searchQuery.toLowerCase())
