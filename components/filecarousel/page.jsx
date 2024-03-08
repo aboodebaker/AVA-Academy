@@ -16,6 +16,8 @@ import { useEffect } from 'react';
 import ActivityCard from "./activitycard";
 import { pusherClient } from '@/lib/pusher';
 import { usePathname } from "next/navigation";
+import React, { useRef } from 'react';
+import { useEffect } from 'react';
 
 const { format } = require('date-fns');
 

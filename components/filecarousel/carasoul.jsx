@@ -3,10 +3,10 @@ import { useState } from 'react';
 import ClassCard from './page.jsx';
 import './style.css'
 import Link from 'next/link';
-import { useEffect } from 'react';
 import { uploadToS3 } from '@/lib/s3'
 import Head from 'next/head'
 import React, { useRef } from 'react';
+import { useEffect } from 'react';
 
 const FileCarasoul = ({ files, user }) => {
   const [searchQuery, setSearchQuery] = useState('');

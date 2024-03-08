@@ -3,6 +3,9 @@ import { useState } from 'react';
 import ClassCard from '../classcard/page';
 import './style.css'
 import Link from 'next/link';
+import React, { useRef } from 'react';
+import { useEffect } from 'react';
+
 const CarouselItem = ({ notes }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [number, setNumber] = useState(0)
