@@ -223,7 +223,7 @@ console.log(userId)
     return (
       
       <div className="absolute flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-        {loadingEnded ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : 
+        {loadingEnded ? <Loader2 className="w-4 h-4 mr-2 animate-spin text-text" /> : 
         <div>
           <MCQCounter
             correct_answers={stats.correct_answers}

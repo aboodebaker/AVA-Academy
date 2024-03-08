@@ -19,7 +19,56 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
   const [fdate, setFDate] = useState('')
   const [activitiess, setactivitiess] = useState(activities)
   const [activeTab, setActiveTab] = useState(true);
+  const [number, setNumber] = useState(0)
+  
+  React.useEffect(() => {
+  // Define the effect function
+  const checkDarkMode = () => {
+    // Check local storage for dark mode preference
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+    const savedDarkMode = isLocalStorageAvailable
+      ? window.localStorage.getItem('s-c') === 'true'
+      : false
 
+    // Synchronize dark mode state with local storage and body class
+    if (savedDarkMode) {
+      setNumber(50);
+    }
+    else {
+      setNumber(250);
+    }
+  };
+
+  // Run the effect continuously by including all dependencies
+  checkDarkMode();
+
+  // Set up an interval to continuously check for changes
+  const intervalId = setInterval(checkDarkMode, 10); // Adjust the interval time as needed
+
+  // Clean up by clearing the interval when the component unmounts
+  return () => clearInterval(intervalId);
+}, []); 
+
+  
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const divWidth = screenWidth - number;
+    document.querySelector('.scrolling-wrapper').style.width = `${divWidth}px`;
+  }, [number, screenWidth]);
 
   useEffect(() => {
     pusherClient.subscribe(userId);
@@ -123,8 +172,8 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
 
     <Tabs defaultValue="viewer" onChange={handleTabChange}>
       <TabsList className="grid w-full grid-cols-2">
-        <TabsTrigger value="viewer">PDF Viewer</TabsTrigger>
-        <TabsTrigger value="options">Options</TabsTrigger>
+        <TabsTrigger value="viewer" className="text-text">PDF Viewer</TabsTrigger>
+        <TabsTrigger value="options" className="text-text">Options</TabsTrigger>
       </TabsList>
       <TabsContent value="viewer">
         <div>
@@ -135,20 +184,20 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
 
 
       <TabsContent value="options">
-        <h1 className=" text-black">Have questions? Ask our AI that is based on your module</h1>
+        <h1 className=" text-text">Have questions? Ask our AI that is based on your module</h1>
         <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/chat/${id}`}>
           <button className="bux-2">Chat with your module</button>
         </Link>
-        <h1 className=" text-black">Need to prepare for a test? Use our Quiz creation AI for an entire test or just a topic</h1>
+        <h1 className=" text-text">Need to prepare for a test? Use our Quiz creation AI for an entire test or just a topic</h1>
         <Link href={`/quiz/${id}`}>
           <button className="bux-2">Get a quiz on your module</button>
         </Link>
-        <h1 className=" text-black">Do you want to evaluate your strengths and weaknesses for this file?</h1>
+        <h1 className=" text-text">Do you want to evaluate your strengths and weaknesses for this file?</h1>
         <Link href={`/file-performance/${id}`}>
           <button className="bux-2">Evaluate yourself</button>
         </Link>
 
-        <h1 className=" text-black">Activities</h1>
+        <h1 className=" text-text">Activities</h1>
           <div className="scrolling-wrapper">         
             {activitiess.slice().reverse().map((file, index) => (
               <div key={index} className="card">
@@ -159,7 +208,7 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
             ))}
         </div>
 
-        <h1 className=" text-black">Courses</h1>
+        <h1 className=" text-text">Courses</h1>
           <div className="scrolling-wrapper">         
             {courses.slice().reverse().map((file, index) => (
               <div key={index} className="card">

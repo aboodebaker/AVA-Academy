@@ -220,7 +220,7 @@ background-color: var(--primary);
   font-weight: 700;
   line-height: normal;
   letter-spacing: -1.92px;
-  padding: 4rem;
+  padding: 3rem;
   color: var(--text);
 }
 .subject-title {

@@ -185,7 +185,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) 
                         <select {...field} className="mt-1  bg-background text-text  block w-full py-2 px-3 border border-text  rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                           <option value="" className="text-black">Select a subject</option>
                           {subjectFiles.map((file, index) => (
-                            <option key={index} value={file.Subject.id}>
+                            <option key={index} value={file.Subject.id} className="text-black">
                               {file.Subject.name}
                             </option>
                           ))}

@@ -206,7 +206,7 @@ const MCQ =  ({ game, userId}: Props) => {
     return (
       
       <div className="absolute flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
-        {loadingEnded ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : 
+        {loadingEnded ? <Loader2 className="w-4 h-4 mr-2 animate-spin text-text" /> : 
         <div>
           <MCQCounter
             correct_answers={stats.correct_answers}
@@ -222,7 +222,7 @@ const MCQ =  ({ game, userId}: Props) => {
             className={cn(buttonVariants({ size: "lg" }), "mt-2")}
           >
             View Statistics
-            <BarChart className="w-4 h-4 ml-2" />
+            <BarChart className="w-4 h-4 ml-2 text-text" />
           </Link>
           <Button
               variant="outline"
@@ -278,7 +278,7 @@ const MCQ =  ({ game, userId}: Props) => {
                 <Button
                   key={option}
                   variant={selectedChoice === index ? "default" : "outline"}
-                  className={`justify-start w-full py-8 mb-4 text-black ${selectedChoice === index ? "outline outline-primary" : ""}`}
+                  className={`justify-start w-full py-8 mb-4 text-text ${selectedChoice === index ? "outline outline-primary" : ""}`}
                   onClick={() => setSelectedChoice(index)}
                 >
                   <div className="flex items-center justify-start">
