@@ -5,6 +5,7 @@ import './style.css'
 import { getProviders, signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { Loader2 } from "lucide-react";
 
 const Login = () => {
   const session = useSession();
@@ -31,8 +32,8 @@ const Login = () => {
     e.preventDefault();
     const email = e.target[0].value;
     const password = e.target[1].value;
-    setSubmitting('Logging You In')
-
+    setSubmitting(<div className="flex "><Loader2 className="animate-spin w-5 h-5" /> <p> Logging in</p></div>)
+    
     signIn("credentials", {
       email,
       password,
