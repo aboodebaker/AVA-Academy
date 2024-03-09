@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Link from "next/link";
 import { useState } from 'react';
 import {
@@ -12,6 +12,7 @@ import ActivityCard from "./activitycard";
 import { pusherClient } from '@/lib/pusher';
 import { usePathname } from "next/navigation";
 import './stylecopy.css'
+import './sc-wrapper.css';
 
 const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) => {
 
@@ -19,9 +20,10 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
   const [fdate, setFDate] = useState('')
   const [activitiess, setactivitiess] = useState(activities)
   const [activeTab, setActiveTab] = useState(true);
-  const [number, setNumber] = useState(0)
   
-  React.useEffect(() => {
+const [number, setNumber] = useState(0)
+  try {
+  useEffect(() => {
   // Define the effect function
   const checkDarkMode = () => {
     // Check local storage for dark mode preference
@@ -66,9 +68,16 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
 
 
   useEffect(() => {
-    const divWidth = screenWidth - number;
+    try {
+    const divWidth = screenWidth > 800 ? screenWidth - number : screenWidth
     document.querySelector('.scrolling-wrapper').style.width = `${divWidth}px`;
+    } catch (error) {
+      console.log(error)
+    }
   }, [number, screenWidth]);
+} catch (error) {
+  console.log(error)
+}
 
   useEffect(() => {
     pusherClient.subscribe(userId);
@@ -197,7 +206,7 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
           <button className="bux-2">Evaluate yourself</button>
         </Link>
 
-        <h1 className=" text-text">Activities</h1>
+        <h1 className=" text-text">{activitiess ? "Activities" : ''}</h1>
           <div className="scrolling-wrapper">         
             {activitiess.slice().reverse().map((file, index) => (
               <div key={index} className="card">
@@ -208,7 +217,7 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
             ))}
         </div>
 
-        <h1 className=" text-text">Courses</h1>
+        <h1 className=" text-text">{courses ? "Courses" : ''}</h1>
           <div className="scrolling-wrapper">         
             {courses.slice().reverse().map((file, index) => (
               <div key={index} className="card">
