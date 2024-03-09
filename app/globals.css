@@ -161,6 +161,7 @@ h6 {
 }
 
 
+
 .headertable {
   border-radius: 11px;
   background: var(--background);
@@ -241,3 +242,4 @@ h6 {
   color: var(--text);
 }
 }
+
