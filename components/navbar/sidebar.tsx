@@ -313,7 +313,7 @@ const Sidebars = () => {
 
   return (
     <div className=''>
-    <div style={{ display: 'flex', height: '100vh', direction: rtl ? 'rtl' : 'ltr' }}>
+    <div style={{ display: 'flex', height: '100dvh', direction: rtl ? 'rtl' : 'ltr' }}>
       <Sidebar
         collapsed={collapsed}
         toggled={toggled}

@@ -64,21 +64,21 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
     // Cleanup the interval when the component unmounts or the useEffect dependency changes
     return () => clearInterval(intervalId);
   }, []);
-  useEffect(() => {
-    const loadAdobeDCViewSDK = () => {
+//   useEffect(() => {
+//     const loadAdobeDCViewSDK = () => {
       
-        // Initialize Adobe DC View when the SDK is ready
+//         // Initialize Adobe DC View when the SDK is ready
         
-          const adobeDCView = new AdobeDC.View({ clientId: '1c9773d18f39418aab4d3510b525c51c', divId: divId });
-          adobeDCView.previewFile({
-            content: { location: { url: link } },
-            metaData: { fileName: 'Bodea Brochure.pdf' }
-          }, { embedMode: 'IN_LINE', exitPDFViewerType: "CLOSE" });
-        }
+//           const adobeDCView = new AdobeDC.View({ clientId: '1c9773d18f39418aab4d3510b525c51c', divId: divId });
+//           adobeDCView.previewFile({
+//             content: { location: { url: link } },
+//             metaData: { fileName: 'Bodea Brochure.pdf' }
+//           }, { embedMode: 'IN_LINE', exitPDFViewerType: "CLOSE" });
+//         }
 
-      setTimeout(function() {
-       loadAdobeDCViewSDK();
-}, 200); 
+//       setTimeout(function() {
+//        loadAdobeDCViewSDK();
+// }, 200); 
 
 
   }, []);
