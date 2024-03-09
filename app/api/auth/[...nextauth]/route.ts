@@ -32,7 +32,7 @@ export const authOptions: NextAuthOptions = {
         })
 
         if (!user) {
-          redirect('/signup')
+          redirect('/register')
         }
         else {
           if(user.password == null) {

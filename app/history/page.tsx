@@ -16,12 +16,16 @@ const History = async (props: Props) => {
     return redirect("/");
   }
   return (
+    <div>
+    <div className='headertable'>
+          <h1 className='header'>History</h1>
+        </div>
+        
         <div className='flex justify-center align-center w-[800]'>
       <div className='flex flex-col justify-center align-center '>
       <Card>
         <CardHeader>
           <div className="flex items-center justify-between">
-            <CardTitle className="text-2xl font-bold">History</CardTitle>
             <Link className={buttonVariants() + 'text-text'} href="/">
               <LucideLayoutDashboard className="mr-2 text-text" />
               <p className="text-text">Back to Classes</p>
@@ -32,6 +36,7 @@ const History = async (props: Props) => {
           <HistoryComponent limit={100} userId={session.user.id} />
         </CardContent>
       </Card>
+    </div>
     </div>
     </div>
   );

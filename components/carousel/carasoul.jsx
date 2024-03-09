@@ -55,7 +55,7 @@ const CarouselItem = ({ notes }) => {
 
 
   useEffect(() => {
-    const divWidth = screenWidth - number -20;
+    const divWidth = screenWidth > 800 ? screenWidth - number : screenWidth
     document.querySelector('.scrolling-wrapper').style.width = `${divWidth}px`;
   }, [number, screenWidth]);
 

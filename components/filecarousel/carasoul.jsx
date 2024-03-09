@@ -58,7 +58,7 @@ const FileCarasoul = ({ files, user }) => {
 
 
   useEffect(() => {
-    const divWidth = screenWidth - number;
+    const divWidth = screenWidth > 800 ? screenWidth - number : screenWidth
     document.querySelector('.scrolling-wrapper').style.width = `${divWidth}px`;
   }, [number, screenWidth]);
 

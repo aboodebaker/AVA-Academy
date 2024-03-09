@@ -168,3 +168,87 @@ color: var(--text);
     width: 29.3%; /* Adjust the width as needed for 4 columns on desktop */
   }
 }
+
+
+
+.headertable {
+  border-radius: 11px;
+  background: var(--background);
+  box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.92px;
+  padding: 4rem;
+  color: var(--text);
+}
+
+
+@media only screen and (max-width: 1200px) {
+  .headertable {
+  border-radius: 11px;
+  background: var(--background);
+  box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 88px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.92px;
+  padding: 2.5rem;
+  color: var(--text);
+}
+}
+
+/* Add a media query for desktop screens (4 columns) */
+@media only screen and (max-width: 800px) {
+  .headertable {
+  border-radius: 11px;
+  background: var(--background);
+  box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 82px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.92px;
+  padding: 2rem;
+  color: var(--text);
+}
+}
+
