@@ -184,7 +184,8 @@ console.log(userId)
 
   if (hasEnded) {
     return (
-      <div className="absolute flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+      <div className='flex justify-center items-center full-screen '>
+  <div className='flex flex-col justify-center items-center'>
         {loadingEnded ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : 
         <div>
           <OpenEndedPercentage percentage={averagePercentage} />
@@ -210,12 +211,14 @@ console.log(userId)
         </div>
         }
       </div>
+      </div>
     );
   }
 
   return (
     
-    <div className="text-text -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 absolute">
+    <div className='flex justify-center items-center full-screen '>
+  <div className='flex flex-col justify-center items-center'>
         <div>
       <div className="flex flex-row justify-between">
         <div className="flex flex-col w-1/2">
@@ -254,7 +257,7 @@ console.log(userId)
           className="w-full max-w-2xl rounded bg-background text-text"
         />
 
-        <div className="flex justify-center align-center text-black">
+        <div className="flex flex-col justify-center items-center">
                     
               <Button
                 variant="outline"
@@ -279,7 +282,7 @@ console.log(userId)
       </div>
       
     </div>
-    
+    </div>
   );
 };
 

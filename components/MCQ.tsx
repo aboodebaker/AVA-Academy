@@ -205,7 +205,8 @@ const MCQ =  ({ game, userId}: Props) => {
   if (hasEnded) {
     return (
       
-      <div className="absolute flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+      <div className='flex justify-center items-center full-screen '>
+  <div className='flex flex-col justify-center items-center'>
         {loadingEnded ? <Loader2 className="w-4 h-4 mr-2 animate-spin text-text" /> : 
         <div>
           <MCQCounter
@@ -234,11 +235,13 @@ const MCQ =  ({ game, userId}: Props) => {
         </div>
         }
       </div>
+      </div>
     );
   }
 
   return (
-    <div className="absolute  -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 max-w-4xl text-black">
+<div className='flex justify-center items-center full-screen '>
+  <div className='flex flex-col justify-center items-center'>
         <div>
       <div className="flex flex-row justify-between">
         <div className="flex flex-col">
@@ -290,10 +293,11 @@ const MCQ =  ({ game, userId}: Props) => {
                 </Button>
           );
         })}
-        <div className="flex justify-center align-center">
+        <div className="flex flex-col justify-center items-center">
+
             <Button
             variant="default"
-            className="mt-2 text-text border-text"
+            className="mt-2 text-text text-text border border-text"
             size="lg"
             disabled={isChecking || hasEnded}
             onClick={() => {
@@ -314,6 +318,7 @@ const MCQ =  ({ game, userId}: Props) => {
         </div>
       </div>
       </div>
+    </div>
     </div>
   );
 };

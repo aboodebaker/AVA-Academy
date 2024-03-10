@@ -132,6 +132,7 @@ import { Book } from './icons/Book';
 import { Calendar } from './icons/Calendar';
 import { ShoppingCart } from './icons/ShoppingCart';
 import { Service } from './icons/Service';
+import {Quiz} from './icons/Quiz'
 import { SidebarFooter } from './components/SidebarFooter';
 import { Badge } from './components/Badge';
 import { Typography } from './components/Typography';
@@ -347,7 +348,7 @@ const Sidebars = () => {
                 <MenuItem icon={<InkBottle />}>Notes</MenuItem>
               </Link>
               <Link href={'/course'}>
-                <MenuItem icon={<InkBottle />}>Courses</MenuItem>
+                <MenuItem icon={<ShoppingCart />}>Courses</MenuItem>
               </Link>
                 
             </Menu>
@@ -370,7 +371,7 @@ const Sidebars = () => {
               </MenuItem>
               </Link>
               <Link href={'/quiz'}>
-              <MenuItem icon={<Global />} >
+              <MenuItem icon={<BarChart />} >
                 Quiz
               </MenuItem>
               </Link>

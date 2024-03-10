@@ -156,7 +156,8 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
 
   return (
     <div className='col m-2 text-text bg-background'>
-    <div className='flex justify-center align-center w-[800]'>
+       <div className='flex justify-center items-center full-screen w-[800] '>
+  <div className='flex flex-col justify-center items-center'>
       <Card>
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Quiz Creation</CardTitle>
@@ -324,6 +325,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files }: Props) => {
           </Form>
         </CardContent>
       </Card>
+    </div>
     </div>
     </div>
   );

@@ -1,5 +1,5 @@
 'use client'
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import Link from "next/link";
 import { useState } from 'react';
 import {
@@ -12,7 +12,6 @@ import ActivityCard from "./activitycard";
 import { pusherClient } from '@/lib/pusher';
 import { usePathname } from "next/navigation";
 import './stylecopy.css'
-import './sc-wrapper.css';
 
 const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) => {
 
@@ -20,17 +19,15 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
   const [fdate, setFDate] = useState('')
   const [activitiess, setactivitiess] = useState(activities)
   const [activeTab, setActiveTab] = useState(true);
+  const [number, setNumber] = useState(0)
   
-const [number, setNumber] = useState(0)
-  try {
-  useEffect(() => {
+  React.useEffect(() => {
   // Define the effect function
   const checkDarkMode = () => {
     // Check local storage for dark mode preference
-    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
-    const savedDarkMode = isLocalStorageAvailable
-      ? window.localStorage.getItem('s-c') === 'true'
-      : false
+
+    const savedDarkMode = window.localStorage.getItem('s-c') === 'true'
+
 
     // Synchronize dark mode state with local storage and body class
     if (savedDarkMode) {
@@ -45,16 +42,17 @@ const [number, setNumber] = useState(0)
   checkDarkMode();
 
   // Set up an interval to continuously check for changes
-  const intervalId = setInterval(checkDarkMode, 10); // Adjust the interval time as needed
+  // const intervalId = setInterval(checkDarkMode, 10); // Adjust the interval time as needed
 
-  // Clean up by clearing the interval when the component unmounts
-  return () => clearInterval(intervalId);
+  // // Clean up by clearing the interval when the component unmounts
+  // return () => clearInterval(intervalId);
 }, []); 
 
   
-  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+  const [screenWidth, setScreenWidth] = useState(0);
 
   useEffect(() => {
+    setScreenWidth(window.innerWidth)
     const handleResize = () => {
       setScreenWidth(window.innerWidth);
     };
@@ -67,17 +65,10 @@ const [number, setNumber] = useState(0)
   }, []);
 
 
-  useEffect(() => {
-    try {
-    const divWidth = screenWidth > 800 ? screenWidth - number : screenWidth
-    document.querySelector('.scrolling-wrapper').style.width = `${divWidth}px`;
-    } catch (error) {
-      console.log(error)
-    }
-  }, [number, screenWidth]);
-} catch (error) {
-  console.log(error)
-}
+  // useEffect(() => {
+  //   const divWidth = screenWidth - number;
+  //   document.querySelector('.scrolling-wrapper').style.width = `${divWidth}px`;
+  // }, [number, screenWidth]);
 
   useEffect(() => {
     pusherClient.subscribe(userId);
@@ -144,7 +135,7 @@ const [number, setNumber] = useState(0)
   }
 };
   useEffect(() => {
- if (activeTab === true) {
+
     const embedOptions = {
       clientId: '1c9773d18f39418aab4d3510b525c51c',
     };
@@ -167,7 +158,7 @@ const [number, setNumber] = useState(0)
       
     );
 
-  }
+  
   }, [pdf_Url, activeTab]);
 
 
@@ -206,8 +197,8 @@ const [number, setNumber] = useState(0)
           <button className="bux-2">Evaluate yourself</button>
         </Link>
 
-        <h1 className=" text-text">{activitiess ? "Activities" : ''}</h1>
-          <div className="scrolling-wrapper">         
+        <h1 className=" text-text">Activities</h1>
+          <div className="scrolling-wrapper" style={{width: `${screenWidth - number-20}px`}}>         
             {activitiess.slice().reverse().map((file, index) => (
               <div key={index} className="card">
                 <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/${pathname.includes('/teacher-platform') ? 'activities' : 'activity'}/${file.gameType == 'open_ended' ? 'open-ended' : 'mcq'}/${file.id}`}>
@@ -217,8 +208,8 @@ const [number, setNumber] = useState(0)
             ))}
         </div>
 
-        <h1 className=" text-text">{courses ? "Courses" : ''}</h1>
-          <div className="scrolling-wrapper">         
+        <h1 className=" text-text">Courses</h1>
+          <div className="scrolling-wrapper" style={{width: `${screenWidth - number-20}px`}}>         
             {courses.slice().reverse().map((file, index) => (
               <div key={index} className="card">
                 <Link href={`/course/${file.id}/0/0`}>

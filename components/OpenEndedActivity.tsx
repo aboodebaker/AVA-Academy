@@ -260,7 +260,7 @@ console.log(userId)
           className="w-full max-w-2xl rounded bg-background text-text"
         />
 
-        <div className="flex justify-center align-center text-black">
+        <div className="flex flex-col justify-center items-center">
                     
               <Button
                 variant="outline"
