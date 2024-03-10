@@ -139,7 +139,7 @@ import { Typography } from './components/Typography';
 import { PackageBadges } from './components/PackageBadges';
 import Sticky from 'react-stickynode';
 import Link from 'next/link'
-
+import { FiMenu as Icon } from 'react-icons/fi';
 type Theme = 'light' | 'dark';
 
 const themes = {
@@ -414,12 +414,12 @@ const Sidebars = () => {
         </div>
       </Sidebar>
 
-      <main style={{ position: 'absolute', top: 0, left: 0 }}>
+      <main style={{ position: 'absolute', top: 0, left: 10, width: '30px', height:'30px' }}>
   <div>
     <div>
       {broken && (
-        <button className="sb-button" onClick={() => setToggled(!toggled)}>
-          Toggle
+        <button className="sb-button text-text h-2 w-2" onClick={() => setToggled(!toggled)}>
+          <Icon className='h-8 w-8' />
         </button>
       )}
     </div>

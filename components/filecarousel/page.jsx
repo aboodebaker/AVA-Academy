@@ -16,7 +16,7 @@ import { useEffect } from 'react';
 import ActivityCard from "./activitycard";
 import { pusherClient } from '@/lib/pusher';
 import { usePathname } from "next/navigation";
-
+import { useRouter } from 'next/navigation';
 
 const { format } = require('date-fns');
 
@@ -24,7 +24,7 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
     const pathname = usePathname();
   const [fdate, setFDate] = useState('')
   const [activitiess, setactivitiess] = useState(activities)
-
+const router = useRouter();
   useEffect(() => {
   if (date != null) {
     const idk = format(date, 'dd/MM/yyyy');
@@ -65,6 +65,7 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
     return () => clearInterval(intervalId);
   }, []);
   useEffect(() => {
+    try{
     const loadAdobeDCViewSDK = () => {
       
         // Initialize Adobe DC View when the SDK is ready
@@ -79,7 +80,10 @@ const ClassCard = ({title, link,  date, height, clip, divId, selectedFile, activ
       setTimeout(function() {
        loadAdobeDCViewSDK();
 }, 200); 
-
+    } catch (error) {
+      console.log(error)
+      router.reload();
+    }
 
   }, []);
 
