@@ -45,19 +45,24 @@ const CoursePage = async ({ params: { slug } }: Props) => {
   const nextChapter = unit.chapters[chapterIndex + 1];
   const prevChapter = unit.chapters[chapterIndex - 1];
   return (
-    <div className="flex sm:flex-col md:flex-row">
-      <CourseSideBar course={course} currentChapterId={chapter.id} />;
+    <div className="flex sm:flex-col md:flex-row lg:w-[500] md:w-[300] sm:w-[50]">
+      <CourseSideBar course={course} currentChapterId={chapter.id} />
       <div>
-        <div className="ml-[400px] px-8">
-          <div className="flex">
-            <MainVideoSummary
-              chapter={chapter}
-              chapterIndex={chapterIndex}
-              unit={unit}
-              unitIndex={unitIndex}
-            />
-            <QuizCards chapter={chapter} />
-          </div>
+        <div className="px-8">
+          <div className="flex flex-col md:flex-row">
+  <MainVideoSummary
+    chapter={chapter}
+    chapterIndex={chapterIndex}
+    unit={unit}
+    unitIndex={unitIndex}
+    className="md:w-1/2"
+  />
+  {/* Conditionally render QuizCards based on screen size */}
+  <div className="w-full md:w-1/2">
+    <QuizCards chapter={chapter} />
+  </div>
+</div>
+
 
           <div className="flex-[1] h-[1px] mt-4 text-gray-500 bg-gray-500" />
           <div className="flex pb-8">

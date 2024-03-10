@@ -62,17 +62,7 @@ const ConfirmChapters = ({ course }: Props) => {
       <div className="flex items-center justify-center mt-4">
         <Separator className="flex-[1]" />
         <div className="flex items-center mx-4">
-          <Link
-            href="/create"
-            className={buttonVariants({
-              variant: "secondary",
-              className: 'border-white border text-text'
-            })}
-            
-          >
-            <ChevronLeft className="w-4 h-4 mr-2 text-text" strokeWidth={4} />
-            Back
-          </Link>
+
           {totalChaptersCount === completedChapters.size ? (
             <Link
               className={buttonVariants({

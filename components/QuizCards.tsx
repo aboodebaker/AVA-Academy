@@ -41,14 +41,14 @@ const QuizCards = ({ chapter }: Props) => {
           return (
             <div
               key={question.id}
-              className={cn("p-3 mt-4 border border-secondary rounded-lg", {
+              className={cn("p-3 mt-4 border border-secondary rounded-lg text-text", {
                 "bg-green-700": questionState[question.id] === true,
                 "bg-red-700": questionState[question.id] === false,
                 "bg-secondary": questionState[question.id] === null,
               })}
             >
               <h1 className="text-lg font-semibold">{question.question}</h1>
-              <div className="mt-2">
+              <div className="mt-2 text-text">
                 <RadioGroup
                   onValueChange={(e) => {
                     setAnswers((prev) => {
@@ -61,12 +61,12 @@ const QuizCards = ({ chapter }: Props) => {
                 >
                   {options.map((option, index) => {
                     return (
-                      <div className="flex items-center space-x-2" key={index}>
+                      <div className="flex items-center space-x-2 text-text" key={index}>
                         <RadioGroupItem
                           value={option}
                           id={question.id + index.toString()}
                         />
-                        <Label htmlFor={question.id + index.toString()}>
+                        <Label htmlFor={question.id + index.toString()} className="text-text">
                           {option}
                         </Label>
                       </div>

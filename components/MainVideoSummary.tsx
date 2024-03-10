@@ -16,7 +16,7 @@ const MainVideoSummary = ({
 }: Props) => {
   return (
     <div className="flex-[2] mt-16">
-      <h4 className="text-sm uppercase text-secondary-foreground/60">
+      <h4 className="text-sm uppercase text-text ">
         Unit {unitIndex + 1} &bull; Chapter {chapterIndex + 1}
       </h4>
       <h1 className="text-4xl font-bold">{chapter.name}</h1>
@@ -27,8 +27,8 @@ const MainVideoSummary = ({
         allowFullScreen
       />
       <div className="mt-4">
-        <h3 className="text-3xl font-semibold">Summary</h3>
-        <p className="mt-2 text-secondary-foreground/80">{chapter.summary}</p>
+        <h3 className="text-3xl font-semibold text-text">Summary</h3>
+        <p className="mt-2  text-text">{chapter.summary}</p>
       </div>
     </div>
   );
