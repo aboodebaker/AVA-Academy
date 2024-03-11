@@ -75,7 +75,7 @@ const SCarousel = ({ notes, groupedNotes, subjects }) => {
   );
 
   return (
-    <div className="">
+    <div className="swc">
       <div className="headertable">
         <h1 className="header">Courses</h1>
         
