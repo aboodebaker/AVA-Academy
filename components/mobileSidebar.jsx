@@ -12,7 +12,7 @@ const MobileSidebar = ({ chats, chatId, isPro, useClient }) => {
         <div className='overflow-hidden max-h-screen'>
             {useClient ? (
                 <button
-                    className=" text-l flex text-text  mb-4 z-20 m-1"
+                    className=" text-l flex text-text  mb-4 z-20 m-1 mt-3"
                     onClick={() => {
                         setShowSidebar(!showSidebar);
                     }}
