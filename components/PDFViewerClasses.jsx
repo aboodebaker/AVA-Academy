@@ -198,7 +198,7 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
         </Link>
 
         <h1 className=" text-text">Activities</h1>
-          <div className="scrolling-wrapper" style={{width: `${screenWidth - number-20}px`}}>         
+          <div className="scrolling-wrapper" style={{width: `${screenWidth > 800 ? screenWidth - number -20 : screenWidth - 20}px`}}>         
             {activitiess.slice().reverse().map((file, index) => (
               <div key={index} className="card">
                 <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/${pathname.includes('/teacher-platform') ? 'activities' : 'activity'}/${file.gameType == 'open_ended' ? 'open-ended' : 'mcq'}/${file.id}`}>
@@ -209,7 +209,7 @@ const PDFViewer = ({ id, pdf_Url, activities, userId, courses }, {children} ) =>
         </div>
 
         <h1 className=" text-text">Courses</h1>
-          <div className="scrolling-wrapper" style={{width: `${screenWidth - number-20}px`}}>         
+          <div className="scrolling-wrapper" style={{width: `${screenWidth > 800 ? screenWidth - number -20 : screenWidth - 20}px`}}>         
             {courses.slice().reverse().map((file, index) => (
               <div key={index} className="card">
                 <Link href={`/course/${file.id}/0/0`}>
