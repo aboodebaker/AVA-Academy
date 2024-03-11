@@ -254,7 +254,7 @@ background-color: var(--primary);
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 1rem;
+  margin: 0.5rem;
 }
 
 
@@ -267,8 +267,9 @@ background-color: var(--primary);
   font-weight: 700;
   line-height: normal;
   letter-spacing: -1.92px;
-  padding: 2rem;
+  padding: 1.5rem;
   color: var(--text);
+}
 }
 }
 
