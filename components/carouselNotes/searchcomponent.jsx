@@ -54,7 +54,7 @@ const SCarousel = ({ notes, groupedNotes, subjects }) => {
 
 
   useEffect(() => {
-    const divWidth = screenWidth - number;
+    const divWidth = screenWidth > 800 ? screenWidth - number - 20 : screenWidth - 20;
     document.querySelector('.swc').style.width = `${divWidth}px`;
   }, [number, screenWidth]);
 
@@ -75,7 +75,7 @@ const SCarousel = ({ notes, groupedNotes, subjects }) => {
   );
 
   return (
-    <div className="">
+    <div className="swc">
       <div className="headertable">
         <h1 className="header">Courses</h1>
         
