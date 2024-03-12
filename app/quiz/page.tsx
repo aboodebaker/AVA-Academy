@@ -43,7 +43,7 @@ const Quiz = async ({ searchParams }: Props) => {
 
   return (
   
-  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+  <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
   <QuizCreation topic={""} files={files} id={id} />;
 </div>
   )
