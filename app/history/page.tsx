@@ -21,7 +21,7 @@ const History = async (props: Props) => {
           <h1 className='header'>History</h1>
         </div>
         
-        <div className='flex justify-center align-center w-[800]'>
+        <div className='flex justify-center align-center md:w-[800] sm:w-[700]'>
       <div className='flex flex-col justify-center align-center '>
       <Card>
         <CardHeader>
