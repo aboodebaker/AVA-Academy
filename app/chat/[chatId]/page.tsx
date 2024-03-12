@@ -27,6 +27,9 @@ const ChatPage = async ({ params: { chatId } }: Props) => {
     where: {
       userId: userId,
     },
+    include: {
+      Subject: true,
+    }
   });
 
   if (!files || !files.find((file) => file.id === chatId)) {
