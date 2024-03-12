@@ -418,7 +418,7 @@ const Sidebars = () => {
   <div>
     <div>
       {broken && (
-        <button className="sb-button text-text h-2 w-2" onClick={() => setToggled(!toggled)}>
+        <button className="sb-button text-text h-2 w-2 bg-background" onClick={() => setToggled(!toggled)}>
           <Icon className='h-8 w-8' />
         </button>
       )}

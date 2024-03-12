@@ -9,6 +9,8 @@ import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Chatcomp from '@/components/chat/page'
 import ChatSideBarComplete from "@/components/ChatSidebarComp";
 
+
+
 const page = async() => {
   const prisma = new PrismaClient()
   const session = await getServerSession(authOptions);
@@ -21,7 +23,12 @@ const page = async() => {
     where: {
       userId: userId,
     },
+    include: {
+      Subject: true,
+    }
   });
+
+  console.log(files)
   const user = await prisma.user.findUnique({
     where: {
       id: userId,
@@ -48,13 +55,13 @@ const page = async() => {
   concept you can move the conversation to a close and tell them you're here to help if they have further questions. Do not generate essays,
   letters or transaction writings ever.`
   return (
-    <div className="h-screen">
+    <div className="full-screen">
       {user.messages + 1 < user.messageLimit ? 
-    <div className="flex h-screen overflow-scroll">
-        <div className=" max-h-screen max-w-xs flex-[0.001]">
+    <div className="flex h-full">
+        <div className="">
           <ChatSideBarComplete chats={files} chatId={null} isPro={isPro} />
         </div>
-        <div className="max-h-screen p-4  flex-[5]">
+        <div className="max-h-screen md:p-4  flex-[5]">
           <Chatcomp systemprompt={systemprompt} />
       </div>
     
