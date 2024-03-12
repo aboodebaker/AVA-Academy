@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import styles from './page.module.css';
 import ClassCard from '../classcard/page';
@@ -10,10 +10,66 @@ const Class = ({ subjects }) => {
   const pathname = usePathname();
   const filteredResponses = subjects.filter((subject) =>
     subject.name.toLowerCase().includes(searchQuery.toLowerCase())
+
   );
+
+  const [number, setNumber] = useState(0)
+   React.useEffect(() => {
+  // Define the effect function
+  const checkDarkMode = () => {
+    // Check local storage for dark mode preference
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+    const savedDarkMode = isLocalStorageAvailable
+      ? window.localStorage.getItem('s-c') === 'true'
+      : false
+
+    // Synchronize dark mode state with local storage and body class
+    if (savedDarkMode) {
+      setNumber(50);
+    }
+    else {
+      setNumber(250);
+    }
+  };
+
+  // Run the effect continuously by including all dependencies
+  checkDarkMode();
+
+  // Set up an interval to continuously check for changes
+  const intervalId = setInterval(checkDarkMode, 10); // Adjust the interval time as needed
+
+  // Clean up by clearing the interval when the component unmounts
+  return () => clearInterval(intervalId);
+}, []); 
+
+  
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const divWidth = screenWidth > 800 ? screenWidth - number - 20 : screenWidth - 5;
+    document.querySelector('.swc').style.width = `${divWidth}px`;
+  }, [number, screenWidth]);
 
   return (
     <div>
+      <div className='swc'>
+        <div className={styles.headertable}>
+          <h1 className={styles.header}>Classes</h1>
+        </div>
+      </div>
       <div className={styles.inputsbox}>
       <div className={styles.inputbox}>
       <input
@@ -47,6 +103,7 @@ const Class = ({ subjects }) => {
       
       }
       </div>
+
       <div className={styles.flexbox}>
         <div className={styles.column}>
           {subjects.map((subject, index) => (

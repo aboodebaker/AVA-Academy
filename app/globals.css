@@ -314,12 +314,12 @@ h6 {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 60px;
+  font-size: 56px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   letter-spacing: -1.92px;
-  padding: 1.5rem;
+  padding: 1.25rem;
   color: var(--text);
 }
 }

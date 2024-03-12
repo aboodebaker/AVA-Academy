@@ -58,7 +58,7 @@ const FileCarasoul = ({ files, user }) => {
 
 
   useEffect(() => {
-    const divWidth = screenWidth > 800 ? screenWidth - number : screenWidth
+    const divWidth = screenWidth > 800 ? screenWidth - number : screenWidth -20
     document.querySelector('.scrolling-wrapper').style.width = `${divWidth}px`;
   }, [number, screenWidth]);
 
@@ -74,8 +74,11 @@ const FileCarasoul = ({ files, user }) => {
     setSelectedFile(FileSelected);
   };
 
+  
+
   return (
-    
+    <div>
+
     <div className=''>
       <div className='inputsbox'>
       <div className='inputbox'>
@@ -111,6 +114,8 @@ const FileCarasoul = ({ files, user }) => {
           </div>
         ))}
       </div>
+    </div>
+
     </div>
   );
 };

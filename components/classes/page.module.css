@@ -14,12 +14,7 @@
     align-items: center;
     justify-content: center;
   }
-  .header {
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
   /* Additional styling for the subjects */
   .column div {
     
@@ -118,26 +113,10 @@ border-radius: 38px;
   font-size: 24px;
 }
 
-.headertable {
-  border-radius: 11px;
-background: var(--background);
-box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
-display: flex;
-justify-content: center;
-align-items: center;
-margin: 2rem;
 
-}
 
-.header {
-  font-size: 96px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
-letter-spacing: -1.92px;
-padding: 4rem;
-color: var(--text);
-}
+
+
 
 .flexbox {
   display: flex;
@@ -166,25 +145,12 @@ color: var(--text);
   aspect-ratio: 2/1;
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 96px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: -1.92px;
-  padding: 4rem;
-  color: var(--text);
-}
 
 /* Add media queries for tablet and phone layout */
 @media only screen and (max-width: 1800px) {
   .column {
     flex-direction: row;
-    flex-wrap: wrap;
-    gap: 70px; /* Add gap between columns */
+    flex-wrap: wrap; /* Add gap between columns */
   }
   .tester {
     width: 45%; /* Adjust the width as needed for 2 columns on tablets */
@@ -205,9 +171,90 @@ color: var(--text);
   .column {
     flex-direction: row;
     flex-wrap: wrap;
-    gap: 70px; /* Add gap between columns */
+     /* Add gap between columns */
   }
   .tester {
     width: 29.3%; /* Adjust the width as needed for 4 columns on desktop */
   }
+}
+
+.headertable {
+  border-radius: 11px;
+  background: var(--background);
+  box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 2rem;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.92px;
+  padding: 4rem;
+  color: var(--text);
+}
+
+
+@media only screen and (max-width: 1200px) {
+  .headertable {
+  border-radius: 11px;
+  background: var(--background);
+  box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1.5rem;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 88px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.92px;
+  padding: 2.5rem;
+  color: var(--text);
+}
+}
+
+/* Add a media query for desktop screens (4 columns) */
+@media only screen and (max-width: 800px) {
+  .headertable {
+  border-radius: 11px;
+  background: var(--background);
+  box-shadow: -2px -2px 4px 0px var(--boxshadow), 4px 4px 4px 0px var(--boxshadow);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem;
+}
+
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 82px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: -1.92px;
+  padding: 2rem;
+  color: var(--text);
+}
 }

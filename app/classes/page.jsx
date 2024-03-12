@@ -32,10 +32,8 @@ const Page = async () => {
 
 
 return (
-  <div className={styles.container}>
-    <div className={styles.headertable}>
-      <h1 className={styles.header}>Classes</h1>
-    </div>
+  <div >
+
     <Class subjects={subjects}/>
   </div>
 );

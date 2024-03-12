@@ -21,9 +21,9 @@ const History = async (props: Props) => {
           <h1 className='header'>History</h1>
         </div>
         
-        <div className='flex justify-center align-center md:w-[800] sm:w-[700]'>
-      <div className='flex flex-col justify-center align-center '>
-      <Card>
+        <div className='flex justify-center align-center'>
+      <div className='flex flex-col justify-center align-center  '>
+      <Card className=" md:w-[800] sm:w-[380] sm:m-3">
         <CardHeader>
           <div className="flex items-center justify-between">
             <Link className={buttonVariants() + 'text-text'} href="/">

@@ -54,7 +54,7 @@ const SCarousel = ({ notes, groupedNotes, subjects }) => {
 
 
   useEffect(() => {
-    const divWidth = screenWidth > 800 ? screenWidth - number - 20 : screenWidth - 20;
+    const divWidth = screenWidth > 800 ? screenWidth - number - 20 : screenWidth - 5;
     document.querySelector('.swc').style.width = `${divWidth}px`;
   }, [number, screenWidth]);
 
@@ -109,7 +109,7 @@ const SCarousel = ({ notes, groupedNotes, subjects }) => {
 
       {subjectsWithNotes.map((subject) => (
         <div key={subject.id} className="font-bold p-2">
-          <h1 className="subject-title font-bold text-xl">{subject.name}</h1>
+          <h1 className="subject-title font-bold">{subject.name}</h1>
           {/* Pass filtered notes for the subject to CarouselItem */}
           <CarouselItem notes={filteredNotesBySubject(subject.id).reverse()} />
         </div>

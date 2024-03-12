@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import CarouselItem from './carasoul.jsx';
 import './style.css'
 import Link from "next/link";
@@ -7,6 +7,56 @@ import CreateNoteDialog from '../CreateNoteDialog.tsx'
 
 const SCarousel = ({ notes, groupedNotes, subjects }) => {
   const [searchQuery, setSearchQuery] = useState('');
+
+    const [number, setNumber] = useState(0)
+   useEffect(() => {
+  // Define the effect function
+  const checkDarkMode = () => {
+    // Check local storage for dark mode preference
+    const isLocalStorageAvailable = typeof window !== 'undefined' && window.localStorage;
+    const savedDarkMode = isLocalStorageAvailable
+      ? window.localStorage.getItem('s-c') === 'true'
+      : false
+
+    // Synchronize dark mode state with local storage and body class
+    if (savedDarkMode) {
+      setNumber(50);
+    }
+    else {
+      setNumber(250);
+    }
+  };
+
+  // Run the effect continuously by including all dependencies
+  checkDarkMode();
+
+  // Set up an interval to continuously check for changes
+  const intervalId = setInterval(checkDarkMode, 10); // Adjust the interval time as needed
+
+  // Clean up by clearing the interval when the component unmounts
+  return () => clearInterval(intervalId);
+}, []); 
+
+  
+  const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setScreenWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
+
+  useEffect(() => {
+    const divWidth = screenWidth > 800 ? screenWidth - number - 20 : screenWidth - 10;
+    document.querySelector('.swc').style.width = `${divWidth}px`;
+  }, [number, screenWidth]);
 
   const filteredNotesBySubject = (subjectId) => {
     // Filter notes for a specific subject
@@ -21,7 +71,7 @@ const SCarousel = ({ notes, groupedNotes, subjects }) => {
   );
 
   return (
-    <div>
+    <div className="swc">
       <div className="headertable">
         <h1 className="header">Notes</h1>
         
