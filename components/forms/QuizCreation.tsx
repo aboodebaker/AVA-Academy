@@ -149,7 +149,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) 
   }
 
   return (
-      <div className='flex justify-center items-center full-screen md:w-[800] sm:w-[700]'>
+      <div className='flex justify-center items-center full-screen md:w-[800] sm:w-[600]'>
   <div className='flex flex-col justify-center items-center'>
         <Card>
           <CardHeader>
