@@ -30,8 +30,8 @@ const Dashboard = async (props: Props) => {
         <div className="flex justify-end">
         <UserAccountNav user={user}/>
         </div>
-        <div className='headertable'>
-          <h1 className='header'>Homework</h1>
+        <div className='headertables'>
+          <h1 className='headers'>Homework</h1>
         </div>
         
         </div>
