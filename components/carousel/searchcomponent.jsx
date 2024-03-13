@@ -54,7 +54,7 @@ const SCarousel = ({ notes, groupedNotes, subjects }) => {
 
 
   useEffect(() => {
-    const divWidth = screenWidth > 800 ? screenWidth - number - 20 : screenWidth - 10;
+    const divWidth = screenWidth > 800 ? screenWidth - number - 25 : screenWidth - 10;
     document.querySelector('.swc').style.width = `${divWidth}px`;
   }, [number, screenWidth]);
 

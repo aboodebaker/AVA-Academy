@@ -150,7 +150,8 @@ border-radius: 38px;
 @media only screen and (max-width: 1800px) {
   .column {
     flex-direction: row;
-    flex-wrap: wrap; /* Add gap between columns */
+    flex-wrap: wrap; 
+    gap: 70px; /* Add gap between columns */
   }
   .tester {
     width: 45%; /* Adjust the width as needed for 2 columns on tablets */
@@ -171,7 +172,7 @@ border-radius: 38px;
   .column {
     flex-direction: row;
     flex-wrap: wrap;
-     /* Add gap between columns */
+    gap: 70px; /* Add gap between columns */
   }
   .tester {
     width: 29.3%; /* Adjust the width as needed for 4 columns on desktop */
