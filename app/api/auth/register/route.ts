@@ -137,13 +137,13 @@ export const POST = async (request) => {
     }
   }
     return NextResponse.json(
-      JSON.stringify({
+      {
         token: user.id,
         email: user.email,
         classes: user.class,
         grade: user.grade,
         name: user.name,
-      }),
+      },
       { status: 200 }
     );
   } catch (error) {
