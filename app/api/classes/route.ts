@@ -7,8 +7,8 @@ import { PrismaClient } from "@prisma/client";
 
 export async function POST(req: Request) { 
 const prisma = await new PrismaClient()
-  const body = await req.json();
-  const { id } = body;
+
+  const { id } = await req.json();
 
   const subjects = await prisma.subject.findMany({
     where: {
