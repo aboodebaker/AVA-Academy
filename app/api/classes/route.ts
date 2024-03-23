@@ -16,6 +16,8 @@ const prisma = await new PrismaClient()
     }
   })
 
-  return new NextResponse(subjects, {status: 200})
+  const classes = {subjects}
+
+  return new NextResponse(classes, {status: 200})
 
 }
