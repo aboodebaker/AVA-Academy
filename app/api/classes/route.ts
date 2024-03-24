@@ -5,10 +5,10 @@ import { PrismaClient } from "@prisma/client";
 
 
 
-export async function POST(req: Request) { 
+export async function POST(request) { 
 const prisma = await new PrismaClient()
 
-  const { id } = await req.json();
+  const { id } = await request.json();
 
   const subjects = await prisma.subject.findMany({
   where: {
@@ -16,14 +16,7 @@ const prisma = await new PrismaClient()
   }
 });
 
-const plainSubjects = subjects.map(subject => {
-  return {
-    id: subject.id,
-    name: subject.name,
-    picture: subject.image,
-  };
-});
 
-  return new NextResponse.json({plainSubjects}, {status: 200})
+  return NextResponse.json(subjects, {status: 200})
 
 }

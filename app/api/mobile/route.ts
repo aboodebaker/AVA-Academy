@@ -4,11 +4,14 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt'
 
-
-
 export const POST = async (request) => {
+    const {type, data} = await request.json()
+
+    if (type === 'register') {
+
+
   try {
-    const { name, email, password, grade, classes } = await request.json();
+    const { name, email, password, grade, classes } = data;
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -155,4 +158,22 @@ export const POST = async (request) => {
       { status: 500 }
     );
   }
+}
+if (type === 'classes') {
+      const { id } = data;
+
+  const subjects = await prisma.subject.findMany({
+  where: {
+    userId: id
+  }
+});
+
+
+  return NextResponse.json(subjects, {status: 200})
+}
+else {
+    return NextResponse("type not found", {status: 404})
+}
+
+
 };
