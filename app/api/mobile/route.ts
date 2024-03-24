@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 import bcrypt from 'bcrypt'
+import { compare } from 'bcrypt'
 
 export const POST = async (request) => {
     const {type, data} = await request.json()
@@ -171,6 +172,49 @@ if (type === 'classes') {
 
   return NextResponse.json(subjects, {status: 200})
 }
+
+if (type === 'login') {
+    const {email, password} = data
+
+    const user = await prisma.user.findUnique({
+          where: {
+            email: email
+          }
+        })
+
+        if (!user) {
+          return NextResponse.json({error: "no user please register"}, {status: 404})
+        }
+        
+        const isPasswordValid = await compare(
+          password,
+          user.password
+        )
+
+        if (!isPasswordValid) {
+            return NextResponse.json({error: "Wrong password. Please try again"}, {status: 404})
+        }
+
+        return NextResponse.json({
+          id: user.id,
+          email: user.email,
+          name: user.name,
+          class: user.class,
+          grade: user.grade,
+        }, 
+        {status: 200} 
+        )
+}
+
+
+
+
+
+
+
+
+
+
 else {
     return NextResponse("type not found", {status: 404})
 }
