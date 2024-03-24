@@ -24,6 +24,6 @@ const plainSubjects = subjects.map(subject => {
   };
 });
 
-  return new NextResponse.json(plainSubjects, {status: 200})
+  return new NextResponse.json({plainSubjects}, {status: 200})
 
 }
