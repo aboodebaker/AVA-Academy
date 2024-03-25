@@ -206,6 +206,17 @@ if (type === 'login') {
         )
 }
 
+if (type === 'password') {
+  const {password} = data;
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  return NextResponse.json({
+          password: hashedPassword
+        }, 
+        {status: 200} 
+        )
+}
+
 
 
 
