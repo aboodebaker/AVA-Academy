@@ -40,6 +40,13 @@ model Session {
   @@index([userId])
 }
 
+model School {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  name    String
+  country String?
+  users   User[]
+}
+
 model User {
   id            String               @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
@@ -50,7 +57,9 @@ model User {
   messages      Int                  @default(0)
   messageLimit  Int                  @default(200)
   grade         String?
-  class         String
+  class         String?
+  role          RoleEnum             @default(student)
+  schoolId      String?              @db.ObjectId
   subject       Subject[]
   games         Game[]
   files         Files[]
@@ -60,6 +69,7 @@ model User {
   activities    Activity[]
   performance   PerformanceSummary[]
   courses       Course[]
+  school        School?              @relation(fields: [schoolId], references: [id])
 }
 
 model Subject {
@@ -166,6 +176,12 @@ model Message {
 enum UserSystemEnum {
   system
   user
+}
+
+enum RoleEnum {
+  teacher
+  student
+  tutor
 }
 
 enum GameType {

@@ -53,6 +53,8 @@ export const authOptions: NextAuthOptions = {
           name: user.name,
           class: user.class,
           grade: user.grade,
+          role: user.role,
+          school: user.schoolId,
         }}
       }
     })
@@ -66,7 +68,8 @@ export const authOptions: NextAuthOptions = {
           id: token.id,
           class: token.class,
           grade: token.grade,
-          
+          role: token.role,
+          school: token.schoolId,
         }
       }
     },
@@ -79,6 +82,8 @@ export const authOptions: NextAuthOptions = {
           id: u.id,
           class: u.class,
           grade: u.grade,
+          role: u.role,
+          school: u.schoolId,
           
         }
       }

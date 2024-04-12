@@ -16,6 +16,9 @@ function getRandomInt(min: number, max: number) {
 // /api/create-chat
 export async function POST(req: Request, res: Response) {
   const prisma = new PrismaClient();
+  const session = await getServerSession(authOptions);;
+  const user = session?.user as { school?: string };
+  const userId = user?.school;
 
   try {
     const body = await req.json();
@@ -35,6 +38,9 @@ export async function POST(req: Request, res: Response) {
       where: {
         grade: {
           in: ['teacher', grade, 'registerUser']
+        },
+        schoolId: {
+          equals: userId,
         }
       }
     })
