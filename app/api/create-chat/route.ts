@@ -10,6 +10,7 @@ import { downloadFromS3 } from "@/lib/s3-server";
 const { PDFDocument, rgb, StandardFonts } = require("pdf-lib");
 import { strict_output } from '@/lib/gpts';
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
+import { strict_output as strict_o } from '@/lib/gpt';
 
 interface User {
   id: string;
@@ -74,6 +75,18 @@ export async function POST(req: Request, res: Response) {
 
       summarys.push(outputWithPage)
     }
+
+    const topics = await strict_o(
+      'You are an ai topics analyser. You are to analyse the multiple summaries provided with the page number and determine where topics start and end. You are to specify the topic clearly. The summaries are page by page summaries of a pdf document used to teach students',
+      `here are the page by page summaries of a module called ${file_name}: ${summarys}`,
+      {
+        topic: 'the name of the topic. Be pricise and not generic eg.(wrong answer: Grade 8 skills, right answer: Graph Skills)',
+        pageStart: 'the page where the topic start',
+        pageEnd: 'the page where the topic ends'
+      }
+    )
+
+    console.log(topics)
 
     const users = await prisma.user.findMany({
       where: {

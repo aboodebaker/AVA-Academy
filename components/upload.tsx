@@ -36,20 +36,28 @@ const Page = ({ subjects }: Props) => {
         url: getS3Url(fileKey),
       };
 
-      const response = await axios.post("https://api.chatpdf.com/v1/sources/add-url", data, config);
-      console.log("Source ID:", response.data.sourceId);
+      // const response = await axios.post("https://api.chatpdf.com/v1/sources/add-url", data, config);
+      // console.log("Source ID:", response.data.sourceId);
 
-      await fetch('/api/create-chat', {
+      const res = await fetch('/api/create-chat', {
         method: 'POST',
-        body: JSON.stringify({ file_key: fileKey, file_name: name, grade: grade, subject: subject, chatpdf: response.data.sourceId }),
+        body: JSON.stringify({ file_key: fileKey, file_name: name, grade: grade, subject: subject, chatpdf: generateRandomString(10) }),
         headers: {
           'Content-Type': 'application/json',
         },
       });
 
-      setSubmitSuccess(true);
+      if (res.status !== 500) {
+        setSubmitSuccess(true);
       setSubmit("Submitted");
       setSubmitError('');
+      } else {
+        setSubmitSuccess(false);
+      setSubmitError('Submission failed. Please try again.');
+      setSubmit("Submission failed");
+      }
+
+      
     } catch (error: any) {
       console.error("Error:", error.message);
       setSubmitSuccess(false);
@@ -167,3 +175,13 @@ const Page = ({ subjects }: Props) => {
 };
 
 export default Page;
+
+function generateRandomString(length:number) {
+  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  let result = '';
+  for (let i = 0; i < length; i++) {
+    const randomIndex = Math.floor(Math.random() * characters.length);
+    result += characters.charAt(randomIndex);
+  }
+  return result;
+}

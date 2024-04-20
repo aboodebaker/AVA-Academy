@@ -12,6 +12,7 @@ const FileCarasoul = ({ files, user }) => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFile, setSelectedFile] = useState('')
   const [number, setNumber] = useState(0)
+  const [input, setInput] = useState(0)
   
   React.useEffect(() => {
   // Define the effect function
@@ -59,7 +60,7 @@ const FileCarasoul = ({ files, user }) => {
 
   useEffect(() => {
     const divWidth = screenWidth > 800 ? screenWidth - number : screenWidth -20
-    document.querySelector('.scrolling-wrapper').style.width = `${divWidth}px`;
+    document.querySelector(`${input == 0 ? '.scrolling-wrapper' : ''} ${input == 1 ? '.flexbox' : ''} `).style.width = `${divWidth - 20}px`;
   }, [number, screenWidth]);
 
   
@@ -104,15 +105,28 @@ const FileCarasoul = ({ files, user }) => {
       </div>
       </div>
       </div>
+      <div class="container">
+      <div class="tabs">
+        <input type="radio" id="radio-1" name="tabs" checked="" onClick={() => {setInput(0)}}/>
+        <label class="tab" for="radio-1">Row</label>
+        <input type="radio" id="radio-2" name="tabs" onClick={() => {setInput(1)}}/>
+        <label class="tab" for="radio-2">Column</label>
+        <input type="radio" id="radio-3" name="tabs"/>
+        <label class="tab" for="radio-3" onClick={() => {setInput(2)}}>List</label>
+        <span class="glider"></span>
+      </div>
+    </div>
       {/* style={{width: `${screenWidth-number}px`}} */}
-      <div className={`scrolling-wrapper `} >
+      <div className={`${input == 0 ? 'scrolling-wrapper' : ''} ${input == 1 ? 'flexbox' : ''} `} >
+        <div className={`${input == 1 ? 'column' : ''} `} >
         {filteredfiles.map((file, index) => (
-          <div key={index} className="card">
+          <div key={index} className={`${input == 0 ? 'card' : ''} ${input == 1 ? 'tester' : ''}`}>
             
               <ClassCard title={file.pdfName} link={file.pdfUrl}  date={file.createdAt} height={file.id} clip={'title-clip'} divId={file.pdfName + index} selectedFile={handleFileChange} activities={file.activities} userId={user.id} fileId={file.id}/>
                   
           </div>
         ))}
+        </div>
       </div>
     </div>
 

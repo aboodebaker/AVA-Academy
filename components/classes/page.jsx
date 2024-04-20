@@ -113,7 +113,7 @@ const Class = ({ subjects }) => {
                 filteredResponses.includes(subject) ? styles.fadeIn : styles.fadeOut
               }`}
             >
-              <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/classes/${subject.name}`}>
+              <Link href={`${pathname.includes('/teacher-platform') ? '/teacher-platform' : ''}/classes/${subject.id}`}>
                  <ClassCard title={subject.name} img={subject.image} link={subject.name} height={'100%'} clip={'title'}/>
               </Link>
             </div>

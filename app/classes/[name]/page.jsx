@@ -20,7 +20,7 @@ const page = async ({params}) => {
 
   const subject = await prisma.subject.findFirst({
     where: {
-      name: data,
+      id: data,
       userId: userid
     },
     include: {
@@ -68,9 +68,9 @@ const page = async ({params}) => {
 
   return (
 
-  <div >
+  <div className='min-h-screen'>
     <div className={styles.headertable}>
-      <h1 className={styles.header}>{data}</h1>
+      <h1 className={styles.header}>{subject.name}</h1>
     </div>
     <FileCarasoul files={files} user={user}/>
     

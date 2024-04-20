@@ -402,14 +402,14 @@ const Sidebars = () => {
             </Menu>
           </div>
           {/* <SidebarFooter collapsed={collapsed} /> */}
-          <div style={{ marginBottom: 30, display:"flex", alignItems:"center", justifyContent:"center" }}>
+          {/* <div style={{ marginBottom: 30, display:"flex", alignItems:"center", justifyContent:"center" }}>
               <Switch
                 id="collapse"
                 checked={collapsed}
                 onChange={() => setCollapsed(!collapsed)}
                 label={collapsed ? "" : "Collapse"}
               />
-            </div>
+            </div> */}
             
         </div>
       </Sidebar>
