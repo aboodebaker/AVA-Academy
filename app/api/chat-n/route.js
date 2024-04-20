@@ -16,6 +16,7 @@ export async function POST(req) {
 
 
   const { messages } = await req.json()
+  console.log(process.env)
  
   // const response = await fetch(`${process.env.BASE_URL}/api/chat-n/check`, {method: 'POST', body: {anything: 'anything'}})
   // const responseJson = await response.json()

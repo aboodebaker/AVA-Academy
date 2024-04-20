@@ -105,7 +105,7 @@ const FileCarasoul = ({ files, user }) => {
       </div>
       </div>
       </div>
-      <div class="container">
+      {/* <div class="container">
       <div class="tabs">
         <input type="radio" id="radio-1" name="tabs" checked="" onClick={() => {setInput(0)}}/>
         <label class="tab" for="radio-1">Row</label>
@@ -115,7 +115,7 @@ const FileCarasoul = ({ files, user }) => {
         <label class="tab" for="radio-3" onClick={() => {setInput(2)}}>List</label>
         <span class="glider"></span>
       </div>
-    </div>
+    </div> */}
       {/* style={{width: `${screenWidth-number}px`}} */}
       <div className={`${input == 0 ? 'scrolling-wrapper' : ''} ${input == 1 ? 'flexbox' : ''} `} >
         <div className={`${input == 1 ? 'column' : ''} `} >
