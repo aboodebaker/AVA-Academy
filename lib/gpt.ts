@@ -3,7 +3,7 @@ import { Configuration, OpenAIApi } from "openai";
 
 
 
-const apiKey = process.env.OPENAI_API_KEY
+const apiKey = process.env.OPENAI_API_KEYS
 console.log(apiKey)
 const configuration = new Configuration({
   apiKey: apiKey,

@@ -43,7 +43,8 @@ export default function RootLayout({
         <title>AVA Academy</title>
       </head>
 
-      <body>
+      <body style={{backgroundColor:'var(--background)'}}>
+
         <AuthProvider>
         <Providers>
         <div className="flex">
@@ -83,7 +84,7 @@ export default function RootLayout({
         <title>AVA Academy</title>
       </head>
 
-      <body>
+      <body style={{backgroundColor:'var(--background)'}}>
         <AuthProvider>
         <Providers>
         <div className="flex">
@@ -123,7 +124,8 @@ export default function RootLayout({
         <title>AVA Academy</title>
       </head>
 {/* className="outer" */}
-      <body >
+      <body style={{backgroundColor:'var(--background)'}}>
+
         <AuthProvider>
           <Providers>
 

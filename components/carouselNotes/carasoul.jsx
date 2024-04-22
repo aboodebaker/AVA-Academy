@@ -1,6 +1,6 @@
 'use client'
 import { useState } from 'react';
-import ClassCard from '../classcard/page';
+import ClassCard from './classcard';
 import './style.css'
 import Link from 'next/link';
 import React, { useRef } from 'react';
@@ -76,9 +76,9 @@ const CarouselItem = ({ notes }) => {
       <div className="scrolling-wrapper">
         {filteredNotes.map((note, index) => (
           <div key={index} className="card">
-            <Link href={`/course/${note.id}/0/0`}>
-              <ClassCard title={note.name} link={note.id} img={note.image} date={note.created_at} height={'100%'} clip={'title-clip'} />
-            </Link>          
+
+              <ClassCard title={note.name} link={note.id} img={note.image} date={note.created_at} height={'100%'} clip={'title-clip'} courseId={note.id}/>
+       
           </div>
         ))}
       </div>

@@ -29,7 +29,7 @@ Remember, your tone should remain casual and friendly, always keeping in mind th
 Your role is not just to answer questions but to help them become more knowledgeable and confident learners. `
 
 const config = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEYS,
 });
 const openai = new OpenAIApi(config);
 

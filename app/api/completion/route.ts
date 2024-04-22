@@ -3,7 +3,7 @@ import { OpenAIStream, StreamingTextResponse } from "ai";
 
 // /api/completion
 const config = new Configuration({
-  apiKey: process.env.OPENAI_API_KEY,
+  apiKey: process.env.OPENAI_API_KEYS,
 });
 
 export const runtime = 'edge'
