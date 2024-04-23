@@ -35,6 +35,7 @@ type Props = {
   topic: string;
   files: Files[];
   id: string;
+  subjects: any;
 };
 
 type Files = {
@@ -62,7 +63,7 @@ type Messages = {
 
 type Input = z.infer<typeof quizCreationSchema>;
 
-const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) => {
+const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id, subjects }: Props) => {
   const router = useRouter();
   const { toast } = useToast();
   const [showLoader, setShowLoader] = useState(false);
@@ -91,25 +92,30 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) 
     },
   });
 
-  const [subjectFiles, setSubjectFiles] = useState<Files[]>([]);
+  const [subjectFiles, setSubjectFiles] = useState(subjects);
+  const [uniqueFiles, setUniqueFiles] = useState(files)
+
+  // useEffect(() => {
+  //   const uniqueSubjects = Array.from(new Set(files.map(file => file.subject)));
+  //   const uniqueSubjectFiles: Files[] = uniqueSubjects.map(subject => {
+  //     return files.find(file => file.subject === subject);
+  //   }).filter(Boolean) as Files[];
+  //   setSubjectFiles(uniqueSubjectFiles);
+  // }, [files]);
+
+  // useEffect(() => {
+  //   if (id) {
+  //     const selectedFile = files.find((file) => file.id === id);
+  //     if (selectedFile) {
+  //       form.setValue("subject", selectedFile.Subject.id);
+  //       form.setValue("selectedFileId", selectedFile.chatpdf);
+  //     }
+  //   }
+  // }, [id, files, form]);
 
   useEffect(() => {
-    const uniqueSubjects = Array.from(new Set(files.map(file => file.subject)));
-    const uniqueSubjectFiles: Files[] = uniqueSubjects.map(subject => {
-      return files.find(file => file.subject === subject);
-    }).filter(Boolean) as Files[];
-    setSubjectFiles(uniqueSubjectFiles);
-  }, [files]);
-
-  useEffect(() => {
-    if (id) {
-      const selectedFile = files.find((file) => file.id === id);
-      if (selectedFile) {
-        form.setValue("subject", selectedFile.Subject.id);
-        form.setValue("selectedFileId", selectedFile.chatpdf);
-      }
-    }
-  }, [id, files, form]);
+    setUniqueFiles(filterArray(files, form.getValues("subject")))
+  },[form.getValues("subject")])
 
   const onSubmit = async (data: Input) => {
     setShowLoader(true);
@@ -185,8 +191,8 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) 
                         <select {...field} className="mt-1  bg-background text-text  block w-full py-2 px-3 border border-text  rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                           <option value="" className="text-black">Select a subject</option>
                           {subjectFiles.map((file, index) => (
-                            <option key={index} value={file.Subject.id} className="text-black">
-                              {file.Subject.name}
+                            <option key={index} value={file.id} className="text-black">
+                              {file.name}
                             </option>
                           ))}
                         </select>
@@ -208,7 +214,7 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) 
                         <FormControl className="text-text bg-background">
                           <select {...field} className="mt-1 block w-full py-2 px-3 border border-text bg-background text-text rounded-md shadow-sm focus:outline-none focus:ring focus:ring-indigo-200 focus:border-indigo-300">
                             <option value="">Select a file</option>
-                            {files.map((file) => (
+                            {uniqueFiles.map((file) => (
                               <option key={file.chatpdf} value={file.chatpdf} className="text-black">
                                 {file.pdfName}
                               </option>
@@ -300,3 +306,19 @@ const QuizCreation: React.FC<Props> = ({ topic: topicParam, files, id }: Props) 
 };
 
 export default QuizCreation;
+
+
+function filterArray(originalArray, targetValue) {
+    let filteredArray = [];
+
+    // Loop through the original array
+    for (let i = 0; i < originalArray.length; i++) {
+        // Check if the value at the target index matches the target value
+        if (originalArray[i].Subject.id === targetValue) {
+            // If it matches, add it to the filtered array
+            filteredArray.push(originalArray[i]);
+        }
+    }
+
+    return filteredArray;
+}

@@ -97,7 +97,7 @@ console.log(userId)
       setQuestionIndex(parseInt(savedIndex, 10));
       setAveragePercentage(parseFloat(savedPercentage));
       setHasEnded(hasEnded),
-            setTab(tabs),
+      setTab(tabs),
       setCustomId(id)
     }
   }, [game.id]);
@@ -112,7 +112,7 @@ console.log(userId)
       id: customId,
     };
     localStorage.setItem(`gameData_${game.id}`, JSON.stringify(dataToSave));
-  }, [questionIndex, averagePercentage, game.id])
+  }, [questionIndex, averagePercentage, game.id, hasEnded, tab])
 
   useEffect(() => {
     if (!hasEnded) {

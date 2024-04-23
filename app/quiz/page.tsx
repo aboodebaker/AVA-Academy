@@ -36,6 +36,16 @@ const Quiz = async ({ searchParams }: Props) => {
     }
   })
 
+  const subjects = await prisma.subject.findMany({
+    where: {
+      userId: {
+        equals: userId
+      }
+    }
+  })
+
+  
+
   const id = null
 
 
@@ -44,7 +54,7 @@ const Quiz = async ({ searchParams }: Props) => {
   return (
   
   <div style={{ display: "flex", justifyContent: "center", alignItems: "center", minHeight: "100vh" }}>
-  <QuizCreation topic={""} files={files} id={id} />
+  <QuizCreation topic={""} files={files} id={id} subjects={subjects}/>
 </div>
   )
 };
