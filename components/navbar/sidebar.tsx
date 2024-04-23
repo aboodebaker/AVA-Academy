@@ -162,7 +162,7 @@ const themes = {
   },
   dark: {
     sidebar: {
-      backgroundColor: '#2e4686',
+      backgroundColor: '#202020',
       color: '#8ba1b7',
     },
     menu: {
