@@ -97,7 +97,7 @@ console.log(userId)
       setQuestionIndex(parseInt(savedIndex, 10));
       setAveragePercentage(parseFloat(savedPercentage));
       setHasEnded(hasEnded),
-            setTab(tabs),
+      setTab(tabs),
       setCustomId(id)
     }
   }, [game.id]);
