@@ -16,6 +16,8 @@ export async function getEmbeddings(text: string) {
     // Access the response data directly using the 'data' property
     
     const test = await response.data
+
+
     
     return test.data[0].embedding as number[];
   } catch (error) {

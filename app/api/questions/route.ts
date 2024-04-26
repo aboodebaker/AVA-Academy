@@ -39,11 +39,11 @@ export async function POST(req: Request, res: Response) {
     })
 
 
-
+    console.log(chat)
 
 
     const fileKey = chat.fileKey;
-    console.log('here')
+    console.log(fileKey)
     const newMessage = {
       role: 'user',
       content:  `generate a quiz about this topic: ${topic}`
