@@ -1,3 +1,4 @@
+// @ts-nocheck
 const fss = require("fs");
 const fs = require('fs/promises');
 import { PrismaClient } from '@prisma/client';
@@ -11,6 +12,7 @@ const { PDFDocument, rgb, StandardFonts } = require("pdf-lib");
 import { strict_output } from '@/lib/gpts';
 import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { strict_output as strict_o } from '@/lib/gpt';
+import { count } from 'console';
 
 interface User {
   id: string;
@@ -27,17 +29,17 @@ type PDFPage = {
 // /api/create-chat
 export async function POST(req: Request, res: Response) {
   const prisma = new PrismaClient();
-  const session = await getServerSession(authOptions);;
+  const session = await getServerSession(authOptions);
   const user = session?.user as { school?: string };
   const userId = user?.school;
 
   try {
     const body = await req.json();
     const { file_key, file_name, grade, subject, chatpdf } = body;
-    console.log(file_key, file_name, grade, subject);
+    console.log(file_key, file_name, grade, subject, chatpdf);
     
 
-    await loadS3IntoPinecone(file_key);
+    const vectors = await loadS3IntoPinecone(file_key, chatpdf);
     const url = getS3Url(file_key)
 
     const filename = await downloadFromS3(file_key);
@@ -53,35 +55,35 @@ export async function POST(req: Request, res: Response) {
     // Find the specific page
     let summarys = []
     
-    for (let i = 1; i < pagesno; i++) {
-
-
+    for (let i = 1; i <= pagesno; i++) {
       const page = pages.find(page => page.metadata.loc.pageNumber === i)?.pageContent;
 
-      let output = await strict_output(
-        'You are an ai summariser. summarise the page of a module which a teacher is uploaded. you are to use the exact json format required. If it looks like an activity please put into your summary that it is an activity.',
-        `your content to summarise is: ${page} `,
-        {
-          summary: "your summary, if you cannot then just say what is shown",
-          topic:"topic of what is in the content. very specific. should be from reasoning and not what is in the text"
+      if (page) {
+        let output = await strict_output(
+          'You are an ai summariser. summarise the page of a module which a teacher is uploaded. you are to use the exact json format required. If it looks like an activity please put into your summary that it is an activity.',
+          `your content to summarise is: ${page} `,
+          {
+            summary: "your summary, if you cannot then just say what is shown",
+            topic:"topic of what is in the content. very specific. should be from reasoning and not what is in the text"
+          }
+        )
+
+        let outputWithPage = {
+          summary: output.summary,
+          topic: output.topic,
+          pageNumber: i,
         }
 
-      )
+        console.log(outputWithPage)
 
-      let outputWithPage = {
-        summary: output.summary,
-        topic: output.topic,
-        pageNumber: i,
+        summarys.push(outputWithPage)
       }
-
-      console.log(outputWithPage)
-
-      summarys.push(outputWithPage)
     }
 
+    
     const topics = await strict_o(
       'You are an ai topics analyser. You are to analyse the multiple summaries provided with the page number and determine where topics start and end. You are to specify the topic clearly. The summaries are page by page summaries of a pdf document used to teach students. there are multiple topics so group it in a []',
-      `here are the page by page summaries of a module called ${file_name}: ${summarys}`,
+      `here are the page by page summaries of a module called ${file_name}: ${JSON.stringify(summarys)}`,
       {
         topic: 'the name of the topic. Be pricise and not generic eg.(wrong answer: Grade 8 skills, right answer: Graph Skills)',
         pageStart: 'the page where the topic start',
@@ -113,13 +115,12 @@ export async function POST(req: Request, res: Response) {
 
       if (subjects == null) {
         return NextResponse.json(
-      {
-        error: "no subject like that available"
-      },
-      { status: 500 }
-    );
+          {
+            error: "no subject like that available"
+          },
+          { status: 500 }
+        );
       }
-
 
       const chat = await prisma.files.create({
         data: {
@@ -132,6 +133,7 @@ export async function POST(req: Request, res: Response) {
           grade: grade,
         },
       });
+      
       console.log(`Created chat for user ${user.id}`);
     }
 
@@ -142,7 +144,7 @@ export async function POST(req: Request, res: Response) {
       { status: 200 }
     );
   } catch (error) {
-    console.log('error'+error);
+    console.log('error: ' + error.message);
     
     return NextResponse.json(
       { error: 'internal server error' },
@@ -153,5 +155,6 @@ export async function POST(req: Request, res: Response) {
     prisma.$disconnect();
   }
 }
+
 
 

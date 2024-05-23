@@ -48,12 +48,13 @@ export async function POST(req: Request) {
     }
 
     const fileKey = chat.fileKey;
+    const chatpdf = chat.chatpdf
     const lastMessage = messages[messages.length - 1];
     const newMessage = {
       role: 'system',
       content: 'none'
     }
-    const context = await getContext(lastMessage.content, fileKey);
+    const context = await getContext(lastMessage.content, fileKey, chatpdf);
     console.log(context)
 
     const prompt = {
@@ -97,7 +98,7 @@ export async function POST(req: Request) {
       // stream: true,
     });
 
-    console.log(response.data.usage?.total_tokens)
+
 
     // const stream = await OpenAIStream(response);
     console.log(response.data.choices[0].message?.content)

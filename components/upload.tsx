@@ -41,7 +41,7 @@ const Page = ({ subjects }: Props) => {
 
       const res = await fetch('/api/create-chat', {
         method: 'POST',
-        body: JSON.stringify({ file_key: fileKey, file_name: name, grade: grade, subject: subject, chatpdf: generateRandomString(10) }),
+        body: JSON.stringify({ file_key: fileKey, file_name: name, grade: grade, subject: subject, chatpdf: generateRandomString(120) }),
         headers: {
           'Content-Type': 'application/json',
         },

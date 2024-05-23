@@ -165,6 +165,15 @@ model Files {
   Subject     Subject           @relation(fields: [subjectid], references: [id], onDelete: Cascade)
 }
 
+//Unsupported("vector(1536)")?
+model FilePage {
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  chatpdf    String  @map("chatpdf")
+  embeddings Json    @map("embeddings")
+  text       String? @map("text")
+  pageNumber Int
+}
+
 model Message {
   id        String         @id @default(auto()) @map("_id") @db.ObjectId
   chatId    Int?           @map("chat_id")

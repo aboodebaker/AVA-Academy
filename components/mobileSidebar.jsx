@@ -89,7 +89,7 @@ const MobileSidebar = ({ chats, chatId, isPro, useClient }) => {
   };
 
     return (
-        <div className='h-full'>
+        <div className='h-full' >
             {useClient ? (
 
 
@@ -98,7 +98,7 @@ const MobileSidebar = ({ chats, chatId, isPro, useClient }) => {
         </button>
             )
         : <></>}
-            <div style={{ display: 'flex', height: '100%', direction: rtl ? 'rtl' : 'ltr' }} >
+            <div style={{ display: 'flex', minHeight: '100%', direction: rtl ? 'rtl' : 'ltr', overflowY: 'scroll' }} >
                   <Sidebar
         collapsed={collapsed}
         toggled={toggled}
@@ -141,8 +141,9 @@ const MobileSidebar = ({ chats, chatId, isPro, useClient }) => {
                     {pdfs.length}
                   </Badge>
                 }
+                // style={{overflowY: 'scroll'}}
               >
-
+                {/* <div style={{ height: '20%', overflowY: 'scroll'}}> */}
                                 {pdfs.map(chat => (
                                     <Link key={chat.id} href={`/chat/${chat.id}`}>
                                         <MenuItem>
@@ -152,7 +153,7 @@ const MobileSidebar = ({ chats, chatId, isPro, useClient }) => {
                                         </MenuItem>
                                     </Link>
                                 ))}
-
+{/* </div> */}
                             </SubMenu>
                         </div>
                     ))}

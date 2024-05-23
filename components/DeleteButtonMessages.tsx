@@ -20,6 +20,7 @@ const DeleteButton = ({ chatId }: Props) => {
         chatId,
       });
       
+      
       return response.data;
     },
   });

@@ -1,66 +1,72 @@
+//@ts-nocheck
 import { Pinecone } from "@pinecone-database/pinecone";
 import { convertToAscii } from "./utils";
 import { getEmbeddings } from "./embeddings";
+import { PrismaClient } from "@prisma/client";
 
 // Function to retrieve matches from Pinecone embeddings
-export async function getMatchesFromEmbeddings(embeddings: number[], fileKey: string) {
+export async function getMatchesFromEmbeddings(embeddings: any, fileKey: string, chatpdf: string) {
+  const prisma = new PrismaClient()
+  console.log(chatpdf)
   try {
-    // Initialize Pinecone client
-    const client = new Pinecone({
-      environment: process.env.PINECONE_ENVIRONMENT!,
-      apiKey: process.env.PINECONE_API_KEY!,
-    });
-
-    // Retrieve the Pinecone index for "ava-academy"
-    const pineconeIndex = await client.index("ava-academy");
-
-    // Create a namespace based on the file key
-    const namespace = pineconeIndex.namespace(convertToAscii(fileKey));
-
-    // Query Pinecone for matches
-    const queryResult = await namespace.query({
-      topK: 3,
-      vector: embeddings,
-      includeMetadata: true,
-    });
-
-    // Filter and return relevant matches
-    if (queryResult.matches && Array.isArray(queryResult.matches)) {
-      return queryResult.matches.filter(match => {
-        if (match.metadata && match.metadata.text) {
-          return match.score && match.score > 0.05;
+    const matches = await prisma.filePage.aggregateRaw({
+      pipeline: [
+        {
+          '$vectorSearch': {
+            'index': 'file_page_embeddings',
+            'path': 'embeddings',
+            'queryVector': embeddings,
+            'numCandidates': 500,
+            'limit': 1,
+            'filter': {
+              'chatpdf': chatpdf,
+            }
+          }
+        },
+        {
+          '$project': {
+            '_id': 1,
+            'text': 1,
+            'chatpdf': 1,
+            'pageNumber': 1,
+            'score': {
+              '$meta': 'vectorSearchScore'
+            }
+          }
         }
-        return false;
-      }) || [];
-    } else {
-      return [];
-    }
+      ]
+    });
+    console.log(matches)
+
+    return matches
+    
   } catch (error) {
     console.error("Error querying embeddings:", error);
     throw error;
+  } finally{
+    prisma.$disconnect()
   }
 }
 
 // Function to retrieve context based on a query and file key
-export async function getContext(query: string, fileKey: string) {
+export async function getContext(query: string, fileKey: string, fileId: string) {
   try {
     // Get embeddings for the query
     const queryEmbeddings = await getEmbeddings(query);
 
     // Get matches based on the embeddings and file key
-    const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey);
+    const matches = await getMatchesFromEmbeddings(queryEmbeddings, fileKey, fileId);
 
     // Define a type for metadata
-    type Metadata = {
-      text?: string;
-      pageNumber?: number;
-    };
 
-    // Extract relevant information from matches
+
+
+
+
     let docs = matches.map((match) => {
-      if (match.metadata && match.metadata.text) {
-        const text = (match.metadata as Metadata).text || "";
-        const pageNumber = (match.metadata as Metadata).pageNumber;
+      if (match && match.text) {
+        const text = match.text || "";
+        const pageNumber = match.pageNumber;
         return `${text} (Page ${pageNumber})`;
       }
       return "";
