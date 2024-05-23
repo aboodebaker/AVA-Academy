@@ -17,7 +17,7 @@ export async function getMatchesFromEmbeddings(embeddings: any, fileKey: string,
             'path': 'embeddings',
             'queryVector': embeddings,
             'numCandidates': 500,
-            'limit': 1,
+            'limit': 3,
             'filter': {
               'chatpdf': chatpdf,
             }

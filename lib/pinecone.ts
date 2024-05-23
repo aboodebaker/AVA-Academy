@@ -60,24 +60,59 @@ export async function loadS3IntoPinecone(fileKey: string, chatpdf: string) {
 
 
   //4. upload to mongoDB
-  for (const document of vectors) {
-        const { embeddings, text, pageNumber } = document;
+  // for (const document of vectors) {
+  //       const { embeddings, text, pageNumber } = document;
         
-        let filePage = await prisma.filePage.create({
-          data: {
-            embeddings: embeddings,
-            pageNumber: pageNumber,
-            text: text,
-            chatpdf: chatpdf,
-          }
-        })
+  //       let filePage = await prisma.filePage.create({
+  //         data: {
+  //           embeddings: embeddings,
+  //           pageNumber: pageNumber,
+  //           text: text,
+  //           chatpdf: chatpdf,
+  //         }
+  //       })
 
        
 
-        console.log(`Stored page number ${pageNumber} into MongoDB, ${text !== null || '' ? 'there is text' : 'there is no text'} 
-        and ${embeddings !== null || '' ? 'there is embeddings' : 'there is no embeddings'}`)
+  //       console.log(`Stored page number ${pageNumber} into MongoDB, ${text !== null || '' ? 'there is text' : 'there is no text'} 
+  //       and ${embeddings !== null || '' ? 'there is embeddings' : 'there is no embeddings'}`)
 
+  //   }
+  const promises = vectors.map(async (document) => {
+    const { embeddings, text, pageNumber } = document;
+
+    try {
+      const filePage = await prisma.filePage.create({
+        data: {
+          embeddings: embeddings,
+          pageNumber: pageNumber,
+          text: text,
+          chatpdf: chatpdf,
+        }
+      });
+
+      console.log(`Stored page number ${pageNumber} into MongoDB, ${text !== null ? 'there is text' : 'there is no text'} 
+        and ${embeddings !== null ? 'there is embeddings' : 'there is no embeddings'}`);
+
+      return filePage;
+    } catch (error) {
+      console.error(`Error processing document for page number ${pageNumber}:`, error.message);
+      return { error: error.message, pageNumber: pageNumber };
     }
+  });
+
+  // Wait for all promises to resolve
+  const results = await Promise.all(promises);
+
+  // Handle any errors and filter out successful operations
+  const errors = results.filter(result => result && result.error);
+  const successfulFilePages = results.filter(result => !result.error);
+
+  if (errors.length > 0) {
+    console.error('Some operations failed:', errors);
+    // Optionally, handle errors, e.g., return them or take other actions
+  }
+
 
 
   console.log('complete')
