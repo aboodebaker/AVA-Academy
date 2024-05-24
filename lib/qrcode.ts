@@ -9,3 +9,5 @@ const QRCode = require("qrcode");
     throw error;
   }
 }
+
+module.exports = { generateQRCode };

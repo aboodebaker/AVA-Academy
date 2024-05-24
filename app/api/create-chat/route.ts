@@ -14,7 +14,7 @@ import { PDFLoader } from "langchain/document_loaders/fs/pdf";
 import { strict_output as strict_o } from '@/lib/gpt';
 import { count } from 'console';
 import { Configuration, OpenAIApi } from "openai";
-import generateQRCode from '@/lib/qrcode'
+import {generateQRCode} from '@/lib/qrcode'
 interface User {
   id: string;
   // Add other properties as needed
@@ -172,38 +172,79 @@ export async function POST(req: Request, res: Response) {
       response_format: { type: "json_object" },
       
     });
-    // const topics = response.data.choices[0].message?.content.topics
+    let topics = response.data.choices[0].message?.content
+    
+    topics = JSON.parse(topics).topics
+    console.log(topics)
 
-    // console.log(topics)
+    const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
+    for (const topic of topics) {
+    const formattedTopic = topic.topic.replace(/\s+/g, '-'); // Replace spaces with dashes
+    const topicLink = `https://ava-academy.vercel.app/topic/${formattedTopic}`;
+    const qrCodeUrl = await generateQRCode(topicLink);
+    const qrImage = await pdfDoc.embedPng(qrCodeUrl);
 
-    // for (const topic of topics) {
-    //   const topicLink = `https://ava-academy.vercel.app/topic/${topic.topic}`;
-    //   const pageNumber = topic.pageStart - 1;
-    //   const qrCodeUrl = await generateQRCode(topicLink);
-    //   const qrImage = await pdfDoc.embedPng(qrCodeUrl);
+    const pageNumber = parseInt(topic.pageStart, 10);
+    if (isNaN(pageNumber) || pageNumber < 1 || pageNumber > pdfDoc.getPageCount()) {
+      console.error(`Invalid page number: ${topic.pageStart}`);
+      continue;
+    }
 
-    //   const page = pdfDoc.getPage(pageNumber-1);
-    //   const { width, height } = page.getSize();
+    const page = pdfDoc.getPage(pageNumber - 1);
+    const { width, height } = page.getSize();
 
+    const qrWidth = 50;
+    const qrHeight = 50;
+    const margin = 40;
+    const text = topic.topic;
+    const textWidth = font.widthOfTextAtSize(text, 12);
 
+    const qrX = width - qrWidth - margin;
+    const qrY = height - margin - qrHeight;
+    const rectWidth = Math.max(qrWidth, textWidth + margin * 2);
+    const rectHeight = qrHeight + margin * 3 + 24; // Adjust height for link and text
 
+    const rectX = qrX - margin / 2;
+    const rectY = qrY - margin - 24; // Adjust for link height
 
-    //   page.drawImage(qrImage, {
-    //     x: width - 50,
-    //     y: height - 100, // Adjust as needed
-    //     width: 50,
-    //     height: 50,
-    //   });
+    // Draw gray rectangle background with less transparency
+    page.drawRectangle({
+      x: rectX,
+      y: rectY,
+      width: rectWidth,
+      height: rectHeight,
+      color: rgb(0.5, 0.5, 0.5),
+      opacity: 0.85, // Adjusted opacity
+    });
 
-    //   page.drawText(topic, {
-    //     x: width- 120,
-    //     y: height - 50, // Adjust as needed
-    //     size: 12,
-    //     font: await pdfDoc.embedFont(StandardFonts.Helvetica),
-    //     color: rgb(0, 0, 0),
-    //   });
-    // }
+    // Draw the topic link on top of the QR code
+    page.drawText(topicLink, {
+      x: qrX + (rectWidth - font.widthOfTextAtSize(topicLink, 10)) / 2,
+      y: qrY + qrHeight + margin - 12, // Position above QR code
+      size: 10,
+      font: font,
+      color: rgb(0, 0, 1),
+    });
+
+    // Draw QR code
+    page.drawImage(qrImage, {
+      x: qrX,
+      y: qrY,
+      width: qrWidth,
+      height: qrHeight,
+    });
+
+    // Draw text below QR code
+    page.drawText(text, {
+      x: qrX + (rectWidth - textWidth) / 2,
+      y: qrY - margin - 12,
+      size: 12,
+      font: font,
+      color: rgb(0, 0, 0),
+    });
+  }
+
 
     // Embed QR codes and links for subtopics
     // for (const subtopic of subtopics) {
