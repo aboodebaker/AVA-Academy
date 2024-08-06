@@ -23,7 +23,7 @@ export async function POST(req) {
   // console.log(responseJson)
   // if (responseJson.sucess == true) {
   const response = await openai.createChatCompletion({
-    model: 'gpt-3.5-turbo-1106',
+    model: 'gpt-4o',
     stream: true,
     messages
   })
